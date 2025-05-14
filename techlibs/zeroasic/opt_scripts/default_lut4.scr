@@ -1,0 +1,2 @@
+strash; &get -n; &fraig -x; &put; scorr; dc2; dretime; strash; dch -f; if -K 4; mfs2; lutpack -S 1; &get -n -m; &ps; &put;  
+

@@ -1,0 +1,1 @@
+&get -n -m; &st; &lf -K 4 -e; &save -a; &st; &if -K 4 -a; &satlut -C 100; &save -a; &put; strash; dc2; if -K 4 -a; &get -n -m; &save -a; &load; &put
