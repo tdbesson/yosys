@@ -388,6 +388,14 @@ struct SynthFpgaPass : public ScriptPass
 
     log("'Zero Asic' FPGA Synthesis Version : %s\n", SYNTH_FPGA_VERSION);
 
+    // Read basic models for resynthesis purpose
+    //
+    run("read_verilog +/zeroasic/ff_models/dff.v");
+    run("read_verilog +/zeroasic/ff_models/dffe.v");
+    run("read_verilog +/zeroasic/ff_models/dffr.v");
+    run("read_verilog +/zeroasic/ff_models/dffer.v");
+    run("hierarchy -check");
+
 #if 0
     # Pre-processing step:  if DSPs instance are hard-coded into
     # the users design, we can use a blackbox flow for DSP mapping
@@ -578,15 +586,6 @@ struct SynthFpgaPass : public ScriptPass
     // Extra line added versus 'sc_synth_fpga.tcl' tcl script version
     //
     run("stat");
-
-#if 0
-    run("read_verilog +/techlibs/zeroasic/ff_models/dff.v");
-    run("read_verilog +/techlibs/zeroasic/ff_models/dffe.v");
-    run("read_verilog +/techlibs/zeroasic/ff_models/dffr.v");
-    run("read_verilog +/techlibs/zeroasic/ff_models/dffer.v");
-
-    run("hierarchy -check");
-#endif
 
     auto endTime = std::chrono::high_resolution_clock::now();
     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);
