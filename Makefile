@@ -160,7 +160,7 @@ ifeq ($(OS), Haiku)
 CXXFLAGS += -D_DEFAULT_SOURCE
 endif
 
-YOSYS_VER := 0.53+24
+YOSYS_VER := 0.53+26
 YOSYS_MAJOR := $(shell echo $(YOSYS_VER) | cut -d'.' -f1)
 YOSYS_MINOR := $(shell echo $(YOSYS_VER) | cut -d'.' -f2 | cut -d'+' -f1)
 YOSYS_COMMIT := $(shell echo $(YOSYS_VER) | cut -d'+' -f2)
@@ -894,6 +894,7 @@ SH_TEST_DIRS += tests/bram
 SH_TEST_DIRS += tests/svinterfaces
 SH_TEST_DIRS += tests/xprop
 SH_TEST_DIRS += tests/select
+SH_TEST_DIRS += tests/peepopt
 SH_TEST_DIRS += tests/proc
 SH_TEST_DIRS += tests/blif
 SH_TEST_DIRS += tests/arch
