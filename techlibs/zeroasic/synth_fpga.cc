@@ -21,6 +21,9 @@
 #include "kernel/celltypes.h"
 #include "kernel/rtlil.h"
 #include "kernel/log.h"
+#include <chrono>
+
+#define SYNTH_FPGA_VERSION "1.0"
 
 USING_YOSYS_NAMESPACE
 PRIVATE_NAMESPACE_BEGIN
@@ -31,11 +34,24 @@ struct SynthFpgaPass : public ScriptPass
   //
   string top_opt, verilog_file, part_name, opt;
   bool flatten, dff_enable, dff_async_set, dff_async_reset;
+  bool obs_clean;
   string sc_syn_lut_size;
 
   // Methods
   //
   SynthFpgaPass() : ScriptPass("synth_fpga", "Zero Asic FPGA synthesis flow") { }
+
+  // -------------------------
+  // clean_design 
+  // -------------------------
+  void clean_design()
+  {
+     if (obs_clean) {
+        run("obs_clean -wires -assigns");
+     } else {
+        run("opt_clean");
+     }
+  }
 
   // -------------------------
   // opt_and_map_comb_logic 
@@ -211,6 +227,11 @@ struct SynthFpgaPass : public ScriptPass
         log("        DFF with asynchronous reset is supported.\n");
         log("\n");
 
+        log("    -obs_clean\n");
+        log("        specifies to use 'obs_clean' cleanup function instead of inefficient \n");
+        log("        'opt_clean'.\n");
+        log("\n");
+
         log("    -lut_size\n");
         log("        specifies lut size. By default lut size is 4.\n");
         log("\n");
@@ -239,6 +260,8 @@ struct SynthFpgaPass : public ScriptPass
 	dff_async_set = true;
 	dff_async_reset = true;
 
+	obs_clean = false;
+
 	verilog_file = "";
 
 	sc_syn_lut_size = "4";
@@ -266,6 +289,10 @@ struct SynthFpgaPass : public ScriptPass
 		}
 	        if (args[argidx] == "-lut_size" && argidx+1 < args.size()) {
                         sc_syn_lut_size = args[++argidx];
+                        continue;
+                }
+	        if (args[argidx] == "-obs_clean") {
+                        obs_clean = true;
                         continue;
                 }
 	        if (args[argidx] == "-verilog" && argidx+1 < args.size()) {
@@ -320,8 +347,10 @@ struct SynthFpgaPass : public ScriptPass
   // ---------------------------------------------------------------------------
   void script() override
   {
+    auto startTime = std::chrono::high_resolution_clock::now();
+
     log("\nPLATYPUS flow using 'synth_fpga' Yosys plugin command\n");
-    log("\n");
+    log("Version : %s\n", SYNTH_FPGA_VERSION);
 
 #if 0
     # Pre-processing step:  if DSPs instance are hard-coded into
@@ -375,18 +404,18 @@ struct SynthFpgaPass : public ScriptPass
     // flow and the Yosys synth_ice40 flow
     //
     run("opt_expr");
-    run("opt_clean");
+    clean_design();
     run("check");
     run("opt -nodffe -nosdff");
     run("fsm");
     run("opt");
     run("wreduce");
     run("peepopt");
-    run("opt_clean");
+    clean_design();
     run("share");
     run("techmap -map +/cmp2lut.v -D LUT_WIDTH=4");
     run("opt_expr");
-    run("opt_clean");
+    clean_design();
 
     // Extra line added versus 'sc_synth_fpga.tcl' tcl script version
     //
@@ -496,6 +525,15 @@ struct SynthFpgaPass : public ScriptPass
 
     run("hierarchy -check");
 #endif
+
+    auto endTime = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);
+
+    float totalTime = elapsed.count() * 1e-9;
+
+    log("   FPGA Synthesis Version : %s\n", SYNTH_FPGA_VERSION);
+    log("\n");
+    log("   Total Synthesis Run Time = %.1f sec.\n", totalTime);
 
   } // end script()
 
