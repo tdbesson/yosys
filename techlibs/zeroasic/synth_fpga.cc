@@ -30,11 +30,12 @@ PRIVATE_NAMESPACE_BEGIN
 
 struct SynthFpgaPass : public ScriptPass
 {
-  // data
+  // Global data
   //
+  RTLIL::Design *G_design; 
   string top_opt, verilog_file, part_name, opt;
-  bool flatten, dff_enable, dff_async_set, dff_async_reset;
-  bool obs_clean;
+  bool no_flatten, dff_enable, dff_async_set, dff_async_reset;
+  bool obs_clean, wait;
   string sc_syn_lut_size;
 
   // Methods
@@ -61,7 +62,7 @@ struct SynthFpgaPass : public ScriptPass
 
     if (opt == "default") {
 
-      log("SCRIPT-BASED DEFAULT optimization\n");
+      log_header(G_design, "Performing SCRIPT-BASED DEFAULT optimization\n");
 
       if (sc_syn_lut_size == "4") {
         run("abc -script +/zeroasic/opt_scripts/default_lut4.scr");
@@ -76,7 +77,7 @@ struct SynthFpgaPass : public ScriptPass
     //
     if (opt == "area") {
 
-      log("AREA optimization\n");
+      log_header(G_design, "Performing Min-LUT optimization\n");
 
       if (sc_syn_lut_size == "4") {
         run("abc -script +/zeroasic/opt_scripts/area_lut4_high_effort.scr");
@@ -92,7 +93,7 @@ struct SynthFpgaPass : public ScriptPass
     //
     if (opt == "delay") {
 
-      log("DELAY optimization\n");
+      log_header(G_design, "Performing Min-LUT-Level optimization\n");
 
       if (sc_syn_lut_size == "4") {
         run("abc -dff -script +/zeroasic/opt_scripts/delay_lut4_high_effort.scr");
@@ -106,7 +107,7 @@ struct SynthFpgaPass : public ScriptPass
 
     // default
     //
-    log("OFFICIAL DEFAULT optimization\n");
+    log_header(G_design, "Performing OFFICIAL DEFAULT optimization\n");
     run("abc -lut " + sc_syn_lut_size);
   }
 
@@ -208,6 +209,10 @@ struct SynthFpgaPass : public ScriptPass
 	log("        use the specified module as top module\n");
         log("\n");
 
+        log("    -no_flatten\n");
+        log("        skip flatening. By default, design is flatened.\n");
+        log("\n");
+
         log("    -opt\n");
         log("        specifies the optimization target : area, delay, default.\n");
         log("\n");
@@ -241,6 +246,11 @@ struct SynthFpgaPass : public ScriptPass
         log("        output file is omitted if this parameter is not specified.\n");
 	log("\n");
 
+        log("    -wait\n");
+        log("        wait after each 'stat' report for user to touch <enter> key. Help for \n");
+        log("        flow analysis/debug.\n");
+        log("\n");
+
 	log("The following Yosys commands are executed underneath by 'synth_fpga' :\n");
 
 	help_script();
@@ -254,7 +264,9 @@ struct SynthFpgaPass : public ScriptPass
 
 	part_name = "z1000";
 
-	flatten = true;
+	no_flatten = false;
+
+	wait = false;
 
 	dff_enable = true;
 	dff_async_set = true;
@@ -272,6 +284,8 @@ struct SynthFpgaPass : public ScriptPass
 	string run_from, run_to;
 	clear_flags();
 
+	G_design = design;
+
 	size_t argidx;
 	for (argidx = 1; argidx < args.size(); argidx++)
 	{
@@ -283,6 +297,10 @@ struct SynthFpgaPass : public ScriptPass
 			opt = args[++argidx];
 			continue;
 		}
+	        if (args[argidx] == "-no_flatten") {
+                        no_flatten = true;
+                        continue;
+                }
 		if (args[argidx] == "-partname" && argidx+1 < args.size()) {
 			part_name = args[++argidx];
 			continue;
@@ -314,6 +332,13 @@ struct SynthFpgaPass : public ScriptPass
                 }
 	        if (args[argidx] == "-no_dff_async_reset") {
                         dff_async_reset = false;
+                        continue;
+                }
+
+		// for debug, flow analysis
+		//
+	        if (args[argidx] == "-wait") {
+                        wait = true;
                         continue;
                 }
 
@@ -372,7 +397,22 @@ struct SynthFpgaPass : public ScriptPass
     run(stringf("hierarchy -check %s", help_mode ? "-top <top>" : top_opt.c_str()));
 
     run("proc");
+
+    run("design -save original");
     run("flatten");
+    log("\n# ------------------------ \n");
+    log("#  Design raw statistics  \n");
+    log("# ------------------------ \n");
+    run("stat");
+    run("design -load original");
+
+    if (wait) {
+      getchar();
+    }
+
+    if (!no_flatten) {
+      run("flatten");
+    }
 
     // Note there are two possibilities for how macro mapping might be done:
     // using the extract command (to pattern match user RTL against
@@ -420,6 +460,10 @@ struct SynthFpgaPass : public ScriptPass
     // Extra line added versus 'sc_synth_fpga.tcl' tcl script version
     //
     run("stat");
+
+    if (wait) {
+      getchar();
+    }
 
     // Here is a remaining customization pass for DSP tech mapping
 
@@ -502,6 +546,10 @@ struct SynthFpgaPass : public ScriptPass
     // Extra line added versus 'sc_synth_fpga.tcl' tcl script version
     //
     run("stat");
+
+    if (wait) {
+      getchar();
+    }
 
     opt_and_map_comb_logic();
 
