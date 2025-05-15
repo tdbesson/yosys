@@ -35,7 +35,7 @@ struct SynthFpgaPass : public ScriptPass
   RTLIL::Design *G_design; 
   string top_opt, verilog_file, part_name, opt;
   bool no_flatten, dff_enable, dff_async_set, dff_async_reset;
-  bool obs_clean, wait;
+  bool obs_clean, wait, show_path;
   string sc_syn_lut_size;
 
   // Methods
@@ -246,6 +246,10 @@ struct SynthFpgaPass : public ScriptPass
         log("        output file is omitted if this parameter is not specified.\n");
 	log("\n");
 
+        log("    -show_path\n");
+        log("        Show longest paths.\n");
+        log("\n");
+
         log("    -wait\n");
         log("        wait after each 'stat' report for user to touch <enter> key. Help for \n");
         log("        flow analysis/debug.\n");
@@ -265,6 +269,7 @@ struct SynthFpgaPass : public ScriptPass
 	part_name = "z1000";
 
 	no_flatten = false;
+	show_path = false;
 
 	wait = false;
 
@@ -335,6 +340,11 @@ struct SynthFpgaPass : public ScriptPass
                         continue;
                 }
 
+	        if (args[argidx] == "-show_path") {
+                        show_path = true;
+                        continue;
+                }
+
 		// for debug, flow analysis
 		//
 	        if (args[argidx] == "-wait") {
@@ -375,7 +385,8 @@ struct SynthFpgaPass : public ScriptPass
     auto startTime = std::chrono::high_resolution_clock::now();
 
     log("\nPLATYPUS flow using 'synth_fpga' Yosys plugin command\n");
-    log("Version : %s\n", SYNTH_FPGA_VERSION);
+
+    log("'Zero Asic' FPGA Synthesis Version : %s\n", SYNTH_FPGA_VERSION);
 
 #if 0
     # Pre-processing step:  if DSPs instance are hard-coded into
@@ -398,6 +409,9 @@ struct SynthFpgaPass : public ScriptPass
 
     run("proc");
 
+    // Print stat when design is flatened. We flatened a copy, stat the copy
+    // and get back to the original hierarchical design.
+    //
     run("design -save original");
     run("flatten");
     log("\n# ------------------------ \n");
@@ -579,9 +593,15 @@ struct SynthFpgaPass : public ScriptPass
 
     float totalTime = elapsed.count() * 1e-9;
 
-    log("   FPGA Synthesis Version : %s\n", SYNTH_FPGA_VERSION);
+    log("   'Zero Asic' FPGA Synthesis Version : %s\n", SYNTH_FPGA_VERSION);
     log("\n");
     log("   Total Synthesis Run Time = %.1f sec.\n", totalTime);
+
+    // Show longest path in 'delay' mode
+    //
+    if (show_path) {
+      run("path");
+    }
 
   } // end script()
 

@@ -1,0 +1,166 @@
+#include "kernel/yosys.h"
+#include "kernel/celltypes.h"
+#include "kernel/sigtools.h"
+
+USING_YOSYS_NAMESPACE
+PRIVATE_NAMESPACE_BEGIN
+
+struct PathWorker
+{
+	RTLIL::Design *design;
+	RTLIL::Module *module;
+	SigMap sigmap;
+
+	dict<SigBit, tuple<int, SigBit, Cell*>> bits;
+	dict<SigBit, dict<SigBit, Cell*>> bit2bits;
+	dict<SigBit, tuple<SigBit, Cell*>> bit2ff;
+
+	int maxlvl;
+	SigBit maxbit;
+	pool<SigBit> busy;
+
+	PathWorker(RTLIL::Module *module, bool noff) : design(module->design), module(module), sigmap(module)
+	{
+		CellTypes ff_celltypes;
+
+		if (noff) {
+			ff_celltypes.setup_internals_mem();
+			ff_celltypes.setup_stdcells_mem();
+		}
+
+		for (auto wire : module->selected_wires())
+			for (auto bit : sigmap(wire))
+				bits[bit] = tuple<int, SigBit, Cell*>(-1, State::Sx, nullptr);
+
+		for (auto cell : module->selected_cells())
+		{
+			pool<SigBit> src_bits, dst_bits;
+
+			for (auto &conn : cell->connections())
+				for (auto bit : sigmap(conn.second)) {
+					if (cell->input(conn.first))
+						src_bits.insert(bit);
+					if (cell->output(conn.first))
+						dst_bits.insert(bit);
+				}
+
+			if (noff && ff_celltypes.cell_known(cell->type)) {
+				for (auto s : src_bits)
+					for (auto d : dst_bits) {
+						bit2ff[s] = tuple<SigBit, Cell*>(d, cell);
+						break;
+					}
+				continue;
+			}
+
+			for (auto s : src_bits)
+				for (auto d : dst_bits)
+					bit2bits[s][d] = cell;
+		}
+
+		maxlvl = -1;
+		maxbit = State::Sx;
+	}
+
+	void runner(SigBit bit, int level, SigBit from, Cell *via)
+	{
+		auto &bitinfo = bits.at(bit);
+
+		if (get<0>(bitinfo) >= level)
+			return;
+
+		if (busy.count(bit) > 0) {
+			log_warning("Detected loop at %s in %s\n", log_signal(bit), log_id(module));
+			return;
+		}
+
+		busy.insert(bit);
+		get<0>(bitinfo) = level;
+		get<1>(bitinfo) = from;
+		get<2>(bitinfo) = via;
+
+		if (level > maxlvl) {
+			maxlvl = level;
+			maxbit = bit;
+		}
+
+		if (bit2bits.count(bit)) {
+			for (auto &it : bit2bits.at(bit))
+				runner(it.first, level+1, bit, it.second);
+		}
+
+		busy.erase(bit);
+	}
+
+	void printpath(SigBit bit)
+	{
+		auto &bitinfo = bits.at(bit);
+		if (get<2>(bitinfo)) {
+			printpath(get<1>(bitinfo));
+			log("%5d: %s (via %s)\n", get<0>(bitinfo), log_signal(bit), log_id(get<2>(bitinfo)));
+		} else {
+			log("%5d: %s\n", get<0>(bitinfo), log_signal(bit));
+		}
+	}
+
+	void run()
+	{
+		for (auto &it : bits)
+			if (get<0>(it.second) < 0)
+				runner(it.first, 0, State::Sx, nullptr);
+
+		log("\n");
+		log("Longest topological path in %s (length=%d):\n", log_id(module), maxlvl);
+
+		if (maxlvl >= 0)
+			printpath(maxbit);
+
+		if (bit2ff.count(maxbit))
+			log("%5s: %s (via %s)\n", "ff", log_signal(get<0>(bit2ff.at(maxbit))), log_id(get<1>(bit2ff.at(maxbit))));
+	}
+};
+
+struct PathPass : public Pass {
+	PathPass() : Pass("path", "print longest topological path") { }
+	void help() override
+	{
+		//   |---v---|---v---|---v---|---v---|---v---|---v---|---v---|---v---|---v---|---v---|
+		log("\n");
+		log("    path [options] [selection]\n");
+		log("\n");
+		log("This command prints the longest topological path in the design. (Only considers\n");
+		log("paths within a single module, so the design must be flattened.)\n");
+		log("\n");
+		log("    -noff\n");
+		log("        automatically exclude FF cell types\n");
+		log("\n");
+	}
+	void execute(std::vector<std::string> args, RTLIL::Design *design) override
+	{
+		bool noff = false;
+
+		log_header(design, "Executing PATH pass (find longest path).\n");
+
+		size_t argidx;
+		for (argidx = 1; argidx < args.size(); argidx++) {
+			if (args[argidx] == "-noff") {
+				noff = true;
+				continue;
+			}
+			break;
+		}
+
+		extra_args(args, argidx, design);
+
+		for (Module *module : design->selected_modules())
+		{
+			if (module->has_processes_warn())
+				continue;
+
+			PathWorker worker(module, noff);
+			worker.run();
+		}
+	}
+} PathPass;
+
+PRIVATE_NAMESPACE_END
