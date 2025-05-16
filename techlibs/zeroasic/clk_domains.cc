@@ -6,7 +6,7 @@ USING_YOSYS_NAMESPACE
 PRIVATE_NAMESPACE_BEGIN
 
 static bool noff = false;
-static bool silent = false;
+static bool summary = false;
 
 struct MaxLvlWorker
 {
@@ -114,7 +114,9 @@ struct MaxLvlWorker
 
 		design->scratchpad_set_int("za_max_level", maxlvl);
 
-		if (!silent) {
+		if (summary) {
+		  log("Max logic level = %d\n", maxlvl);
+		} else {
 		  log("\n");
 		  log("Max logic level in %s (length=%d):\n", log_id(module), maxlvl);
 
@@ -142,8 +144,8 @@ struct MaxLvlPass : public Pass {
 		log("        automatically exclude FF cell types\n");
 		log("\n");
 
-		log("    -silent\n");
-		log("        stay silent\n");
+		log("    -summary\n");
+		log("        just print max level number.\n");
 		log("\n");
 	}
 	void execute(std::vector<std::string> args, RTLIL::Design *design) override
@@ -156,8 +158,8 @@ struct MaxLvlPass : public Pass {
 				noff = true;
 				continue;
 			}
-			if (args[argidx] == "-silent") {
-				silent = true;
+			if (args[argidx] == "-summary") {
+				summary = true;
 				continue;
 			}
 			break;

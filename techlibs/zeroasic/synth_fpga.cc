@@ -100,7 +100,7 @@ struct SynthFpgaPass : public ScriptPass
      // call 'max_level' command if not called yet
      //
      if (!show_max_level) {
-         run("max_level -silent"); // -> store 'maxlvl' in scratchpad with 'za_max_level'
+         run("max_level -summary"); // -> store 'maxlvl' in scratchpad with 'za_max_level'
 
 	 maxlvl = G_design->scratchpad_get_int("za_max_level", 0);
      }
