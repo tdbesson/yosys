@@ -704,7 +704,7 @@ struct SynthFpgaPass : public ScriptPass
     auto endTime = std::chrono::high_resolution_clock::now();
     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);
 
-    float totalTime = elapsed.count() * 1e-9;
+    float totalTime = 1 + elapsed.count() * 1e-9;
 
     log("   'Zero Asic' FPGA Synthesis Version : %s\n", SYNTH_FPGA_VERSION);
     log("\n");
