@@ -1,0 +1,10 @@
+time
+&get -n -m; &st; &if -K 4; &save; &load; &ps; time
+
+&sopb -C 5; &sopb -C 5; &sopb -C 5; &sopb -C 5; &sopb -C 5; &sopb -C 5; &sopb -C 5; &if -K 4 -a; &save; &load; &ps; time
+
+&st; &if -K 4; &save; &sopb -C 5; &sopb -C 5; &sopb -C 5; &sopb -C 5; &sopb -C 5; &sopb -C 5; &sopb -C 5; &if -K 4 -a; &save; &load; &ps; time
+
+&st; &lf -K 4 -e; &satlut -d -N 31 ; &dch -C 600; &lf -K 4 -e; &mfs -W 2 -D 15 -M 600 ; &satlut -d -N 31 ; &save; &load; &ps; time
+
+&mfs -W 2 -D 15 -C 600 ; &satlut -N 15 -d ; &put; lutpack -S 1; &get -n -m; &save; &load; &ps -s; &put; time

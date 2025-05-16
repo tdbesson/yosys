@@ -5,7 +5,10 @@
 USING_YOSYS_NAMESPACE
 PRIVATE_NAMESPACE_BEGIN
 
-struct PathWorker
+static bool noff = false;
+static bool silent = false;
+
+struct MaxLvlWorker
 {
 	RTLIL::Design *design;
 	RTLIL::Module *module;
@@ -19,7 +22,7 @@ struct PathWorker
 	SigBit maxbit;
 	pool<SigBit> busy;
 
-	PathWorker(RTLIL::Module *module, bool noff) : design(module->design), module(module), sigmap(module)
+	MaxLvlWorker(RTLIL::Module *module) : design(module->design), module(module), sigmap(module)
 	{
 		CellTypes ff_celltypes;
 
@@ -109,42 +112,52 @@ struct PathWorker
 			if (get<0>(it.second) < 0)
 				runner(it.first, 0, State::Sx, nullptr);
 
-		log("\n");
-		log("Longest topological path in %s (length=%d):\n", log_id(module), maxlvl);
+		design->scratchpad_set_int("za_max_level", maxlvl);
 
-		if (maxlvl >= 0)
-			printpath(maxbit);
+		if (!silent) {
+		  log("\n");
+		  log("Max logic level in %s (length=%d):\n", log_id(module), maxlvl);
 
-		if (bit2ff.count(maxbit))
+		  if (maxlvl >= 0)
+			  printpath(maxbit);
+
+		  if (bit2ff.count(maxbit))
 			log("%5s: %s (via %s)\n", "ff", log_signal(get<0>(bit2ff.at(maxbit))), log_id(get<1>(bit2ff.at(maxbit))));
+		}
 	}
 };
 
-struct PathPass : public Pass {
-	PathPass() : Pass("path", "print longest topological path") { }
+struct MaxLvlPass : public Pass {
+	MaxLvlPass() : Pass("max_level", "print max logic level") { }
 	void help() override
 	{
 		//   |---v---|---v---|---v---|---v---|---v---|---v---|---v---|---v---|---v---|---v---|
 		log("\n");
-		log("    path [options] [selection]\n");
+		log("    max_level [options] [selection]\n");
 		log("\n");
-		log("This command prints the longest topological path in the design. (Only considers\n");
+		log("This command prints the max logic levelin the design. (Only considers\n");
 		log("paths within a single module, so the design must be flattened.)\n");
 		log("\n");
 		log("    -noff\n");
 		log("        automatically exclude FF cell types\n");
 		log("\n");
+
+		log("    -silent\n");
+		log("        stay silent\n");
+		log("\n");
 	}
 	void execute(std::vector<std::string> args, RTLIL::Design *design) override
 	{
-		bool noff = false;
-
-		log_header(design, "Executing PATH pass (find longest path).\n");
+		log_header(design, "Executing 'max_level' command (find max logic level).\n");
 
 		size_t argidx;
 		for (argidx = 1; argidx < args.size(); argidx++) {
 			if (args[argidx] == "-noff") {
 				noff = true;
+				continue;
+			}
+			if (args[argidx] == "-silent") {
+				silent = true;
 				continue;
 			}
 			break;
@@ -157,10 +170,10 @@ struct PathPass : public Pass {
 			if (module->has_processes_warn())
 				continue;
 
-			PathWorker worker(module, noff);
+			MaxLvlWorker worker(module);
 			worker.run();
 		}
 	}
-} PathPass;
+} MaxLvlPass;
 
 PRIVATE_NAMESPACE_END

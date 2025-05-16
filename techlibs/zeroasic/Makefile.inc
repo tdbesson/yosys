@@ -21,7 +21,10 @@ $(eval $(call add_share_file,share/zeroasic/opt_scripts,techlibs/zeroasic/opt_sc
 $(eval $(call add_share_file,share/zeroasic/ff_models,techlibs/zeroasic/ff_models/dff.v))
 $(eval $(call add_share_file,share/zeroasic/ff_models,techlibs/zeroasic/ff_models/dffe.v))
 $(eval $(call add_share_file,share/zeroasic/ff_models,techlibs/zeroasic/ff_models/dffr.v))
+$(eval $(call add_share_file,share/zeroasic/ff_models,techlibs/zeroasic/ff_models/dffs.v))
 $(eval $(call add_share_file,share/zeroasic/ff_models,techlibs/zeroasic/ff_models/dffer.v))
+$(eval $(call add_share_file,share/zeroasic/ff_models,techlibs/zeroasic/ff_models/dffes.v))
+$(eval $(call add_share_file,share/zeroasic/ff_models,techlibs/zeroasic/ff_models/dffers.v))
 
 
 

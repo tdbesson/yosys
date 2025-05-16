@@ -32,15 +32,113 @@ struct SynthFpgaPass : public ScriptPass
 {
   // Global data
   //
-  RTLIL::Design *G_design; 
+  RTLIL::Design *G_design = NULL; 
   string top_opt, verilog_file, part_name, opt;
   bool no_flatten, dff_enable, dff_async_set, dff_async_reset;
-  bool obs_clean, wait, show_path;
+  bool obs_clean, wait, show_max_level, csv;
   string sc_syn_lut_size;
 
   // Methods
   //
   SynthFpgaPass() : ScriptPass("synth_fpga", "Zero Asic FPGA synthesis flow") { }
+
+  // -------------------------
+  // getNumberOfLuts
+  // -------------------------
+  int getNumberOfLuts() {
+
+     int nb = 0;
+
+     for (auto cell : G_design->top_module()->cells()) {
+         if (cell->type.in(ID($lut))) {
+           nb++;
+         }
+     }
+
+     return nb;
+  }
+
+  // -------------------------
+  // getNumberOfDffs
+  // -------------------------
+  int getNumberOfDffs() {
+
+     int nb = 0;
+
+     for (auto cell : G_design->top_module()->cells()) {
+         if (cell->type.in(ID(dff), ID(dffe), ID(dffr), ID(dffer), ID(dffs), ID(dffes), ID(dffers))) {
+           nb++;
+         }
+     }
+
+     return nb;
+  }
+
+  // -------------------------
+  // dump_csv_file 
+  // -------------------------
+  void dump_csv_file(string fileName, int runTime)
+  {
+     // -----
+     // Get all the stats 
+     //
+     Module* topModule = G_design->top_module();
+
+     if (!topModule) {
+       log_warning("Design seems empty !\n");
+       return;
+     }
+
+     string topName = log_id(topModule->name);
+
+     int nbLuts = getNumberOfLuts();
+
+     int nbDffs = getNumberOfDffs();
+
+     int maxlvl = -1;
+
+     // call 'max_level' command if not called yet
+     //
+     if (!show_max_level) {
+         run("max_level -silent"); // -> store 'maxlvl' in scratchpad with 'za_max_level'
+
+	 maxlvl = G_design->scratchpad_get_int("za_max_level", 0);
+     }
+
+     // -----
+     // Open the csv file and dump the stats.
+     //
+     std::ofstream csv_file(fileName);
+
+     csv_file << topName + ",";
+     csv_file << std::to_string(nbLuts) + ",";
+     csv_file << std::to_string(nbDffs) + ",";
+     csv_file << std::to_string(maxlvl) + ",";
+     csv_file << std::to_string(runTime);
+     csv_file << std::endl;
+
+     csv_file.close();
+
+     log("\n   Dumped file %s\n", fileName.c_str());
+  }
+
+  // -------------------------
+  // replace_dff_models 
+  // -------------------------
+  // Read ZA Dff models and replace eventually them in the current design. This
+  // is usefull in the resynthesis case when we want to resynthesize a post
+  // synthesis netlist using DFF ZA cells.
+  //
+  void replace_dff_models()
+  {
+     run("read_verilog +/zeroasic/ff_models/dff.v");
+     run("read_verilog +/zeroasic/ff_models/dffe.v");
+     run("read_verilog +/zeroasic/ff_models/dffr.v");
+     run("read_verilog +/zeroasic/ff_models/dffs.v");
+     run("read_verilog +/zeroasic/ff_models/dffer.v");
+     run("read_verilog +/zeroasic/ff_models/dffes.v");
+     run("read_verilog +/zeroasic/ff_models/dffers.v");
+  }
 
   // -------------------------
   // clean_design 
@@ -246,8 +344,12 @@ struct SynthFpgaPass : public ScriptPass
         log("        output file is omitted if this parameter is not specified.\n");
 	log("\n");
 
-        log("    -show_path\n");
+        log("    -show_max_level\n");
         log("        Show longest paths.\n");
+        log("\n");
+
+        log("    -csv\n");
+        log("        Dump a 'stat.csv' file.\n");
         log("\n");
 
         log("    -wait\n");
@@ -269,7 +371,8 @@ struct SynthFpgaPass : public ScriptPass
 	part_name = "z1000";
 
 	no_flatten = false;
-	show_path = false;
+	show_max_level = false;
+	csv = false;
 
 	wait = false;
 
@@ -340,8 +443,13 @@ struct SynthFpgaPass : public ScriptPass
                         continue;
                 }
 
-	        if (args[argidx] == "-show_path") {
-                        show_path = true;
+	        if (args[argidx] == "-show_max_level") {
+                        show_max_level = true;
+                        continue;
+                }
+
+	        if (args[argidx] == "-csv") {
+                        csv = true;
                         continue;
                 }
 
@@ -352,6 +460,7 @@ struct SynthFpgaPass : public ScriptPass
                         continue;
                 }
 
+		log_cmd_error("Unknowm option : %s\n", (args[argidx]).c_str());
 	}
 	extra_args(args, argidx, design);
 
@@ -388,13 +497,11 @@ struct SynthFpgaPass : public ScriptPass
 
     log("'Zero Asic' FPGA Synthesis Version : %s\n", SYNTH_FPGA_VERSION);
 
-    // Read basic models for resynthesis purpose
+    // Eventually replace 'dff' ZA models in order to perform 
+    // resynthesis.
     //
-    run("read_verilog +/zeroasic/ff_models/dff.v");
-    run("read_verilog +/zeroasic/ff_models/dffe.v");
-    run("read_verilog +/zeroasic/ff_models/dffr.v");
-    run("read_verilog +/zeroasic/ff_models/dffer.v");
-    run("hierarchy -check");
+    replace_dff_models();
+   
 
 #if 0
     # Pre-processing step:  if DSPs instance are hard-coded into
@@ -414,6 +521,13 @@ struct SynthFpgaPass : public ScriptPass
     // Extra line added versus 'sc_synth_fpga.tcl' tcl script version
     //
     run(stringf("hierarchy -check %s", help_mode ? "-top <top>" : top_opt.c_str()));
+
+    Module* topModule = G_design->top_module();
+
+    if (!topModule) {
+       log_warning("Design seems empty !\n");
+       return;
+    }
 
     run("proc");
 
@@ -598,8 +712,12 @@ struct SynthFpgaPass : public ScriptPass
 
     // Show longest path in 'delay' mode
     //
-    if (show_path) {
-      run("path");
+    if (show_max_level) {
+      run("max_level"); // -> store 'maxlvl' in scratchpad with 'za_max_level'
+    }
+
+    if (csv) {
+       dump_csv_file("stat.csv", (int)totalTime);
     }
 
   } // end script()
