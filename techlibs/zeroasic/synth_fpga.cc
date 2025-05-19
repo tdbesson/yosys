@@ -500,7 +500,7 @@ struct SynthFpgaPass : public ScriptPass
     // Eventually replace 'dff' ZA models in order to perform 
     // resynthesis.
     //
-    replace_dff_models();
+    //replace_dff_models();
    
 
 #if 0
@@ -658,6 +658,7 @@ struct SynthFpgaPass : public ScriptPass
 
     // original TCL call : legalize_flops $sc_syn_feature_set
     //
+    run("stat");
     legalize_flops (); // C++ version of TCL call
 
 #if 0
@@ -706,6 +707,8 @@ struct SynthFpgaPass : public ScriptPass
 
     float totalTime = 1 + elapsed.count() * 1e-9;
 
+    log("   PartName : %s\n", part_name.c_str());
+    log("\n");
     log("   'Zero Asic' FPGA Synthesis Version : %s\n", SYNTH_FPGA_VERSION);
     log("\n");
     log("   Total Synthesis Run Time = %.1f sec.\n", totalTime);
