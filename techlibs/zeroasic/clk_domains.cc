@@ -115,7 +115,8 @@ struct MaxLvlWorker
 		design->scratchpad_set_int("za_max_level", maxlvl);
 
 		if (summary) {
-		  log("Max logic level = %d\n", maxlvl);
+		  log("\n");
+		  log("   Max logic level = %d\n", maxlvl);
 		} else {
 		  log("\n");
 		  log("Max logic level in %s (length=%d):\n", log_id(module), maxlvl);
