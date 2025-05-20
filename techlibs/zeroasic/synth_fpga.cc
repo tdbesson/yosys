@@ -131,13 +131,13 @@ struct SynthFpgaPass : public ScriptPass
   //
   void replace_dff_models()
   {
-     run("read_verilog +/zeroasic/ff_models/dff.v");
-     run("read_verilog +/zeroasic/ff_models/dffe.v");
-     run("read_verilog +/zeroasic/ff_models/dffr.v");
-     run("read_verilog +/zeroasic/ff_models/dffs.v");
-     run("read_verilog +/zeroasic/ff_models/dffer.v");
-     run("read_verilog +/zeroasic/ff_models/dffes.v");
-     run("read_verilog +/zeroasic/ff_models/dffers.v");
+     run("read_verilog +/zeroasic/FF_MODELS/dff.v");
+     run("read_verilog +/zeroasic/FF_MODELS/dffe.v");
+     run("read_verilog +/zeroasic/FF_MODELS/dffr.v");
+     run("read_verilog +/zeroasic/FF_MODELS/dffs.v");
+     run("read_verilog +/zeroasic/FF_MODELS/dffer.v");
+     run("read_verilog +/zeroasic/FF_MODELS/dffes.v");
+     run("read_verilog +/zeroasic/FF_MODELS/dffers.v");
   }
 
   // -------------------------
@@ -153,9 +153,9 @@ struct SynthFpgaPass : public ScriptPass
   }
 
   // -------------------------
-  // opt_and_map_comb_logic 
+  // abc_synthesize 
   // -------------------------
-  void opt_and_map_comb_logic()
+  void abc_synthesize()
   {
 
     if (opt == "default") {
@@ -163,11 +163,11 @@ struct SynthFpgaPass : public ScriptPass
       log_header(G_design, "Performing SCRIPT-BASED DEFAULT optimization\n");
 
       if (sc_syn_lut_size == "4") {
-        run("abc -script +/zeroasic/opt_scripts/default_lut4.scr");
+        run("abc -script +/zeroasic/ABC_SCRIPTS/default_lut4.scr");
         return;
       }
 
-      run("abc -script +/zeroasic/opt_scripts/default_lut6.scr");
+      run("abc -script +/zeroasic/ABC_SCRIPTS/default_lut6.scr");
       return;
     }
 
@@ -178,11 +178,11 @@ struct SynthFpgaPass : public ScriptPass
       log_header(G_design, "Performing Min-LUT optimization\n");
 
       if (sc_syn_lut_size == "4") {
-        run("abc -script +/zeroasic/opt_scripts/area_lut4_high_effort.scr");
+        run("abc -script +/zeroasic/ABC_SCRIPTS/area_lut4_high_effort.scr");
         return;
       }
 
-      run("abc -script +/zeroasic/opt_scripts/area_lut6x2.scr");
+      run("abc -script +/zeroasic/ABC_SCRIPTS/area_lut6x2.scr");
 
       return;
     }
@@ -194,11 +194,11 @@ struct SynthFpgaPass : public ScriptPass
       log_header(G_design, "Performing Min-LUT-Level optimization\n");
 
       if (sc_syn_lut_size == "4") {
-        run("abc -dff -script +/zeroasic/opt_scripts/delay_lut4_high_effort.scr");
+        run("abc -dff -script +/zeroasic/ABC_SCRIPTS/delay_lut4_high_effort.scr");
         return;
       }
 
-      run("abc -script +/zeroasic/opt_scripts/delay_lut6x2.scr");
+      run("abc -script +/zeroasic/ABC_SCRIPTS/delay_lut6x2.scr");
 
       return;
     }
@@ -368,7 +368,7 @@ struct SynthFpgaPass : public ScriptPass
 	top_opt = "-auto-top";
 	opt = "";
 
-	part_name = "z1000";
+	part_name = "Z1000";
 
 	no_flatten = false;
 	show_max_level = false;
@@ -688,7 +688,9 @@ struct SynthFpgaPass : public ScriptPass
       getchar();
     }
 
-    opt_and_map_comb_logic();
+    // Optimize and map through ABC the combinational logic part of the design.
+    //
+    abc_synthesize();
 
     run("setundef -zero");
     run("clean -purge");

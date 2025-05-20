@@ -76,13 +76,13 @@ struct LoadModelsPass : public ScriptPass
   //
   void script() override
   {
-     run("read_verilog +/zeroasic/ff_models/dff.v");
-     run("read_verilog +/zeroasic/ff_models/dffe.v");
-     run("read_verilog +/zeroasic/ff_models/dffr.v");
-     run("read_verilog +/zeroasic/ff_models/dffs.v");
-     run("read_verilog +/zeroasic/ff_models/dffer.v");
-     run("read_verilog +/zeroasic/ff_models/dffes.v");
-     run("read_verilog +/zeroasic/ff_models/dffers.v");
+     run("read_verilog +/zeroasic/FF_MODELS/dff.v");
+     run("read_verilog +/zeroasic/FF_MODELS/dffe.v");
+     run("read_verilog +/zeroasic/FF_MODELS/dffr.v");
+     run("read_verilog +/zeroasic/FF_MODELS/dffs.v");
+     run("read_verilog +/zeroasic/FF_MODELS/dffer.v");
+     run("read_verilog +/zeroasic/FF_MODELS/dffes.v");
+     run("read_verilog +/zeroasic/FF_MODELS/dffers.v");
 
   } // end script()
 
