@@ -34,6 +34,7 @@ struct SynthFpgaPass : public ScriptPass
   //
   RTLIL::Design *G_design = NULL; 
   string top_opt, verilog_file, part_name, opt;
+  string abc_script_version;
   bool no_flatten, dff_enable, dff_async_set, dff_async_reset;
   bool obs_clean, wait, show_max_level, csv;
   string sc_syn_lut_size;
@@ -157,56 +158,21 @@ struct SynthFpgaPass : public ScriptPass
   // -------------------------
   void abc_synthesize()
   {
-
-    if (opt == "default") {
-
-      log_header(G_design, "Performing SCRIPT-BASED DEFAULT optimization\n");
-
-      if (sc_syn_lut_size == "4") {
-        run("abc -script +/zeroasic/ABC_SCRIPTS/default_lut4.scr");
-        return;
-      }
-
-      run("abc -script +/zeroasic/ABC_SCRIPTS/default_lut6.scr");
-      return;
+    if (opt == "") {
+       log_header(G_design, "Performing OFFICIAL PLATYPUS optimization\n");
+       run("abc -lut " + sc_syn_lut_size);
+       return;
     }
 
-    // AREA mode
+    // Otherwise specific ABC script based flow
     //
-    if (opt == "area") {
+    string abc_script = "+/zeroasic/ABC_SCRIPTS/LUT" + sc_syn_lut_size + "/" +
+	                abc_script_version + "/" + opt + "_lut" + sc_syn_lut_size +
+			".scr";
 
-      log_header(G_design, "Performing Min-LUT optimization\n");
+    log_header(G_design, "calling script in %s mode\n", opt.c_str());
 
-      if (sc_syn_lut_size == "4") {
-        run("abc -script +/zeroasic/ABC_SCRIPTS/area_lut4_high_effort.scr");
-        return;
-      }
-
-      run("abc -script +/zeroasic/ABC_SCRIPTS/area_lut6x2.scr");
-
-      return;
-    }
-
-    // DELAY mode
-    //
-    if (opt == "delay") {
-
-      log_header(G_design, "Performing Min-LUT-Level optimization\n");
-
-      if (sc_syn_lut_size == "4") {
-        run("abc -dff -script +/zeroasic/ABC_SCRIPTS/delay_lut4_high_effort.scr");
-        return;
-      }
-
-      run("abc -script +/zeroasic/ABC_SCRIPTS/delay_lut6x2.scr");
-
-      return;
-    }
-
-    // default
-    //
-    log_header(G_design, "Performing OFFICIAL DEFAULT optimization\n");
-    run("abc -lut " + sc_syn_lut_size);
+    run("abc -script " + abc_script);
   }
 
   // -------------------------
@@ -384,6 +350,8 @@ struct SynthFpgaPass : public ScriptPass
 
 	verilog_file = "";
 
+	abc_script_version = "V1";
+
 	sc_syn_lut_size = "4";
   }
 
@@ -415,6 +383,10 @@ struct SynthFpgaPass : public ScriptPass
 		}
 	        if (args[argidx] == "-lut_size" && argidx+1 < args.size()) {
                         sc_syn_lut_size = args[++argidx];
+                        continue;
+                }
+	        if (args[argidx] == "-abc_script_version" && argidx+1 < args.size()) {
+                        abc_script_version = args[++argidx];
                         continue;
                 }
 	        if (args[argidx] == "-obs_clean") {
