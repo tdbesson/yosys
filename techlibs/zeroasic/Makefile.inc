@@ -1,5 +1,5 @@
 
-OBJS += techlibs/zeroasic/synth_fpga.o techlibs/zeroasic/obs_clean.o techlibs/zeroasic/clk_domains.o techlibs/zeroasic/load_models.o
+OBJS += techlibs/zeroasic/synth_fpga.o techlibs/zeroasic/obs_clean.o techlibs/zeroasic/clk_domains.o techlibs/zeroasic/load_models.o techlibs/zeroasic/report_stat.o
 
 $(eval $(call add_share_file,share/zeroasic/Z1000/techlib,techlibs/zeroasic/Z1000/techlib/bram_memory_map_empty.txt))
 $(eval $(call add_share_file,share/zeroasic/Z1000/techlib,techlibs/zeroasic/Z1000/techlib/tech_bram_empty.v))

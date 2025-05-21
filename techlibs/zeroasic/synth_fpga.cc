@@ -67,7 +67,7 @@ struct SynthFpgaPass : public ScriptPass
      int nb = 0;
 
      for (auto cell : G_design->top_module()->cells()) {
-         if (cell->type.in(ID(dff), ID(dffe), ID(dffr), ID(dffer), ID(dffs), ID(dffes), ID(dffers))) {
+         if (cell->type.in(ID(dff), ID(dffe), ID(dffr), ID(dffer), ID(dffs), ID(dffrs), ID(dffes), ID(dffers))) {
            nb++;
          }
      }
@@ -136,6 +136,7 @@ struct SynthFpgaPass : public ScriptPass
      run("read_verilog +/zeroasic/FF_MODELS/dffe.v");
      run("read_verilog +/zeroasic/FF_MODELS/dffr.v");
      run("read_verilog +/zeroasic/FF_MODELS/dffs.v");
+     run("read_verilog +/zeroasic/FF_MODELS/dffrs.v");
      run("read_verilog +/zeroasic/FF_MODELS/dffer.v");
      run("read_verilog +/zeroasic/FF_MODELS/dffes.v");
      run("read_verilog +/zeroasic/FF_MODELS/dffers.v");
