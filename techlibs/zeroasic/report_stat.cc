@@ -22,6 +22,7 @@
 #include "kernel/rtlil.h"
 #include "kernel/log.h"
 #include <chrono>
+#include <iomanip>
 
 #define SYNTH_FPGA_VERSION "1.0"
 
@@ -58,6 +59,12 @@ struct ReportStatPass : public ScriptPass
          if (cell->type.in(ID(LUT1), ID(LUT2), ID(LUT3), ID(LUT4), ID(INV))) {
              nb++;
          }
+	 
+         // Lattice 'Mach xo2' Luts
+         //
+         if (cell->type.in(ID(LUT1), ID(LUT2), ID(LUT3), ID(LUT4))) {
+             nb++;
+         }
      }
 
      return nb;
@@ -83,6 +90,12 @@ struct ReportStatPass : public ScriptPass
         //
         if (cell->type.in(ID(FDCE), ID(FDPE), ID(FDRE), ID(FDRE_1),
                           ID(FDSE))) {
+             nb++;
+        }
+	
+        // Lattice 'Mach ox2' DFFs
+        //
+        if (cell->type.in(ID(TRELLIS_FF))) {
              nb++;
         }
     }
@@ -132,6 +145,46 @@ struct ReportStatPass : public ScriptPass
 
 	log_pop();
   }
+  
+  // ---------------------------------------------------------------------------
+  // getTimeDifference 
+  // ---------------------------------------------------------------------------
+  int getTimeDifference(string& end, string& start)
+  {
+    // Extract time_t value from strings
+    //
+    struct std::tm tm_end = {};
+    std::istringstream ss_end(end);
+    ss_end >> std::get_time(&tm_end, "%T"); // %T for %H:%M:%S format
+    std::time_t end_time = mktime(&tm_end);
+
+    struct std::tm tm_start = {};
+    std::istringstream ss_start(start);
+    ss_start >> std::get_time(&tm_start, "%T"); // %T for %H:%M:%S format
+    std::time_t start_time = mktime(&tm_start);
+
+#if 0
+    // Code to check that extraction worked well
+    //
+    struct tm  datetime_end;
+    char output_end[50];
+    datetime_end = *localtime(&end_time);
+    strftime(output_end, 50, "%T", &datetime_end);
+    log("New end = %s\n", output_end);
+
+    struct tm  datetime_start;
+    char output_start[50];
+    datetime_start = *localtime(&start_time);
+    strftime(output_start, 50, "%T", &datetime_start);
+    log("New start = %s\n", output_start);
+#endif
+
+    // Return time in seconds between 'end' and 'start'
+    //
+    double duration = difftime(end_time, start_time)+1;
+
+    return (int)duration; // round to int
+  }
 
   // ---------------------------------------------------------------------------
   // report_stat 
@@ -161,6 +214,16 @@ struct ReportStatPass : public ScriptPass
 
     maxlvl = G_design->scratchpad_get_int("za_max_level", 0);
 
+    string start = G_design->scratchpad_get_string("time_chrono_start");
+    string end =  G_design->scratchpad_get_string("time_chrono_end");
+
+#if 0
+    log("   Start time = %s\n", start.c_str());
+    log("   End time   = %s\n", end.c_str());
+#endif
+
+    int duration = getTimeDifference(end, start);
+
     // -----
     // Open the csv file and dump the stats.
     //
@@ -170,7 +233,7 @@ struct ReportStatPass : public ScriptPass
     csv_file << std::to_string(nbLuts) + ",";
     csv_file << std::to_string(nbDffs) + ",";
     csv_file << std::to_string(maxlvl) + ",";
-    csv_file << std::to_string(0);
+    csv_file << std::to_string(duration);
     csv_file << std::endl;
 
     csv_file.close();
