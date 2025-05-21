@@ -31,6 +31,7 @@ $(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODEL
 $(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dffe.v))
 $(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dffr.v))
 $(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dffs.v))
+$(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dffrs.v))
 $(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dffer.v))
 $(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dffes.v))
 $(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dffers.v))

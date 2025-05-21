@@ -80,6 +80,7 @@ struct LoadModelsPass : public ScriptPass
      run("read_verilog +/zeroasic/FF_MODELS/dffe.v");
      run("read_verilog +/zeroasic/FF_MODELS/dffr.v");
      run("read_verilog +/zeroasic/FF_MODELS/dffs.v");
+     run("read_verilog +/zeroasic/FF_MODELS/dffrs.v");
      run("read_verilog +/zeroasic/FF_MODELS/dffer.v");
      run("read_verilog +/zeroasic/FF_MODELS/dffes.v");
      run("read_verilog +/zeroasic/FF_MODELS/dffers.v");
