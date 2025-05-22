@@ -143,6 +143,16 @@ struct SynthFpgaPass : public ScriptPass
   }
 
   // -------------------------
+  // may_wait 
+  // -------------------------
+  void may_wait ()
+  {  
+     if (wait) {
+       getchar();
+     }
+  }
+
+  // -------------------------
   // clean_design 
   // -------------------------
   void clean_design()
@@ -453,11 +463,14 @@ struct SynthFpgaPass : public ScriptPass
   // synth_fpga 
   // ---------------------------------------------------------------------------
   //
-  // Version 0.0 (05/13/2025, Thierry): 
+  // VERSION 1.0 (05/13/2025, Thierry): 
+  //
   //        - as a starter, we mimic what is done in : 
   //          '.../siliconcompiler/tools/yosys/sc_synth_fpga.tcl' 
+  //
   //        - we try to handle DFF legalization by taking care of DFF features
   //        support like handling DFF with 'enable', 'async_set', 'async_reset'.
+  //
   //        - other encapsulated code with #if 0 coming from 'sc_synth_fpga.tcl'
   //        needs to be handled in this 'synth_fpga' command.
   //
@@ -477,6 +490,9 @@ struct SynthFpgaPass : public ScriptPass
    
 
 #if 0
+    // TCL scipt version of PLATYPUS
+    //
+
     # Pre-processing step:  if DSPs instance are hard-coded into
     # the users design, we can use a blackbox flow for DSP mapping
     # as follows:
@@ -515,9 +531,7 @@ struct SynthFpgaPass : public ScriptPass
     run("stat");
     run("design -load original");
 
-    if (wait) {
-      getchar();
-    }
+    may_wait();
 
     if (!no_flatten) {
       run("flatten");
@@ -534,7 +548,11 @@ struct SynthFpgaPass : public ScriptPass
     // An extract pass needs to happen prior to other optimizations,
     // otherwise yosys can transform its internal model into something
     // that doesn't match the patterns defined in the extract library
+
 #if 0
+    // TCL scipt version of PLATYPUS
+    //
+    
     if { [sc_cfg_exists fpga $sc_partname file yosys_extractlib] } {
         set sc_syn_extractlibs \
             [sc_cfg_get fpga $sc_partname file yosys_extractlib]
@@ -553,26 +571,24 @@ struct SynthFpgaPass : public ScriptPass
     // flow and the Yosys synth_ice40 flow
     //
     run("opt_expr");
-    clean_design();
+    run("opt_clean");
     run("check");
     run("opt -nodffe -nosdff");
     run("fsm");
     run("opt");
     run("wreduce");
     run("peepopt");
-    clean_design();
+    run("opt_clean");
     run("share");
     run("techmap -map +/cmp2lut.v -D LUT_WIDTH=4");
     run("opt_expr");
-    clean_design();
+    run("opt_clean");
 
     // Extra line added versus 'sc_synth_fpga.tcl' tcl script version
     //
     run("stat");
 
-    if (wait) {
-      getchar();
-    }
+    may_wait();
 
     // Here is a remaining customization pass for DSP tech mapping
 
@@ -580,7 +596,11 @@ struct SynthFpgaPass : public ScriptPass
     // so that we don't convert any math blocks
     // into other primitives
     //
+
 #if 0
+    // TCL scipt version of PLATYPUS
+    //
+
     if { [sc_cfg_exists fpga $sc_partname file yosys_dsp_techmap] } {
         set sc_syn_dsp_library \
             [sc_cfg_get fpga $sc_partname file yosys_dsp_techmap]
@@ -605,6 +625,9 @@ struct SynthFpgaPass : public ScriptPass
     run("techmap -map +/techmap.v");
 
 #if 0
+    // TCL scipt version of PLATYPUS
+    //
+
     set sc_syn_memory_libmap ""
     if { [sc_cfg_exists fpga $sc_partname file yosys_memory_libmap] } {
         set sc_syn_memory_libmap \
@@ -635,6 +658,9 @@ struct SynthFpgaPass : public ScriptPass
     legalize_flops (); // C++ version of TCL call
 
 #if 0
+    // TCL scipt version of PLATYPUS
+    //
+
     if { [sc_cfg_exists fpga $sc_partname file yosys_flop_techmap] } {
         set sc_syn_flop_library \
             [sc_cfg_get fpga $sc_partname file yosys_flop_techmap]
@@ -642,28 +668,40 @@ struct SynthFpgaPass : public ScriptPass
 
         post_techmap
     }
+
 #else
-    // C++ version
+    
+    // C++ Version
     //
-    string sc_syn_flop_library = stringf("+/zeroasic/%s/techlib/tech_flops.v", part_name.c_str());
+    // Map on the DFF of the architecture (partname)
+    //
+    string sc_syn_flop_library = stringf("+/zeroasic/%s/techlib/tech_flops.v", 
+		                         part_name.c_str());
     run("techmap -map " + sc_syn_flop_library);
 #endif
 
     // Perform preliminary buffer insertion before passing to ABC to help reduce
     // the overhead of final buffer insertion downstream
+    //
     run("insbuf");
 
-    // Extra line added versus 'sc_synth_fpga.tcl' tcl script version
-    //
     run("stat");
 
-    if (wait) {
-      getchar();
-    }
+    may_wait();
+
+    clean_design();
+
+    run("stat");
+
+    may_wait();
 
     // Optimize and map through ABC the combinational logic part of the design.
     //
     abc_synthesize();
+
+    run("stat");
+
+    may_wait();
 
     run("setundef -zero");
     run("clean -purge");
@@ -673,8 +711,6 @@ struct SynthFpgaPass : public ScriptPass
        run(stringf("write_verilog -noexpr -nohex -nodec %s", verilog_file.c_str()));
     }
 
-    // Extra line added versus 'sc_synth_fpga.tcl' tcl script version
-    //
     run("stat");
 
     auto endTime = std::chrono::high_resolution_clock::now();
