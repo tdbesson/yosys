@@ -52,18 +52,21 @@ struct ReportStatPass : public ScriptPass
          //
          if (cell->type.in(ID($lut))) {
              nb++;
+	     continue;
          }
 
          // Xilinx 'xc4v' Luts
          //
          if (cell->type.in(ID(LUT1), ID(LUT2), ID(LUT3), ID(LUT4), ID(INV))) {
              nb++;
+	     continue;
          }
 	 
          // Lattice 'Mach xo2' Luts
          //
          if (cell->type.in(ID(LUT1), ID(LUT2), ID(LUT3), ID(LUT4))) {
              nb++;
+	     continue;
          }
      }
 
@@ -84,6 +87,7 @@ struct ReportStatPass : public ScriptPass
         if (cell->type.in(ID(dff), ID(dffe), ID(dffr), ID(dffer),
                           ID(dffs), ID(dffrs), ID(dffes), ID(dffers))) {
              nb++;
+	     continue;
         }
 
         // Xilinx 'xc4v' DFFs
@@ -91,12 +95,14 @@ struct ReportStatPass : public ScriptPass
         if (cell->type.in(ID(FDCE), ID(FDPE), ID(FDRE), ID(FDRE_1),
                           ID(FDSE))) {
              nb++;
+	     continue;
         }
 	
         // Lattice 'Mach ox2' DFFs
         //
         if (cell->type.in(ID(TRELLIS_FF))) {
              nb++;
+	     continue;
         }
     }
 
@@ -237,7 +243,7 @@ struct ReportStatPass : public ScriptPass
 
     // call 'max_level' command if not called yet
     //
-    run("max_level -summary"); // -> store 'maxlvl' in scratchpad with 'za_max_level'
+    run("max_level -noff"); // -> store 'maxlvl' in scratchpad with 'za_max_level'
 
     maxlvl = G_design->scratchpad_get_int("za_max_level", 0);
 

@@ -15,20 +15,64 @@ struct MaxLvlWorker
 	SigMap sigmap;
 
 	dict<SigBit, tuple<int, SigBit, Cell*>> bits;
+
 	dict<SigBit, dict<SigBit, Cell*>> bit2bits;
+
 	dict<SigBit, tuple<SigBit, Cell*>> bit2ff;
 
 	int maxlvl;
 	SigBit maxbit;
 	pool<SigBit> busy;
 
-	MaxLvlWorker(RTLIL::Module *module) : design(module->design), module(module), sigmap(module)
+	void setup_internals_zeroasic_ff_Z1000(CellTypes& ff_celltypes)
+	{
+          // Simply list the DFF cells names is enough as cut points
+	  //
+          ff_celltypes.setup_type(ID(dff), {}, {});
+          ff_celltypes.setup_type(ID(dffe), {}, {});
+          ff_celltypes.setup_type(ID(dffr), {}, {});
+          ff_celltypes.setup_type(ID(dffer), {}, {});
+          ff_celltypes.setup_type(ID(dffs), {}, {});
+          ff_celltypes.setup_type(ID(dffrs), {}, {});
+          ff_celltypes.setup_type(ID(dffes), {}, {});
+          ff_celltypes.setup_type(ID(dffers), {}, {});
+	}
+
+	void setup_internals_xilinx_ff_xc4v(CellTypes& ff_celltypes)
+	{
+          // Simply list the DFF cells names is enough as cut points
+	  //
+          ff_celltypes.setup_type(ID(FDCE), {}, {});
+          ff_celltypes.setup_type(ID(FDPE), {}, {});
+          ff_celltypes.setup_type(ID(FDRE), {}, {});
+          ff_celltypes.setup_type(ID(FDRE_1), {}, {});
+          ff_celltypes.setup_type(ID(FDSE), {}, {});
+	}
+
+	void setup_internals_lattice_ff_xo2(CellTypes& ff_celltypes)
+	{
+          // Simply list the DFF cells names is enough as cut points
+	  //
+          ff_celltypes.setup_type(ID(TRELLIS_FF), {}, {});
+	}
+
+	MaxLvlWorker(RTLIL::Module *module) : design(module->design), module(module), 
+	                                      sigmap(module)
 	{
 		CellTypes ff_celltypes;
 
 		if (noff) {
-			ff_celltypes.setup_internals_mem();
-			ff_celltypes.setup_stdcells_mem();
+
+                   ff_celltypes.setup_internals_mem();
+                   ff_celltypes.setup_stdcells_mem();
+
+		   // Specify technology related DFF cutpoints for -noff option
+		   //
+	           setup_internals_zeroasic_ff_Z1000(ff_celltypes);
+
+	           setup_internals_xilinx_ff_xc4v(ff_celltypes);
+
+	           setup_internals_lattice_ff_xo2(ff_celltypes);
 		}
 
 		for (auto wire : module->selected_wires())
@@ -39,13 +83,15 @@ struct MaxLvlWorker
 		{
 			pool<SigBit> src_bits, dst_bits;
 
-			for (auto &conn : cell->connections())
+			for (auto &conn : cell->connections()) {
+
 				for (auto bit : sigmap(conn.second)) {
 					if (cell->input(conn.first))
 						src_bits.insert(bit);
 					if (cell->output(conn.first))
 						dst_bits.insert(bit);
 				}
+			}
 
 			if (noff && ff_celltypes.cell_known(cell->type)) {
 				for (auto s : src_bits)
@@ -100,7 +146,9 @@ struct MaxLvlWorker
 		auto &bitinfo = bits.at(bit);
 		if (get<2>(bitinfo)) {
 			printpath(get<1>(bitinfo));
-			log("%5d: %s (via %s)\n", get<0>(bitinfo), log_signal(bit), log_id(get<2>(bitinfo)));
+			Cell* cell = get<2>(bitinfo); 
+			log("%5d: %s (via %s)\n", get<0>(bitinfo), log_signal(bit), log_id(cell->type));
+			//log("%5d: %s (via %s)\n", get<0>(bitinfo), log_signal(bit), log_id(get<2>(bitinfo)));
 		} else {
 			log("%5d: %s\n", get<0>(bitinfo), log_signal(bit));
 		}
@@ -124,8 +172,14 @@ struct MaxLvlWorker
 		  if (maxlvl >= 0)
 			  printpath(maxbit);
 
-		  if (bit2ff.count(maxbit))
-			log("%5s: %s (via %s)\n", "ff", log_signal(get<0>(bit2ff.at(maxbit))), log_id(get<1>(bit2ff.at(maxbit))));
+		  if (bit2ff.count(maxbit)) {
+			log("%5s: %s (via %s)\n", "ff",
+                            log_signal(get<0>(bit2ff.at(maxbit))),
+                            log_id(get<1>(bit2ff.at(maxbit))));
+		  }
+
+		  log("\n");
+		  log("   Max logic level = %d\n", maxlvl);
 		}
 	}
 };
@@ -149,9 +203,17 @@ struct MaxLvlPass : public Pass {
 		log("        just print max level number.\n");
 		log("\n");
 	}
+
+        void clear_flags() override
+        {
+	  noff = false;
+	  summary = false;
+	}
+
 	void execute(std::vector<std::string> args, RTLIL::Design *design) override
 	{
 		log_header(design, "Executing 'max_level' command (find max logic level).\n");
+                clear_flags();
 
 		size_t argidx;
 		for (argidx = 1; argidx < args.size(); argidx++) {
