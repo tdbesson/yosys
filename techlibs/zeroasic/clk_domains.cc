@@ -58,6 +58,7 @@ struct MaxLvlWorker
      ff_celltypes.setup_type(ID(FDRE), {}, {});
      ff_celltypes.setup_type(ID(FDRE_1), {}, {});
      ff_celltypes.setup_type(ID(FDSE), {}, {});
+     ff_celltypes.setup_type(ID(LDCE), {}, {});
    }
 
    // ---------------------
@@ -68,6 +69,25 @@ struct MaxLvlWorker
      // Simply list the DFF cells names is enough as cut points
      //
      ff_celltypes.setup_type(ID(TRELLIS_FF), {}, {});
+   }
+   
+   // ---------------------
+   // setup_internals_ice40_ff_hx
+   // ---------------------
+   void setup_internals_ice40_ff_hx(CellTypes& ff_celltypes)
+   {
+     // Simply list the DFF cells names is enough as cut points
+     //
+     ff_celltypes.setup_type(ID(SB_DFF), {}, {});
+     ff_celltypes.setup_type(ID(SB_DFFE), {}, {});
+     ff_celltypes.setup_type(ID(SB_DFFER), {}, {});
+     ff_celltypes.setup_type(ID(SB_DFFESR), {}, {});
+     ff_celltypes.setup_type(ID(SB_DFFESS), {}, {});
+     ff_celltypes.setup_type(ID(SB_DFFN), {}, {});
+     ff_celltypes.setup_type(ID(SB_DFFR), {}, {});
+     ff_celltypes.setup_type(ID(SB_DFFS), {}, {});
+     ff_celltypes.setup_type(ID(SB_DFFSR), {}, {});
+     ff_celltypes.setup_type(ID(SB_DFFES), {}, {});
    }
 
    // ---------------------
@@ -90,6 +110,8 @@ struct MaxLvlWorker
          setup_internals_xilinx_ff_xc4v(ff_celltypes);
 
          setup_internals_lattice_ff_xo2(ff_celltypes);
+
+         setup_internals_ice40_ff_hx(ff_celltypes);
      }
 
      for (auto wire : module->selected_wires()) {

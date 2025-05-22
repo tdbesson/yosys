@@ -68,6 +68,13 @@ struct ReportStatPass : public ScriptPass
              nb++;
 	     continue;
          }
+	 
+         // ice40 'hx' Luts
+         //
+         if (cell->type.in(ID(SB_LUT4))) {
+             nb++;
+	     continue;
+         }
      }
 
      return nb;
@@ -93,7 +100,8 @@ struct ReportStatPass : public ScriptPass
         // Xilinx 'xc4v' DFFs
         //
         if (cell->type.in(ID(FDCE), ID(FDPE), ID(FDRE), ID(FDRE_1),
-                          ID(FDSE))) {
+                          ID(FDSE),
+			  ID(LDCE))) { // LATCH !!!
              nb++;
 	     continue;
         }
@@ -103,6 +111,15 @@ struct ReportStatPass : public ScriptPass
         if (cell->type.in(ID(TRELLIS_FF))) {
              nb++;
 	     continue;
+        }
+	
+        // ice40 'hx' DFFs
+        //
+        if (cell->type.in(ID(SB_DFF), ID(SB_DFFE), ID(SB_DFFER), ID(SB_DFFESR), 
+                          ID(SB_DFFESS), ID(SB_DFFN), ID(SB_DFFR), ID(SB_DFFS), 
+			  ID(SB_DFFSR), ID(SB_DFFES))) {
+            nb++;
+            continue;
         }
     }
 
