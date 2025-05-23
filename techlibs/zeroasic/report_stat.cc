@@ -93,7 +93,7 @@ struct ReportStatPass : public ScriptPass
 	 
          // Quicklogic 'pp3' mux8x0
          //
-         if (cell->type.in(ID(mux4x0))) {
+         if (cell->type.in(ID(mux8x0))) {
              nb += 7;  // equivalent to 7 LUT3 (Mux)
 	     continue;
          }
