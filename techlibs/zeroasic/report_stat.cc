@@ -34,6 +34,7 @@ struct ReportStatPass : public ScriptPass
   // Global data
   //
   RTLIL::Design *G_design = NULL; 
+  string csv_stat_file;
 
   // Methods
   //
@@ -72,6 +73,34 @@ struct ReportStatPass : public ScriptPass
          // ice40 'hx' Luts
          //
          if (cell->type.in(ID(SB_LUT4))) {
+             nb++;
+	     continue;
+         }
+	 
+         // Quicklogic 'pp3' Luts
+         //
+         if (cell->type.in(ID(LUT1), ID(LUT2), ID(LUT3), ID(LUT4))) {
+             nb++;
+	     continue;
+         }
+	 
+         // Quicklogic 'pp3' mux4x0
+         //
+         if (cell->type.in(ID(mux4x0))) {
+             nb += 3;  // equivalent to 3 LUT3 (Mux)
+	     continue;
+         }
+	 
+         // Quicklogic 'pp3' mux8x0
+         //
+         if (cell->type.in(ID(mux4x0))) {
+             nb += 7;  // equivalent to 7 LUT3 (Mux)
+	     continue;
+         }
+	 
+         // Microchip 'polarfire' Luts
+         //
+         if (cell->type.in(ID(CFG1), ID(CFG2), ID(CFG3), ID(CFG4))) {
              nb++;
 	     continue;
          }
@@ -121,6 +150,20 @@ struct ReportStatPass : public ScriptPass
             nb++;
             continue;
         }
+	
+        // Quicklogic 'pp3' DFFs
+        //
+        if (cell->type.in(ID(dffepc))) { 
+            nb++;
+            continue;
+        }
+	
+        // Microchip 'polarfire' DFFs
+        //
+        if (cell->type.in(ID(SLE))) { 
+            nb++;
+            continue;
+        }
     }
 
     return nb;
@@ -135,6 +178,11 @@ struct ReportStatPass : public ScriptPass
 	log("This command reports stat on a flattened netlist. Data are dumped.\n");
 	log("in file 'stat.csv'.\n");
 	log("\n");
+        log("    -csv <file>\n");
+        log("        write design statistics into a CSV file. Default file name\n");
+        log("        is 'stat.csv'.\n");
+	log("\n");
+
 
 	help_script();
 	log("\n");
@@ -142,6 +190,7 @@ struct ReportStatPass : public ScriptPass
 
   void clear_flags() override
   {
+        csv_stat_file = "stat.csv";
   }
 
   void execute(std::vector<std::string> args, RTLIL::Design *design) override
@@ -154,6 +203,10 @@ struct ReportStatPass : public ScriptPass
 	size_t argidx;
 	for (argidx = 1; argidx < args.size(); argidx++)
 	{
+	        if (args[argidx] == "-csv" && argidx+1 < args.size()) {
+                        csv_stat_file = args[++argidx];
+                        continue;
+                }
 	}
 	extra_args(args, argidx, design);
 
@@ -248,8 +301,6 @@ struct ReportStatPass : public ScriptPass
        return;
     }
 
-    string fileName = "stat.csv";
-
     string topName = log_id(topModule->name);
 
     int nbLuts = getNumberOfLuts();
@@ -277,7 +328,7 @@ struct ReportStatPass : public ScriptPass
     // -----
     // Open the csv file and dump the stats.
     //
-    std::ofstream csv_file(fileName);
+    std::ofstream csv_file(csv_stat_file);
 
     csv_file << topName + ",";
     csv_file << std::to_string(nbLuts) + ",";
@@ -288,7 +339,7 @@ struct ReportStatPass : public ScriptPass
 
     csv_file.close();
 
-    log("\n   Dumped file %s\n", fileName.c_str());
+    log("\n   Dumped file %s\n", csv_stat_file.c_str());
 
     run("stat");
 

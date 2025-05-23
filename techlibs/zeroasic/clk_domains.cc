@@ -21,17 +21,21 @@ struct MaxLvlWorker
    //
    dict<SigBit, tuple<int, SigBit, Cell*>> bits;
 
+   // Traversal table : from a sigBit gives the fanout
+   // SigBits
+   //
    dict<SigBit, dict<SigBit, Cell*>> bit2bits;
 
    dict<SigBit, tuple<SigBit, Cell*>> bit2ff;
 
    int maxlvl;
    SigBit maxbit;
+
    pool<SigBit> visited_bits;
 
-   // ---------------------
+   // ------------------------------------
    // setup_internals_zeroasic_ff_Z1000
-   // ---------------------
+   // ------------------------------------
    void setup_internals_zeroasic_ff_Z1000(CellTypes& ff_celltypes)
    {
      // Simply list the DFF cells names is enough as cut points
@@ -46,9 +50,9 @@ struct MaxLvlWorker
      ff_celltypes.setup_type(ID(dffers), {}, {});
    }
 
-   // ---------------------
+   // ------------------------------------
    // setup_internals_xilinx_ff_xc4v
-   // ---------------------
+   // ------------------------------------
    void setup_internals_xilinx_ff_xc4v(CellTypes& ff_celltypes)
    {
      // Simply list the DFF cells names is enough as cut points
@@ -60,10 +64,15 @@ struct MaxLvlWorker
      ff_celltypes.setup_type(ID(FDSE), {}, {});
      ff_celltypes.setup_type(ID(LDCE), {}, {});
    }
+   void setup_internals_xilinx_io_xc4v(CellTypes& ff_celltypes)
+   {
+     ff_celltypes.setup_type(ID(IBUF), {}, {});
+     ff_celltypes.setup_type(ID(OBUF), {}, {});
+   }
 
-   // ---------------------
+   // ------------------------------------
    // setup_internals_lattice_ff_xo2
-   // ---------------------
+   // ------------------------------------
    void setup_internals_lattice_ff_xo2(CellTypes& ff_celltypes)
    {
      // Simply list the DFF cells names is enough as cut points
@@ -71,9 +80,9 @@ struct MaxLvlWorker
      ff_celltypes.setup_type(ID(TRELLIS_FF), {}, {});
    }
    
-   // ---------------------
+   // ------------------------------------
    // setup_internals_ice40_ff_hx
-   // ---------------------
+   // ------------------------------------
    void setup_internals_ice40_ff_hx(CellTypes& ff_celltypes)
    {
      // Simply list the DFF cells names is enough as cut points
@@ -89,6 +98,27 @@ struct MaxLvlWorker
      ff_celltypes.setup_type(ID(SB_DFFSR), {}, {});
      ff_celltypes.setup_type(ID(SB_DFFES), {}, {});
    }
+   
+   // ------------------------------------
+   // setup_internals_quicklogic_ff_pp3
+   // ------------------------------------
+   void setup_internals_quicklogic_ff_pp3(CellTypes& ff_celltypes)
+   {
+     // Simply list the DFF cells names is enough as cut points
+     //
+     ff_celltypes.setup_type(ID(dffepc), {}, {});
+   }
+   
+   // ---------------------------------------
+   // setup_internals_microchip_ff_polarfire
+   // ---------------------------------------
+   void setup_internals_microchip_ff_polarfire(CellTypes& ff_celltypes)
+   {
+     // Simply list the DFF cells names is enough as cut points
+     //
+     ff_celltypes.setup_type(ID(SLE), {}, {});
+   }
+
 
    // ---------------------
    // MaxLvlWorker
@@ -107,13 +137,31 @@ struct MaxLvlWorker
          //
          setup_internals_zeroasic_ff_Z1000(ff_celltypes);
 
+	 // Xilinx
+	 //
          setup_internals_xilinx_ff_xc4v(ff_celltypes);
+         setup_internals_xilinx_io_xc4v(ff_celltypes);
 
+	 // Lattice
+	 //
          setup_internals_lattice_ff_xo2(ff_celltypes);
 
+	 // ICE40
+	 //
          setup_internals_ice40_ff_hx(ff_celltypes);
+
+	 // QuickLogic
+	 //
+         setup_internals_quicklogic_ff_pp3(ff_celltypes);
+
+	 // Microchip
+	 //
+         setup_internals_microchip_ff_polarfire(ff_celltypes);
      }
 
+     // For all SigBits create their associated 'bitInfo'
+     // to store <level, from bit, Cell>
+     //
      for (auto wire : module->selected_wires()) {
 
          for (auto bit : sigmap(wire)) {
@@ -122,6 +170,10 @@ struct MaxLvlWorker
          }
      }
 
+     // For all the traversable cells (not in 'ff_celltypes') 
+     // add the 'src' bits to 'dest_bits( relationship into the
+     // traversable table 'bit2bits'.
+     //
      for (auto cell : module->selected_cells()) {
 
          pool<SigBit> src_bits, dst_bits;
@@ -161,8 +213,11 @@ struct MaxLvlWorker
             continue;
          }
 
-	 // Add the 'src_bits' to the 'dst_bits' table.
-	 // This table will be used for the traversal.
+	 // Add the 'src_bits' to the 'dst_bits' relationship
+	 // into 'bit2bits' table.
+	 //
+	 // This table will be used for the traversal in 'runner'
+	 // to compute all the 'bit' levels..
 	 //
          for (auto s : src_bits) {
 
@@ -209,6 +264,7 @@ struct MaxLvlWorker
      if (bit2bits.count(bit)) {
 
         for (auto &it : bit2bits.at(bit)) {
+
            runner(it.first, level+1, bit, it.second);
         }
      }
@@ -219,22 +275,31 @@ struct MaxLvlWorker
    // ---------------------
    // printpath
    // ---------------------
+   // From input to output.
+   //
    void printpath(SigBit bit)
    {
      auto &bitinfo = bits.at(bit);
 
+     // If the SigBit 'bit' has a cell driving it
+     //
      if (get<2>(bitinfo)) {
 
+        // Print recursively the 'from' bit, e.g the SigBit 
+	// on the critical path driving the cell
+	//
+	// Since we first print the driving sigBit, we print 
+	// the path from Input to Output.
+	//
         printpath(get<1>(bitinfo));
 
         Cell* cell = get<2>(bitinfo); 
 
         log("%5d: %s (via %s)\n", get<0>(bitinfo), log_signal(bit), 
             log_id(cell->type));
-        //log("%5d: %s (via %s)\n", get<0>(bitinfo), log_signal(bit), 
-        //  log_id(get<2>(bitinfo)));
 
      } else {
+
         log("%5d: %s\n", get<0>(bitinfo), log_signal(bit));
      }
    }
@@ -245,7 +310,9 @@ struct MaxLvlWorker
    void run()
    {
      for (auto &it : bits) {
+
         if (get<0>(it.second) < 0) {
+
            runner(it.first, 0, State::Sx, nullptr);
 	}
      }
@@ -255,7 +322,9 @@ struct MaxLvlWorker
      if (summary) {
         log("\n");
         log("   Max logic level = %d\n", maxlvl);
+
      } else {
+
         log("\n");
         log("Max logic level in %s (length=%d):\n", log_id(module), maxlvl);
 
@@ -264,7 +333,8 @@ struct MaxLvlWorker
         }
 
         if (bit2ff.count(maxbit)) {
-           log("%5s: %s (via %s)\n", "ff", log_signal(get<0>(bit2ff.at(maxbit))),
+
+           log("%5s: %s (via %s)\n", "xx", log_signal(get<0>(bit2ff.at(maxbit))),
                log_id(get<1>(bit2ff.at(maxbit))));
         }
 
@@ -287,11 +357,13 @@ struct MaxLvlPass : public Pass {
       log("\n");
       log("    max_level [options] [selection]\n");
       log("\n");
-      log("This command prints the max logic levelin the design. (Only considers\n");
-      log("paths within a single module, so the design must be flattened.)\n");
+      log("This command prints the max logic level in the design. (Only considers\n");
+      log("paths within a single module, so the design must be flattened to get the)\n");
+      log("overall longest path in the design.\n");
       log("\n");
       log("    -noff\n");
-      log("        automatically exclude FF cell types\n");
+      log("        FF cell types in the longest math extraction. They are \n");
+      log("        considered as cut points.\n");
       log("\n");
       
       log("    -summary\n");
