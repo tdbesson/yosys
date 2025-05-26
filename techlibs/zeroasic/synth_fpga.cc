@@ -50,6 +50,10 @@ struct SynthFpgaPass : public ScriptPass
 
      int nb = 0;
 
+     if (!G_design) {
+       return -1;
+     }
+
      for (auto cell : G_design->top_module()->cells()) {
          if (cell->type.in(ID($lut))) {
            nb++;
@@ -66,6 +70,10 @@ struct SynthFpgaPass : public ScriptPass
 
      int nb = 0;
 
+     if (!G_design) {
+       return -1;
+     }
+
      for (auto cell : G_design->top_module()->cells()) {
          if (cell->type.in(ID(dff), ID(dffe), ID(dffr), ID(dffer), ID(dffs), ID(dffrs), ID(dffes), ID(dffers))) {
            nb++;
@@ -80,6 +88,11 @@ struct SynthFpgaPass : public ScriptPass
   // -------------------------
   void dump_csv_file(string fileName, int runTime)
   {
+     if (!G_design) {
+       log_warning("Design seems empty !\n");
+       return;
+     }
+
      // -----
      // Get all the stats 
      //
@@ -169,6 +182,11 @@ struct SynthFpgaPass : public ScriptPass
   // -------------------------
   void abc_synthesize()
   {
+    if (!G_design) {
+       log_warning("Design seems empty !\n");
+       return;
+    }
+
     if (opt == "") {
        log_header(G_design, "Performing OFFICIAL PLATYPUS optimization\n");
        run("abc -lut " + sc_syn_lut_size);
@@ -477,16 +495,22 @@ struct SynthFpgaPass : public ScriptPass
   // ---------------------------------------------------------------------------
   void script() override
   {
+
+    if (!G_design) {
+       return;
+    }
+
     auto startTime = std::chrono::high_resolution_clock::now();
 
     log("\nPLATYPUS flow using 'synth_fpga' Yosys plugin command\n");
 
     log("'Zero Asic' FPGA Synthesis Version : %s\n", SYNTH_FPGA_VERSION);
 
+#if 0
     // Eventually replace 'dff' ZA models in order to perform 
     // resynthesis.
-    //
-    //replace_dff_models();
+    replace_dff_models();
+#endif
    
 
 #if 0
