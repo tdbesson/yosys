@@ -549,9 +549,9 @@ struct SynthFpgaPass : public ScriptPass
     //
     run("design -save original");
     run("flatten");
-    log("\n# ------------------------ \n");
-    log("#  Design raw statistics  \n");
-    log("# ------------------------ \n");
+    log("\n# ------------------------- \n");
+    log("#  Design first statistics  \n");
+    log("# ------------------------- \n");
     run("stat");
     run("design -load original");
 
@@ -702,6 +702,12 @@ struct SynthFpgaPass : public ScriptPass
     string sc_syn_flop_library = stringf("+/zeroasic/%s/techlib/tech_flops.v", 
 		                         part_name.c_str());
     run("techmap -map " + sc_syn_flop_library);
+
+    // 'post_techmap' without arguments gives the following 
+    // according to '.../siliconcompiler/tools/yosys/procs.tcl'
+    //
+    run("techmap");
+    run("opt -purge");
 #endif
 
     // Perform preliminary buffer insertion before passing to ABC to help reduce
