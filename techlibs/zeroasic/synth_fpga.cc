@@ -676,6 +676,15 @@ struct SynthFpgaPass : public ScriptPass
     run("demuxmap");
     run("simplemap");
 
+    // Extra lines that help to win Area (ex: vga_lcd from 31K Lut4 downto 14.8K)
+    //
+    // IMPROVE-2
+    //
+    run("techmap");
+    run("opt -fast");
+    run("opt_clean");
+    // END IMPROVE-2
+
     // original TCL call : legalize_flops $sc_syn_feature_set
     //
     run("stat");
@@ -705,9 +714,11 @@ struct SynthFpgaPass : public ScriptPass
 
     // 'post_techmap' without arguments gives the following 
     // according to '.../siliconcompiler/tools/yosys/procs.tcl'
+    // IMPROVE-1
     //
     run("techmap");
     run("opt -purge");
+    // END IMPROVE-1
 #endif
 
     // Perform preliminary buffer insertion before passing to ABC to help reduce
