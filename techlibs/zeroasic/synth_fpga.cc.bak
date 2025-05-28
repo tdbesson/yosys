@@ -493,6 +493,7 @@ struct SynthFpgaPass : public ScriptPass
   //        needs to be handled in this 'synth_fpga' command.
   //
   // ---------------------------------------------------------------------------
+#if 1
   void script() override
   {
 
@@ -644,14 +645,6 @@ struct SynthFpgaPass : public ScriptPass
     run("alumacc");
     run("opt");
     run("memory -nomap");
-
-    run("design -save copy");
-
-    // First strategy : we deeply optimize logic but we may break its
-    // nice structure than can map in nice DFF enable 
-    // (ex: big_designs/VexRiscv).
-    // But it may help for some designs (ex: medium_designs/xtea)
-    //
     run("opt -full");
 
     run("techmap -map +/techmap.v");
@@ -681,21 +674,18 @@ struct SynthFpgaPass : public ScriptPass
     // $mem_v2 instances into flop arrays
     //
     run("memory_map");
-
     run("demuxmap");
     run("simplemap");
 
-    // Extra lines that help to win Area (ex: vga_lcd from 31K Lut4 downto 14.8K)
-    //
-    // IMPROVE-2
-    //
+#if 0
     run("techmap");
     run("opt -fast");
     run("opt_clean");
-    // END IMPROVE-2
+#endif
 
     // original TCL call : legalize_flops $sc_syn_feature_set
     //
+    run("stat");
     legalize_flops (); // C++ version of TCL call
 
 #if 0
@@ -720,59 +710,11 @@ struct SynthFpgaPass : public ScriptPass
 		                         part_name.c_str());
     run("techmap -map " + sc_syn_flop_library);
 
-
-    run("design -save first_solution");
-    run("stat");
-    int nb_cells1 = (G_design->top_module()->cells()).size();
-    log("**  First solution : %d\n", nb_cells1);
-
-
-    run("design -load copy");
-    
-    // Second strategy : we simply clean logic so that we keep its 
-    // nice structure than can map in nice DFF enable 
-    // (ex: big_designs/VexRiscv).
-    //
-    run("opt_clean");
-
-    run("techmap -map +/techmap.v");
-
-    run("memory_map");
-
-    run("demuxmap");
-    run("simplemap");
-
-    run("techmap");
-    run("opt -fast");
-    run("opt_clean");
-
-    run("opt -full");
-
-    legalize_flops (); // C++ version of TCL call
-
-    run("techmap -map " + sc_syn_flop_library);
-
-    run("stat");
-    int nb_cells2 = (G_design->top_module()->cells()).size();
-
-    log("**  First solution  : %d cells\n", nb_cells1);
-    log("**  Second solution : %d cells\n", nb_cells2);
-
-    //getchar();
-
-    // Choose best solution between the two strategies
-    //
-    if (1 && (nb_cells1 < nb_cells2)) {
-       run("design -load first_solution");
-    }
-
     // 'post_techmap' without arguments gives the following 
     // according to '.../siliconcompiler/tools/yosys/procs.tcl'
-    // IMPROVE-1
     //
     run("techmap");
     run("opt -purge");
-    // END IMPROVE-1
 #endif
 
     // Perform preliminary buffer insertion before passing to ABC to help reduce
@@ -792,7 +734,6 @@ struct SynthFpgaPass : public ScriptPass
 
     // Optimize and map through ABC the combinational logic part of the design.
     //
-    run("stat");
     abc_synthesize();
 
     run("stat");
@@ -831,6 +772,123 @@ struct SynthFpgaPass : public ScriptPass
     }
 
   } // end script()
+
+#else
+
+  void script() override
+  {
+		if (check_label("coarse"))
+		{
+			run("proc");
+			run("flatten");
+
+#if 0
+run("tribuf -logic");
+run("deminout");
+#endif
+
+#if 1
+    run("opt_expr");
+    run("opt_clean");
+    run("check");
+    run("opt -nodffe -nosdff");
+    run("fsm");
+    run("opt");
+    run("wreduce");
+    run("peepopt");
+    run("opt_clean");
+    run("share");
+    run("techmap -map +/cmp2lut.v -D LUT_WIDTH=4");
+    run("opt_expr");
+    run("opt_clean");
+
+    run("stat");
+
+    run("alumacc");
+    run("opt");
+    run("memory -nomap");
+#endif
+
+#if 1
+    run("opt -full");
+    run("techmap -map +/techmap.v");
+#endif
+
+    run("stat");
+    run("memory_map");
+
+#if 1
+    run("demuxmap");
+    run("simplemap");
+#endif
+
+#if 0
+
+			run("tribuf -logic");
+			run("deminout");
+
+			run("opt_expr");
+			run("opt_clean");
+			run("check");
+			run("opt -nodffe -nosdff");
+			run("fsm");
+			run("opt");
+			run("wreduce");
+			run("peepopt");
+			run("opt_clean");
+			run("share");
+			run("techmap -map +/cmp2lut.v -D LUT_WIDTH=4");
+			run("opt_expr");
+			run("opt_clean");
+
+			run("alumacc");
+			run("opt");
+			run("memory -nomap");
+
+			run("opt_clean");
+		}
+
+		run("stat");
+		run("memory_map");
+#endif
+		}
+
+		if (check_label("map_gates"))
+		{
+		  run("techmap");
+		  run("opt -fast");
+		}
+
+		if (check_label("map_ffs"))
+		{
+			run("opt_clean");
+
+		        run("stat");
+                        legalize_flops (); // C++ version of TCL call
+
+                        string sc_syn_flop_library = stringf("+/zeroasic/%s/techlib/tech_flops.v", 
+		                         part_name.c_str());
+                        run("techmap -map " + sc_syn_flop_library);
+
+			run("opt_merge");
+			run("opt_expr -undriven -mux_undef");
+			run("simplemap");
+			run("opt_clean");
+		}
+
+		if (check_label("map_luts"))
+		{
+                  abc_synthesize();
+
+		  run("clean");
+		}
+
+		run("opt_merge");
+		run("opt_expr -undriven -mux_undef");
+		run("opt_clean");
+
+   }
+#endif
 
 } SynthFpgaPass;
 
