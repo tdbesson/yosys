@@ -759,6 +759,7 @@ struct SynthFpgaPass : public ScriptPass
     log("**  Second solution : %d cells\n", nb_cells2);
 
     //getchar();
+    //getchar();
 
     // Choose best solution between the two strategies
     //
