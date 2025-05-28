@@ -223,73 +223,6 @@ struct ReportStatPass : public ScriptPass
   }
   
   // ---------------------------------------------------------------------------
-  // getTimeDifference 
-  // ---------------------------------------------------------------------------
-  // May return the wrong time difference if it exceeds 24 hours
-  //
-  int getTimeDifference(string& end, string& start)
-  {
-    // Extract time_t value from strings
-    //
-    struct std::tm tm_end = {};
-    std::istringstream ss_end(end);
-    ss_end >> std::get_time(&tm_end, "%T"); // %T for %H:%M:%S format
-    std::time_t end_time = mktime(&tm_end);
-
-    struct std::tm tm_start = {};
-    std::istringstream ss_start(start);
-    ss_start >> std::get_time(&tm_start, "%T"); // %T for %H:%M:%S format
-    std::time_t start_time = mktime(&tm_start);
-
-#if 0
-    // Code to check that extraction worked well
-    //
-    struct tm  datetime_end;
-    char output_end[50];
-    datetime_end = *localtime(&end_time);
-    strftime(output_end, 50, "%T", &datetime_end);
-    log("New end = %s\n", output_end);
-
-    struct tm  datetime_start;
-    char output_start[50];
-    datetime_start = *localtime(&start_time);
-    strftime(output_start, 50, "%T", &datetime_start);
-    log("New start = %s\n", output_start);
-#endif
-    
-    // Return time in seconds between 'end' and 'start'
-    //
-    double duration = difftime(end_time, start_time) + 1;
-
-    if (duration <= 0) { // corner case where we went through midnight
-
-	string hour_twfo = "23:59:59";
-
-        struct std::tm tm_twfo = {};
-        std::istringstream ss_twfo(hour_twfo);
-        ss_twfo >> std::get_time(&tm_twfo, "%T"); // %T for %H:%M:%S format
-        std::time_t twfo_time = mktime(&tm_twfo);
-
-        double duration1 = difftime(twfo_time, start_time);
-
-        string hour_zero = "00:00:00";
-
-        struct std::tm tm_zero = {};
-        std::istringstream ss_zero(hour_zero);
-        ss_zero >> std::get_time(&tm_zero, "%T"); // %T for %H:%M:%S format
-        std::time_t zero_time = mktime(&tm_zero);
-
-        double duration2 = difftime(end_time, zero_time);
-
-        double duration = duration1 + duration2 + 1;
-
-        return (int)duration; // round to int
-    }
-
-    return (int)duration; // round to int
-  }
-
-  // ---------------------------------------------------------------------------
   // report_stat 
   // ---------------------------------------------------------------------------
   void script() override
@@ -318,12 +251,19 @@ struct ReportStatPass : public ScriptPass
     string start = G_design->scratchpad_get_string("time_chrono_start");
     string end =  G_design->scratchpad_get_string("time_chrono_end");
 
-    int duration = getTimeDifference(end, start);
+    double d_start = atof(start.c_str());
+    double d_end = atof(end.c_str());
+
+    int duration = (int)(d_end - d_start);
+
+    log("\n");
 
 #if 0
     log("   Start time = %s\n", start.c_str());
     log("   End time   = %s\n", end.c_str());
 #endif
+
+    log("   Duration   = %d sec.\n", duration);
 
     // -----
     // Open the csv file and dump the stats.

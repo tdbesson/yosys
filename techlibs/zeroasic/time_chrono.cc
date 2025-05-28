@@ -107,24 +107,33 @@ struct TimeChronoPass : public ScriptPass
     time_t timestamp;
     time(&timestamp);
 
-    char output[50];
+    char output[100];
     struct tm * datetime;
 
     string ftime = ctime(&timestamp);
 
     datetime = localtime(&timestamp);
-    strftime(output, 50, "%T", datetime);
+
+    // Store whole number is seconds with format "%s" !
+    //
+    strftime(output, 100, "%s", datetime);
 
     if (start) {
+
       G_design->scratchpad_set_string("time_chrono_start", string(output));
+#if 0
       log("\n");
       log("   Start Time = %s\n", output);
+#endif
       return;
 
     } else if (end) {
+
       G_design->scratchpad_set_string("time_chrono_end", string(output));
+#if 0
       log("\n");
       log("   End Time = %s\n", output);
+#endif
       return;
     }
 
