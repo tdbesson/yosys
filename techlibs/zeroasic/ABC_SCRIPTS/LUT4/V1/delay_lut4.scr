@@ -9,7 +9,7 @@ time
 
 &shrink; &blut -K 4; &sopb -C 5; &synch2 -W 2 -K 4; &if -K 4 -C 16; &save; &shrink; &sopb -C 5; &blut -K 4; &synch2 -W 2  -K 4; &if -K 4 -C 16; &save; &load; &mfs -W 2 -D 15 -C 600 ; &satlut -N 15 -d ; &put; lutpack -S 1; &get -n -m; &save; &load; &ps; time
 
-&mfs -W 2 -D 15 -C 600 ; &satlut -N 15 -d ; &put; lutpack -S 1; &get -n -m; &save; &load; &ps -s; &put; time
+&mfs -W 2 -D 15 -C 600 ; &satlut -N 15 -d ; &put; lutpack -S 1; &get -n -m; &save; &load; &ps -s; time
 
 &put
 

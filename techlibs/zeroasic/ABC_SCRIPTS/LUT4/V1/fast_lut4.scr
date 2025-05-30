@@ -1,0 +1,40 @@
+time
+
+echo "strash"; 
+strash; 
+
+echo "scorr"; 
+scorr; 
+
+echo "dc2"; 
+dc2; 
+
+echo "strash"; 
+strash; 
+
+echo "if -K 4"; 
+if -K 4 -a; 
+
+&get -n -m; 
+
+&ps
+
+echo "&sopb -C 5"
+&sopb -C 5; 
+
+echo "&lf -K 4 -e"
+&lf -K 4 -e
+
+&ps; &put
+ 
+echo "mfs2"; 
+mfs2; 
+
+echo "&get -n -m"; 
+&get -n -m; 
+
+echo "&ps; &put";  
+&ps; &put;  
+
+time
+

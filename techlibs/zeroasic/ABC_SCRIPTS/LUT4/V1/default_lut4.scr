@@ -1,3 +1,5 @@
+time
+
 echo "strash"; 
 strash; 
 
@@ -6,35 +8,44 @@ echo "&get -n";
 
 echo "&fraig -x"; 
 &fraig -x; 
+time
 
 echo "&put"; 
 &put; 
+time
 
 echo "scorr"; 
 scorr; 
+time
 
 echo "dc2"; 
 dc2; 
+time
 
 echo "dretime"; 
 dretime; 
+time
 
 echo "strash"; 
 strash; 
 
 echo "dch -f"; 
 dch -f; 
+time
 
 echo "if -K 4"; 
 if -K 4; 
+time
 
 &get -n -m; &ps; &put
  
 echo "mfs2"; 
 mfs2; 
+time
 
 echo "lutpack -S 1"; 
 lutpack -S 1; 
+time
 
 echo "&get -n -m"; 
 &get -n -m; 
@@ -42,3 +53,4 @@ echo "&get -n -m";
 echo "&ps; &put";  
 &ps; &put;  
 
+time
