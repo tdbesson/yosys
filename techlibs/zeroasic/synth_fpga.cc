@@ -760,6 +760,7 @@ struct SynthFpgaPass : public ScriptPass
     run("techmap -map " + sc_syn_flop_library);
 
 
+#if 0
     run("design -save first_solution");
     run("stat");
     int nb_cells1 = (G_design->top_module()->cells()).size();
@@ -798,13 +799,13 @@ struct SynthFpgaPass : public ScriptPass
     log("**  Second solution : %d cells\n", nb_cells2);
 
     //getchar();
-    //getchar();
 
     // Choose best solution between the two strategies
     //
     if (1 && (nb_cells1 < nb_cells2)) {
        run("design -load first_solution");
     }
+#endif
 
     // 'post_techmap' without arguments gives the following 
     // according to '.../siliconcompiler/tools/yosys/procs.tcl'

@@ -3,12 +3,6 @@ time
 echo "strash"; 
 strash; 
 
-echo "scorr"; 
-scorr; 
-
-echo "dc2"; 
-dc2; 
-
 echo "strash"; 
 strash; 
 
@@ -27,9 +21,6 @@ echo "&lf -K 4 -e"
 
 &ps; &put
  
-echo "mfs2"; 
-mfs2; 
-
 echo "&get -n -m"; 
 &get -n -m; 
 
