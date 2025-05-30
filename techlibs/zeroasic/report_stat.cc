@@ -254,7 +254,7 @@ struct ReportStatPass : public ScriptPass
     double d_start = atof(start.c_str());
     double d_end = atof(end.c_str());
 
-    int duration = (int)(d_end - d_start);
+    int duration = (int)(d_end - d_start) + 1;
 
     log("\n");
 
