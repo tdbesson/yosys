@@ -692,7 +692,7 @@ struct SynthFpgaPass : public ScriptPass
     // But it may help for some designs (ex: medium_designs/xtea)
     //
     run("opt -full");
-
+    
     run("techmap -map +/techmap.v");
 
 #if 0
@@ -735,6 +735,7 @@ struct SynthFpgaPass : public ScriptPass
 
     // original TCL call : legalize_flops $sc_syn_feature_set
     //
+    run("opt -full");
     legalize_flops (); // C++ version of TCL call
 
 #if 0
