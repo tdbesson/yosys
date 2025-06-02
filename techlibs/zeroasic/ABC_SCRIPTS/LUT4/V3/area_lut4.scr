@@ -26,8 +26,8 @@ echo "&satlut;"
 &put
 
 echo ""
-echo "lutpack -S 1"
-lutpack -S 1; time
+echo "lutpack -S 3"
+lutpack -S 3; time
 
 &get -n -m; &ps; 
 
