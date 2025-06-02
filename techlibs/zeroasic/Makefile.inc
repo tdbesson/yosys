@@ -20,8 +20,8 @@ $(eval $(call add_share_file,share/zeroasic/ABC_SCRIPTS/LUT4/V1,techlibs/zeroasi
 
 #V2
 $(eval $(call add_share_file,share/zeroasic/ABC_SCRIPTS/LUT4/V2,techlibs/zeroasic/ABC_SCRIPTS/LUT4/V2/default_lut4.scr))
-
 $(eval $(call add_share_file,share/zeroasic/ABC_SCRIPTS/LUT4/V2,techlibs/zeroasic/ABC_SCRIPTS/LUT4/V2/delay_lut4.scr))
+$(eval $(call add_share_file,share/zeroasic/ABC_SCRIPTS/LUT4/V2,techlibs/zeroasic/ABC_SCRIPTS/LUT4/V2/area_lut4.scr))
 
 #V3
 $(eval $(call add_share_file,share/zeroasic/ABC_SCRIPTS/LUT4/V3,techlibs/zeroasic/ABC_SCRIPTS/LUT4/V3/delay_lut4.scr))
