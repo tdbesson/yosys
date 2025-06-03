@@ -12,6 +12,11 @@ $(eval $(call add_share_file,share/zeroasic/Z1000/techlib,techlibs/zeroasic/Z100
 #########################
 #
 
+# BEST Flows
+#
+$(eval $(call add_share_file,share/zeroasic/ABC_SCRIPTS/LUT4/BEST_AREA,techlibs/zeroasic/ABC_SCRIPTS/LUT4/BEST_AREA/area_lut4.scr))
+$(eval $(call add_share_file,share/zeroasic/ABC_SCRIPTS/LUT4/BEST_DELAY,techlibs/zeroasic/ABC_SCRIPTS/LUT4/BEST_DELAY/delay_lut4.scr))
+
 #V1
 $(eval $(call add_share_file,share/zeroasic/ABC_SCRIPTS/LUT4/V1,techlibs/zeroasic/ABC_SCRIPTS/LUT4/V1/area_lut4.scr))
 $(eval $(call add_share_file,share/zeroasic/ABC_SCRIPTS/LUT4/V1,techlibs/zeroasic/ABC_SCRIPTS/LUT4/V1/delay_lut4.scr))
@@ -25,6 +30,7 @@ $(eval $(call add_share_file,share/zeroasic/ABC_SCRIPTS/LUT4/V2,techlibs/zeroasi
 
 #V3
 $(eval $(call add_share_file,share/zeroasic/ABC_SCRIPTS/LUT4/V3,techlibs/zeroasic/ABC_SCRIPTS/LUT4/V3/area_lut4.scr))
+$(eval $(call add_share_file,share/zeroasic/ABC_SCRIPTS/LUT4/V3,techlibs/zeroasic/ABC_SCRIPTS/LUT4/V3/delay_lut4.scr))
 
 
 
