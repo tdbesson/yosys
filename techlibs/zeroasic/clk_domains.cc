@@ -118,6 +118,17 @@ struct MaxLvlWorker
      //
      ff_celltypes.setup_type(ID(SLE), {}, {});
    }
+   
+   // ------------------------------------
+   // setup_internals_intel_ff_cycloneiv
+   // ------------------------------------
+   void setup_internals_intel_ff_cycloneiv(CellTypes& ff_celltypes)
+   {
+     // Simply list the DFF cells names is enough as cut points
+     //
+     ff_celltypes.setup_type(ID(dffeas), {}, {});
+   }
+   
 
 
    // ---------------------
@@ -157,6 +168,10 @@ struct MaxLvlWorker
 	 // Microchip
 	 //
          setup_internals_microchip_ff_polarfire(ff_celltypes);
+
+	 // Intel (Altera)
+	 //
+         setup_internals_intel_ff_cycloneiv(ff_celltypes);
      }
 
      // For all SigBits create their associated 'bitInfo'

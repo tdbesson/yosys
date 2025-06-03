@@ -104,6 +104,13 @@ struct ReportStatPass : public ScriptPass
              nb++;
 	     continue;
          }
+	 
+         // Intel 'cycloneiv' Luts
+         //
+         if (cell->type.in(ID($not), ID(cycloneiv_lcell_comb))) {
+             nb++;
+	     continue;
+         }
      }
 
      return nb;
@@ -158,9 +165,9 @@ struct ReportStatPass : public ScriptPass
             continue;
         }
 	
-        // Microchip 'polarfire' DFFs
+        // Intel 'cycloneiv' DFFs
         //
-        if (cell->type.in(ID(SLE))) { 
+        if (cell->type.in(ID(dffeas))) { 
             nb++;
             continue;
         }
