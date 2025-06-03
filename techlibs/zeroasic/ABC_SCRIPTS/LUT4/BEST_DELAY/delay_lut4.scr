@@ -1,0 +1,21 @@
+time
+&get -n -m;
+
+echo ""
+&st; &lf -K 4 -e; &save; &ps; time
+
+echo ""
+&st; &if -K 4; &save; &sopb -C 5; &sopb -C 5; &sopb -C 5; &sopb -C 5; &sopb -C 5; &sopb -C 5; &sopb -C 5; &if -K 4 -a; &st; &lf -K 4 -e; &dch -C 600; &lf -K 4 -e; &mfs -W 2 -D 15 -M 600 ; &save; &load; &ps; time
+
+&shrink; &blut -K 4; &sopb -C 5; &synch2 -W 2 -K 4; &if -sz -C 5 -K 7 -S 44 ; &save; &load; &ps; time
+
+echo ""
+&shrink; &blut -K 4; &sopb -C 5; &synch2 -W 2 -K 4; &lf -K 4 -e -C 32; &save; &shrink; &sopb -C 5; &blut -K 4; &synch2 -W 2  -K 4; &lf -K 4 -e -C 32; &save; &load; &mfs -W 2 -D 15 -C 600 ; &put; lutpack -S 1; &get -n -m; &save; &load; &ps -s; time
+
+echo ""
+echo ""
+&shrink; &blut -K 4; &sopb -C 5; &synch2 -W 2 -K 4; &if -sz -C 5 -K 7 -S 44 ; &save; &load; &ps; time
+
+
+&put
+
