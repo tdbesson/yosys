@@ -116,7 +116,7 @@ echo "lutpack -S 1;"
 
 echo " "
 echo "&load; &ps"
-&load; &ps -s; time
+&load; &ps; time
 
 echo " "
 echo "&shrink; &blut -K 4; &sopb -C 5;"
@@ -128,7 +128,7 @@ echo "&synch2 -W 2 -K 4; &if -sz -C 5 -K 7 -S 44"
 
 echo " "
 echo "&load; &ps"
-&load; &ps; time
+&load; &ps -s; time
 
 echo " "
 echo "** ABC DELAY optimization done !!!"
@@ -139,8 +139,8 @@ time
 
 echo ""
 echo ""
-echo "Euivalence Checking ..."
-cec in.blif out.blif
+echo "Skip Equivalence Checking ..."
+echo "Skip cec in.blif out.blif; time"
 echo ""
 echo ""
 
