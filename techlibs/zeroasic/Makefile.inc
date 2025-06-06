@@ -16,6 +16,7 @@ $(eval $(call add_share_file,share/zeroasic/Z1000/techlib,techlibs/zeroasic/Z100
 #
 $(eval $(call add_share_file,share/zeroasic/ABC_SCRIPTS/LUT4/BEST,techlibs/zeroasic/ABC_SCRIPTS/LUT4/BEST/area_lut4.scr))
 $(eval $(call add_share_file,share/zeroasic/ABC_SCRIPTS/LUT4/BEST,techlibs/zeroasic/ABC_SCRIPTS/LUT4/BEST/delay_lut4.scr))
+$(eval $(call add_share_file,share/zeroasic/ABC_SCRIPTS/LUT4/BEST,techlibs/zeroasic/ABC_SCRIPTS/LUT4/BEST/fast_lut4.scr))
 
 #V1
 $(eval $(call add_share_file,share/zeroasic/ABC_SCRIPTS/LUT4/V1,techlibs/zeroasic/ABC_SCRIPTS/LUT4/V1/area_lut4.scr))
@@ -27,17 +28,24 @@ $(eval $(call add_share_file,share/zeroasic/ABC_SCRIPTS/LUT4/V1,techlibs/zeroasi
 $(eval $(call add_share_file,share/zeroasic/ABC_SCRIPTS/LUT4/V2,techlibs/zeroasic/ABC_SCRIPTS/LUT4/V2/default_lut4.scr))
 $(eval $(call add_share_file,share/zeroasic/ABC_SCRIPTS/LUT4/V2,techlibs/zeroasic/ABC_SCRIPTS/LUT4/V2/delay_lut4.scr))
 $(eval $(call add_share_file,share/zeroasic/ABC_SCRIPTS/LUT4/V2,techlibs/zeroasic/ABC_SCRIPTS/LUT4/V2/area_lut4.scr))
+$(eval $(call add_share_file,share/zeroasic/ABC_SCRIPTS/LUT4/V2,techlibs/zeroasic/ABC_SCRIPTS/LUT4/V2/fast_lut4.scr))
 
 #V3
 $(eval $(call add_share_file,share/zeroasic/ABC_SCRIPTS/LUT4/V3,techlibs/zeroasic/ABC_SCRIPTS/LUT4/V3/area_lut4.scr))
 $(eval $(call add_share_file,share/zeroasic/ABC_SCRIPTS/LUT4/V3,techlibs/zeroasic/ABC_SCRIPTS/LUT4/V3/delay_lut4.scr))
-
+$(eval $(call add_share_file,share/zeroasic/ABC_SCRIPTS/LUT4/V3,techlibs/zeroasic/ABC_SCRIPTS/LUT4/V3/fast_lut4.scr))
 
 
 #########################
 # LUT6
 #########################
 #
+# BEST Flows
+#
+$(eval $(call add_share_file,share/zeroasic/ABC_SCRIPTS/LUT6/BEST,techlibs/zeroasic/ABC_SCRIPTS/LUT6/BEST/area_lut6.scr))
+$(eval $(call add_share_file,share/zeroasic/ABC_SCRIPTS/LUT6/BEST,techlibs/zeroasic/ABC_SCRIPTS/LUT6/BEST/delay_lut6.scr))
+$(eval $(call add_share_file,share/zeroasic/ABC_SCRIPTS/LUT6/BEST,techlibs/zeroasic/ABC_SCRIPTS/LUT6/BEST/fast_lut6.scr))
+
 $(eval $(call add_share_file,share/zeroasic/ABC_SCRIPTS/LUT6/V1,techlibs/zeroasic/ABC_SCRIPTS/LUT6/V1/area_lut6.scr))
 $(eval $(call add_share_file,share/zeroasic/ABC_SCRIPTS/LUT6/V1,techlibs/zeroasic/ABC_SCRIPTS/LUT6/V1/delay_lut6.scr))
 $(eval $(call add_share_file,share/zeroasic/ABC_SCRIPTS/LUT6/V1,techlibs/zeroasic/ABC_SCRIPTS/LUT6/V1/default_lut6.scr))
