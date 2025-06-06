@@ -19,7 +19,7 @@ echo "&if -sz -C 5 -K 7 -S 44"
 
 echo " "
 echo "&if -sz -C 5 -K 7 -S 44 -a"
-&if -sz -C 5 -K 7 -S 44 -a; &ps; time
+&st; &if -sz -C 5 -K 7 -S 44 -a; &ps; time
 
 &put;  
 
