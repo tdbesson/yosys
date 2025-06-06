@@ -3,29 +3,23 @@ time
 echo " "
 echo "** Starting ABC FAST optimization !!!"
 
-echo " "
-echo "write_blif in.blif"
-write_blif in.blif
-
 &get -n -m;
 
 echo " "
-echo "&sopb -C 5;"
-&sopb -C 5; &ps; time
+echo "&if -sz -C 5 -K 7 -S 44"
+&st; &if -sz -C 5 -K 7 -S 44; &ps; &save -a; time
 
 echo " "
 echo "&if -sz -C 5 -K 7 -S 44"
-&if -sz -C 5 -K 7 -S 44; &ps; time
+&st; &if -sz -C 5 -K 7 -S 44; &save -a; &ps; time
 
 echo " "
-echo "&if -sz -C 5 -K 7 -S 44 -a"
-&st; &if -sz -C 5 -K 7 -S 44 -a; &ps; time
+echo "********************* "
+echo "* Final Best netlist"
+echo "********************* "
+&load; &ps
 
 &put;  
-
-echo " "
-echo "write_blif out.blif"
-write_blif out.blif
 
 time
 
