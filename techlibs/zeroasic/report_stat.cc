@@ -176,6 +176,25 @@ struct ReportStatPass : public ScriptPass
     return nb;
   }
 
+  // -------------------------
+  // getNumberOfDSPs
+  // -------------------------
+  int getNumberOfDSPs() {
+
+    int nb = 0;
+
+    for (auto cell : G_design->top_module()->cells()) {
+
+        if (cell->type.in(ID(DSP48))) {
+             nb++;
+             continue;
+        }
+    }
+
+    return nb;
+  }
+
+
   void help() override
   {
 	//   |---v---|---v---|---v---|---v---|---v---|---v---|---v---|---v---|---v---|---v---|
@@ -247,6 +266,8 @@ struct ReportStatPass : public ScriptPass
 
     int nbDffs = getNumberOfDffs();
 
+    int nbDSPs = getNumberOfDSPs();
+
     int maxlvl = -1;
 
     // call 'max_level' command if not called yet
@@ -280,6 +301,7 @@ struct ReportStatPass : public ScriptPass
     csv_file << topName + ",";
     csv_file << std::to_string(nbLuts) + ",";
     csv_file << std::to_string(nbDffs) + ",";
+    csv_file << std::to_string(nbDSPs) + ",";
     csv_file << std::to_string(maxlvl) + ",";
     csv_file << std::to_string(duration);
     csv_file << std::endl;
