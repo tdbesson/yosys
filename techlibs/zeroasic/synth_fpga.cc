@@ -200,13 +200,33 @@ struct SynthFpgaPass : public ScriptPass
        return;
     }
 
+    string mode = opt;
+
+    int nb_cells = (G_design->top_module()->cells()).size();
+
+    // Switch to FAST ABC synthesis script for huge designs in order to avoid
+    // runtime blow up.
+    //
+    // ex: 'ifu', 'l2c', 'e203' designs will be impacted with sometime slight max
+    // level degradation but with nice speed-up (ex: 'e203' from 5000 sec. downto
+    // 1400 sec.)
+    //
+    if (nb_cells >= 500000) {
+
+      mode  = "fast"; 
+
+      log_warning("Optimization script changed from '%s' to '%s' due to design size (%d cells)\n",
+                  opt.c_str(), mode.c_str(), nb_cells);
+      //getchar();
+    }
+
     // Otherwise specific ABC script based flow
     //
     string abc_script = "+/zeroasic/ABC_SCRIPTS/LUT" + sc_syn_lut_size + 
-	                "/" + abc_script_version + "/" + opt + "_lut" + 
+	                "/" + abc_script_version + "/" + mode + "_lut" + 
 			sc_syn_lut_size + ".scr";
 
-    log_header(G_design, "calling script in %s mode\n", opt.c_str());
+    log_header(G_design, "Calling ABC script in '%s' mode\n", mode.c_str());
 
     run("abc -script " + abc_script);
   }
