@@ -185,9 +185,16 @@ struct ReportStatPass : public ScriptPass
 
     for (auto cell : G_design->top_module()->cells()) {
 
-	// Xilinx 
+	// Xilinx xc4v
 	//
         if (cell->type.in(ID(DSP48))) {
+             nb++;
+             continue;
+        }
+	
+	// Xilinx xc5v
+	//
+        if (cell->type.in(ID(DSP48E))) {
              nb++;
              continue;
         }
