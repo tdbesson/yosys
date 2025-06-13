@@ -1,6 +1,6 @@
 time
 echo " "
-echo "** Starting ABC DELAY optimization !!!"
+echo "** Starting ABC DELAY LUT4 optimization and mapping !!!"
 
 write_blif in.blif
 

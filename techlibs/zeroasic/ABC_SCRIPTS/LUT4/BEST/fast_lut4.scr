@@ -1,9 +1,9 @@
 time
 
-write_blif in.blif 
-
 echo " "
-echo "** Starting ABC FAST optimization !!!"
+echo "** Starting ABC FAST LUT4 optimization and mapping !!!"
+
+write_blif in.blif 
 
 &get -n -m;
 

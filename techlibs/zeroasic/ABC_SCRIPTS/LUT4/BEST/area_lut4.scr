@@ -1,5 +1,10 @@
 time
 
+echo " "
+echo "** Starting ABC AREA LUT4 optimization and mapping !!!"
+
+write_blif in.blif 
+
 &get -n -m; 
 
 echo ""

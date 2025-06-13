@@ -1,5 +1,10 @@
 time
 
+echo " "
+echo "** Starting ABC AREA LUT6 optimization and mapping !!!"
+
+write_blif in.blif
+
 &get -n -m; 
 
 echo ""
@@ -12,7 +17,7 @@ echo "mfs2 -W 4 -M 500 -C 7000; &get -n -m; &save -a; &synch2 -K 6 -C 500; &lf -
 &put; mfs2 -W 4 -M 500 -C 7000; &get -n -m; &save -a; &synch2 -K 6 -C 500; &lf -K 6 -e; &save -a; &load; &ps; time
 
 echo ""
-echo "&st; &if -sz -C 5 -K 7 -S 44 -a"
+echo "&st; &if -sz -C 5 -K 11 -S 66 -a"
 &st; &if -sz -C 5 -K 11 -S 66 -a ; &save -a; &load; &ps; time
 
 echo ""
