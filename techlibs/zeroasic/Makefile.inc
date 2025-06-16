@@ -1,5 +1,5 @@
 
-OBJS += techlibs/zeroasic/synth_fpga.o techlibs/zeroasic/obs_clean.o techlibs/zeroasic/clk_domains.o techlibs/zeroasic/load_models.o techlibs/zeroasic/report_stat.o techlibs/zeroasic/time_chrono.o
+OBJS += techlibs/zeroasic/synth_fpga.o techlibs/zeroasic/clk_domains.o techlibs/zeroasic/load_models.o techlibs/zeroasic/report_stat.o techlibs/zeroasic/time_chrono.o techlibs/zeroasic/obs_clean.o 
 
 $(eval $(call add_share_file,share/zeroasic/Z1000/techlib,techlibs/zeroasic/Z1000/techlib/bram_memory_map_empty.txt))
 $(eval $(call add_share_file,share/zeroasic/Z1000/techlib,techlibs/zeroasic/Z1000/techlib/tech_bram_empty.v))
@@ -58,13 +58,28 @@ $(eval $(call add_share_file,share/zeroasic/ABC_SCRIPTS/LUT6/V1,techlibs/zeroasi
 # MODELS
 #
 $(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dff.v))
+$(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dff_bb.v))
+
 $(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dffe.v))
+$(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dffe_bb.v))
+
 $(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dffr.v))
+$(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dffr_bb.v))
+
 $(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dffs.v))
+$(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dffs_bb.v))
+
 $(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dffrs.v))
+$(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dffrs_bb.v))
+
 $(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dffer.v))
+$(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dffer_bb.v))
+
 $(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dffes.v))
+$(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dffes_bb.v))
+
 $(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dffers.v))
+$(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dffers_bb.v))
 
 
 

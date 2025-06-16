@@ -144,22 +144,18 @@ struct SynthFpgaPass : public ScriptPass
   }
 
   // -------------------------
-  // replace_dff_models 
+  // load_dff_bb_models 
   // -------------------------
-  // Read ZA Dff models and replace eventually them in the current design. 
-  // Tis is usefull in the resynthesis case when we want to resynthesize 
-  // a post synthesis netlist using DFF ZA cells.
-  //
-  void replace_dff_models()
+  void load_dff_bb_models()
   {
-     run("read_verilog +/zeroasic/FF_MODELS/dff.v");
-     run("read_verilog +/zeroasic/FF_MODELS/dffe.v");
-     run("read_verilog +/zeroasic/FF_MODELS/dffr.v");
-     run("read_verilog +/zeroasic/FF_MODELS/dffs.v");
-     run("read_verilog +/zeroasic/FF_MODELS/dffrs.v");
-     run("read_verilog +/zeroasic/FF_MODELS/dffer.v");
-     run("read_verilog +/zeroasic/FF_MODELS/dffes.v");
-     run("read_verilog +/zeroasic/FF_MODELS/dffers.v");
+     run("read_verilog +/zeroasic/FF_MODELS/dff_bb.v");
+     run("read_verilog +/zeroasic/FF_MODELS/dffe_bb.v");
+     run("read_verilog +/zeroasic/FF_MODELS/dffr_bb.v");
+     run("read_verilog +/zeroasic/FF_MODELS/dffs_bb.v");
+     run("read_verilog +/zeroasic/FF_MODELS/dffrs_bb.v");
+     run("read_verilog +/zeroasic/FF_MODELS/dffer_bb.v");
+     run("read_verilog +/zeroasic/FF_MODELS/dffes_bb.v");
+     run("read_verilog +/zeroasic/FF_MODELS/dffers_bb.v");
   }
 
   // -------------------------
@@ -178,8 +174,20 @@ struct SynthFpgaPass : public ScriptPass
   void clean_design()
   {
      if (obs_clean) {
-        run("obs_clean -wires -assigns");
+
+	// Load black box models to get IOs directions for 
+	// 'obs_clean'
+	//
+        load_dff_bb_models();
+
+        run("splitcells");
+
+        run("splitnets");
+
+        run("obs_clean");
+
      } else {
+
         run("opt_clean");
      }
   }
@@ -565,7 +573,7 @@ struct SynthFpgaPass : public ScriptPass
 #if 0
     // Eventually replace 'dff' ZA models in order to perform 
     // resynthesis.
-    replace_dff_models();
+    load_dff_models();
 #endif
    
 
