@@ -2,7 +2,7 @@ module dffe(D,clk,E,Q);
 input D;     // Data input 
 input clk;   // clock input 
 input E;     //  enable
-output Q;    // output Q 
+output reg Q;    // output Q 
 
 always @(posedge clk) 
 

@@ -3,7 +3,7 @@ input D;      // Data input
 input clk;    // clock input 
 input E;      // enable 
 input R;      // reset input 
-output Q;     // output Q 
+output reg Q;     // output Q 
 
 always @(posedge clk or negedge R) 
 

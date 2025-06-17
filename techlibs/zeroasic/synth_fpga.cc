@@ -148,14 +148,16 @@ struct SynthFpgaPass : public ScriptPass
   // -------------------------
   void load_dff_bb_models()
   {
-     run("read_verilog +/zeroasic/FF_MODELS/dff_bb.v");
-     run("read_verilog +/zeroasic/FF_MODELS/dffe_bb.v");
-     run("read_verilog +/zeroasic/FF_MODELS/dffr_bb.v");
-     run("read_verilog +/zeroasic/FF_MODELS/dffs_bb.v");
-     run("read_verilog +/zeroasic/FF_MODELS/dffrs_bb.v");
-     run("read_verilog +/zeroasic/FF_MODELS/dffer_bb.v");
-     run("read_verilog +/zeroasic/FF_MODELS/dffes_bb.v");
-     run("read_verilog +/zeroasic/FF_MODELS/dffers_bb.v");
+     run("read_verilog +/zeroasic/FF_MODELS/dff.v");
+     run("read_verilog +/zeroasic/FF_MODELS/dffe.v");
+     run("read_verilog +/zeroasic/FF_MODELS/dffr.v");
+     run("read_verilog +/zeroasic/FF_MODELS/dffs.v");
+     run("read_verilog +/zeroasic/FF_MODELS/dffrs.v");
+     run("read_verilog +/zeroasic/FF_MODELS/dffer.v");
+     run("read_verilog +/zeroasic/FF_MODELS/dffes.v");
+     run("read_verilog +/zeroasic/FF_MODELS/dffers.v");
+
+     run("blackbox dff dffe dffr dffs dffrs dffer dffes dffers");
   }
 
   // -------------------------
@@ -175,16 +177,18 @@ struct SynthFpgaPass : public ScriptPass
   {
      if (obs_clean) {
 
+        run("splitcells");
+
+        run("splitnets");
+
 	// Load black box models to get IOs directions for 
 	// 'obs_clean'
 	//
         load_dff_bb_models();
 
-        run("splitcells");
-
-        run("splitnets");
-
         run("obs_clean");
+
+        run("hierarchy");
 
      } else {
 

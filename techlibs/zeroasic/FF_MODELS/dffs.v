@@ -2,7 +2,7 @@ module dffs(D,clk,S,Q);
 input D;      // Data input 
 input clk;    // clock input 
 input S;      // set input 
-output Q;     // output Q 
+output reg Q;     // output Q 
 
 always @(posedge clk or negedge S) 
 
