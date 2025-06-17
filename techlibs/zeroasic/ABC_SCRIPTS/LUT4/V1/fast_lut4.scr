@@ -1,31 +1,41 @@
 time
 
-echo "strash"; 
-strash; 
+echo " "
+echo "** Starting ABC FAST LUT4 optimization and mapping !!!"
 
-echo "strash"; 
-strash; 
+write_blif in.blif 
 
-echo "if -K 4"; 
-if -K 4 -a; 
+&get -n -m;
 
-&get -n -m; 
+echo " "
+echo "&sopb -C 5;"
+&sopb -C 5; &ps; time
 
-&ps
+echo " "
+echo "&st; &lf -K 4 -e -C 32;"
+&st; &lf -K 4 -e -C 32; &ps; &save -a; time
 
-echo "&sopb -C 5"
-&sopb -C 5; 
+echo " "
+echo "&if -sz -C 5 -K 7 -S 44"
+&shrink; &if -sz -C 5 -K 7 -S 44; &ps; &save -a; time
 
-echo "&lf -K 4 -e"
-&lf -K 4 -e
+&load
 
-&ps; &put
- 
-echo "&get -n -m"; 
-&get -n -m; 
+echo " "
+echo "&if -sz -C 5 -K 7 -S 44"
+&shrink; &if -sz -C 5 -K 7 -S 44; &save -a; &ps; time
 
-echo "&ps; &put";  
-&ps; &put;  
+&load
+
+echo " "
+echo "********************* "
+echo "* Final Best netlist"
+echo "********************* "
+&load; &ps
+
+&put;  
 
 time
 
+echo " "
+echo "** Ending ABC FAST optimization !!!"
