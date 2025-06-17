@@ -173,7 +173,7 @@ struct SynthFpgaPass : public ScriptPass
   // -------------------------
   // clean_design 
   // -------------------------
-  void clean_design()
+  void clean_design(int use_dff_bb_models)
   {
      if (obs_clean) {
 
@@ -181,10 +181,13 @@ struct SynthFpgaPass : public ScriptPass
 
         run("splitnets");
 
-	// Load black box models to get IOs directions for 
-	// 'obs_clean'
-	//
-        load_dff_bb_models();
+	if (use_dff_bb_models) {
+
+	  // Load black box models to get IOs directions for 
+	  // 'obs_clean'
+	  //
+          load_dff_bb_models();
+	}
 
         run("obs_clean");
 
@@ -860,7 +863,7 @@ struct SynthFpgaPass : public ScriptPass
 
     may_wait();
 
-    clean_design();
+    clean_design(1);
 
     run("stat");
 
