@@ -1,6 +1,6 @@
 time
 echo " "
-echo "** Starting ABC DELAY optimization !!!"
+echo "** Starting ABC DELAY LUT4 optimization and mapping !!!"
 
 write_blif in.blif
 
@@ -15,32 +15,32 @@ echo "&st; &if -K 4; &save;"
 &st; &if -K 4; &ps; &save; time
 
 echo " "
-echo "&sopb -C 6;"
-&sopb -C 6; &ps; time
+echo "&sopb -C 5;"
+&sopb -C 5; &ps; time
 
 echo " "
-echo "&sopb -C 6;"
-&sopb -C 6; &ps; time
+echo "&sopb -C 5;"
+&sopb -C 5; &ps; time
 
 echo " "
-echo "&sopb -C 6;"
-&sopb -C 6; &ps;  time
+echo "&sopb -C 5;"
+&sopb -C 5; &ps;  time
 
 echo " "
-echo "&sopb -C 6;"
-&sopb -C 6; &ps;  time
+echo "&sopb -C 5;"
+&sopb -C 5; &ps;  time
 
 echo " "
-echo "&sopb -C 6;"
-&sopb -C 6; &ps;  time
+echo "&sopb -C 5;"
+&sopb -C 5; &ps;  time
 
 echo " "
-echo "&sopb -C 6;"
-&sopb -C 6; &ps;  time
+echo "&sopb -C 5;"
+&sopb -C 5; &ps;  time
 
 echo " "
-echo "&sopb -C 6;"
-&sopb -C 6; &ps;  time
+echo "&sopb -C 5;"
+&sopb -C 5; &ps;  time
 
 echo " "
 echo "&if -K 4 -a;"
@@ -67,8 +67,8 @@ echo "&shrink; &blut -K 4"
 &shrink; &blut -K 4; &ps; time
 
 echo " "
-echo "&sopb -C 6;"
-&sopb -C 6; &ps; time
+echo "&sopb -C 5;"
+&sopb -C 5; &ps; time
 
 echo " "
 echo "&synch2 -W 2 -K 4;"
@@ -87,16 +87,16 @@ echo "&shrink; &blut -K 4;"
 &shrink; &blut -K 4; &ps; time
 
 echo " "
-echo "&sopb -C 6;"
-&sopb -C 6; &ps; time
+echo "&sopb -C 5;"
+&sopb -C 5; &ps; time
 
 echo " "
 echo "&synch2 -W 2 -K 4; &lf -K 4 -e -C 32;"
 &synch2 -W 2 -K 4; &lf -K 4 -e -C 32; &ps; &save; time
 
 echo " "
-echo "&shrink; &sopb -C 6; &blut -K 4;"
-&shrink; &sopb -C 6; &blut -K 4; &ps; time
+echo "&shrink; &sopb -C 5; &blut -K 4;"
+&shrink; &sopb -C 5; &blut -K 4; &ps; time
 
 echo " "
 echo "&synch2 -W 2  -K 4; &lf -K 4 -e -C 32;"
@@ -119,8 +119,8 @@ echo "&load; &ps"
 &load; &ps; time
 
 echo " "
-echo "&shrink; &blut -K 4; &sopb -C 6;"
-&shrink; &blut -K 4; &sopb -C 6; &ps; time
+echo "&shrink; &blut -K 4; &sopb -C 5;"
+&shrink; &blut -K 4; &sopb -C 5; &ps; time
 
 echo " "
 echo "&synch2 -W 2 -K 4; &if -sz -C 5 -K 7 -S 44"
@@ -130,6 +130,9 @@ echo " "
 echo "&load; &ps"
 &load; &ps -s; time
 
+echo "&satlut -d -N 31; "
+&satlut -d -N 31; &ps; time
+ 
 echo " "
 echo "** ABC DELAY optimization done !!!"
 &put

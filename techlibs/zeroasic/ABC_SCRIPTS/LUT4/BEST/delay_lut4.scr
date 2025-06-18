@@ -130,6 +130,9 @@ echo " "
 echo "&load; &ps"
 &load; &ps -s; time
 
+echo "&satlut -d -N 31; "
+&satlut -d -N 31; &ps; time
+ 
 echo " "
 echo "** ABC DELAY optimization done !!!"
 &put
