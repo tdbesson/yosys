@@ -39,7 +39,7 @@ struct SynthFpgaPass : public ScriptPass
   string top_opt, verilog_file, part_name, opt;
   string abc_script_version;
   bool no_flatten, dff_enable, dff_async_set, dff_async_reset;
-  bool obs_clean, wait, show_max_level, csv, insbuf;
+  bool obs_clean, wait, show_max_level, csv, insbuf, resynthesis;
   string sc_syn_lut_size;
 
   pool<string> opt_options  = {"default", "fast", "area", "delay"};
@@ -334,6 +334,88 @@ struct SynthFpgaPass : public ScriptPass
 
   }
 
+  // -------------------------
+  // resynthesize
+  // -------------------------
+  // Avoid the heavy synthesis flow and performs a light structural synthesis
+  // because we are re-optimizing and re-mapping a netlist.
+  //
+  void resynthesize() 
+  {
+    run("stat");
+
+    run("proc");
+
+    run("flatten");
+
+#if 0
+    run("opt_expr");
+    run("opt_clean");
+    run("check");
+    run("opt -nodffe -nosdff");
+    run("fsm");
+    run("opt");
+    run("wreduce");
+    run("peepopt");
+    run("opt_clean");
+    run("share");
+    run("techmap -map +/cmp2lut.v -D LUT_WIDTH=4");
+    run("opt_expr");
+    run("opt_clean");
+
+    run("alumacc");
+    run("opt");
+    run("memory -nomap");
+
+    run("design -save copy");
+
+    run("opt -full");
+#endif
+    
+    run("techmap -map +/techmap.v");
+
+#if 0
+    run("memory_map");
+
+    run("demuxmap");
+    run("simplemap");
+#endif
+
+    run("techmap");
+
+    run("opt -fast");
+    run("opt_clean");
+
+    run("opt -full");
+
+    legalize_flops ();
+
+    string sc_syn_flop_library = stringf("+/zeroasic/%s/techlib/tech_flops.v",
+                                         part_name.c_str());
+    run("techmap -map " + sc_syn_flop_library);
+
+    run("techmap");
+    run("opt -purge");
+
+    if (insbuf) {
+      run("insbuf");
+    }
+
+    clean_design(1);
+
+    run("stat");
+    abc_synthesize();
+
+    run("setundef -zero");
+    run("clean -purge");
+
+    run("stat");
+  }
+
+  // -------------------------
+  // help
+  // -------------------------
+  //
   void help() override
   {
 	//   |---v---|---v---|---v---|---v---|---v---|---v---|---v---|---v---|---v---|---v---|
@@ -354,18 +436,22 @@ struct SynthFpgaPass : public ScriptPass
         log("        specifies the optimization target : area, delay, default, fast.\n");
         log("\n");
 
+        log("    -resynthesis\n");
+        log("        switch synthesis flow to resynthesis mode which means a lighter flow. It can be used only after performing a first 'synth_fpga' synthesis pass \n");
+        log("\n");
+
         log("    -insbuf\n");
-        log("        performs buffers insertion.\n");
+        log("        performs buffers insertion (off by default).\n");
         log("\n");
 
 	// DFF related options
 	//
         log("    -no_dff_enable\n");
-        log("        specifies that DFF with enable feature is supported. By default,\n");
+        log("        specifies that DFF with enable feature is not supported. By default,\n");
         log("        DFF with enable is supported.\n");
         log("\n");
         log("    -no_dff_async_set\n");
-        log("        specifies that DFF with asynchronous set feature is supported. By default,\n");
+        log("        specifies that DFF with asynchronous set feature is not supported. By default,\n");
         log("        DFF with asynchronous set is supported.\n");
         log("\n");
         log("    -no_dff_async_reset\n");
@@ -374,7 +460,7 @@ struct SynthFpgaPass : public ScriptPass
         log("\n");
 
         log("    -obs_clean\n");
-        log("        specifies to use 'obs_clean' cleanup function instead of inefficient \n");
+        log("        specifies to use 'obs_clean' cleanup function instead of regular \n");
         log("        'opt_clean'.\n");
         log("\n");
 
@@ -406,7 +492,10 @@ struct SynthFpgaPass : public ScriptPass
 	log("\n");
   }
 
-  // set default values 
+  // -------------------------
+  // clear_flags
+  // -------------------------
+  // set default values for global parameters
   //
   void clear_flags() override
   {
@@ -416,6 +505,7 @@ struct SynthFpgaPass : public ScriptPass
 	part_name = "Z1000";
 
 	no_flatten = false;
+	resynthesis = false;
 	show_max_level = false;
 	csv = false;
 	insbuf = false;
@@ -430,11 +520,15 @@ struct SynthFpgaPass : public ScriptPass
 
 	verilog_file = "";
 
-	abc_script_version = "V1";
+	abc_script_version = "BEST";
 
 	sc_syn_lut_size = "4";
   }
 
+  // -------------------------
+  // execute
+  // -------------------------
+  //
   void execute(std::vector<std::string> args, RTLIL::Design *design) override
   {
 	string run_from, run_to;
@@ -460,13 +554,18 @@ struct SynthFpgaPass : public ScriptPass
 	     continue;
           }
 
+          if (args[argidx] == "-resynthesis") {
+             resynthesis = true;
+             continue;
+          }
+
           if (args[argidx] == "-no_flatten") {
              no_flatten = true;
              continue;
           }
 
           if (args[argidx] == "-insbuf") {
-             no_flatten = true;
+             insbuf = true;
              continue;
           }
 
@@ -549,7 +648,7 @@ struct SynthFpgaPass : public ScriptPass
   }
 
   // ---------------------------------------------------------------------------
-  // synth_fpga 
+  // script (synth_fpga flow) 
   // ---------------------------------------------------------------------------
   //
   // VERSION 1.0 (05/13/2025, Thierry): 
@@ -578,13 +677,6 @@ struct SynthFpgaPass : public ScriptPass
     log("'Zero Asic' FPGA Synthesis Version : %s\n", SYNTH_FPGA_VERSION);
 
 #if 0
-    // Eventually replace 'dff' ZA models in order to perform 
-    // resynthesis.
-    load_dff_models();
-#endif
-   
-
-#if 0
     // TCL scipt version of PLATYPUS
     //
 
@@ -610,6 +702,13 @@ struct SynthFpgaPass : public ScriptPass
 
     if (!topModule) {
        log_warning("Design seems empty !\n");
+       return;
+    }
+
+    if (resynthesis) {
+
+       resynthesize();
+
        return;
     }
 
