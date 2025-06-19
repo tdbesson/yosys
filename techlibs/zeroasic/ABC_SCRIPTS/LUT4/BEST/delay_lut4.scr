@@ -128,10 +128,15 @@ echo "&synch2 -W 2 -K 4; &if -sz -C 5 -K 7 -S 44"
 
 echo " "
 echo "&load; &ps"
-&load; &ps -s; time
+&load; &ps; time
 
 echo "&satlut -d -N 31; "
-&satlut -d -N 31; &ps; time
+&satlut -d -N 31; &ps; &save; time
+
+echo " "
+echo "Final stat: "
+echo " "
+&load; &ps -s; time
  
 echo " "
 echo "** ABC DELAY optimization done !!!"
