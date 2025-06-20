@@ -74,20 +74,20 @@ $(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODEL
 $(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dffers.v))
 
 
-# DSP related
+# Z1010 DSP related
 #
-$(eval $(call add_share_file,share/zeroasic/DSP,techlibs/zeroasic/DSP/DSP48_sim.v))
+$(eval $(call add_share_file,share/zeroasic/Z1010/DSP,techlibs/zeroasic/Z1010/DSP/DSP48_sim.v))
 
-$(eval $(call add_share_file,share/zeroasic/DSP,techlibs/zeroasic/DSP/mult18x18_DSP48.v))
+$(eval $(call add_share_file,share/zeroasic/Z1010/DSP,techlibs/zeroasic/Z1010/DSP/mult18x18_DSP48.v))
 
 
 OBJS += techlibs/zeroasic/zeroasic_dsp.o
 
-GENFILES += techlibs/zeroasic/DSP/zeroasic_dsp_CREG_pm.h
-GENFILES += techlibs/zeroasic/DSP/zeroasic_dsp_cascade_pm.h
+GENFILES += techlibs/zeroasic/Z1010/DSP/zeroasic_dsp_CREG_pm.h
+GENFILES += techlibs/zeroasic/Z1010/DSP/zeroasic_dsp_cascade_pm.h
 
-techlibs/zeroasic/zeroasic_dsp.o: techlibs/zeroasic/DSP/zeroasic_dsp_CREG_pm.h techlibs/zeroasic/DSP/zeroasic_dsp_cascade_pm.h
+techlibs/zeroasic/zeroasic_dsp.o: techlibs/zeroasic/Z1010/DSP/zeroasic_dsp_CREG_pm.h techlibs/zeroasic/Z1010/DSP/zeroasic_dsp_cascade_pm.h
 
-$(eval $(call add_extra_objs,techlibs/zeroasic/DSP/zeroasic_dsp_CREG_pm.h))
-$(eval $(call add_extra_objs,techlibs/zeroasic/DSP/zeroasic_dsp_cascade_pm.h))
+$(eval $(call add_extra_objs,techlibs/zeroasic/Z1010/DSP/zeroasic_dsp_CREG_pm.h))
+$(eval $(call add_extra_objs,techlibs/zeroasic/Z1010/DSP/zeroasic_dsp_cascade_pm.h))
 

@@ -345,6 +345,8 @@ struct SynthFpgaPass : public ScriptPass
        return;
      }
 
+     run("stat");
+
      run("memory_dff"); // 'zeroasic_dsp' will merge registers, reserve memory port registers first
 
      // NB: Zero Asic multipliers are signed only
@@ -363,6 +365,7 @@ struct SynthFpgaPass : public ScriptPass
      run("zeroasic_dsp -family DSP48");
      run("chtype -set $mul t:$__soft_mul");
 
+     run("stat");
   }
 
   // -------------------------

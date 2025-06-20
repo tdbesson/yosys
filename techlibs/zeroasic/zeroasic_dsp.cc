@@ -25,14 +25,14 @@
 USING_YOSYS_NAMESPACE
 PRIVATE_NAMESPACE_BEGIN
 
-#include "techlibs/zeroasic/DSP/zeroasic_dsp_CREG_pm.h"
-#include "techlibs/zeroasic/DSP/zeroasic_dsp_cascade_pm.h"
+#include "techlibs/zeroasic/Z1010/DSP/zeroasic_dsp_CREG_pm.h"
+#include "techlibs/zeroasic/Z1010/DSP/zeroasic_dsp_cascade_pm.h"
 
 void zeroasic_dsp_packC(zeroasic_dsp_CREG_pm &pm)
 {
 	auto &st = pm.st_zeroasic_dsp_packC;
 
-	log_debug("Analyzing %s.%s for ZeroAsic DSP packing (CREG).\n", log_id(pm.module), log_id(st.dsp));
+	log_debug("Analyzing %s.%s for ZeroAsic Z1010 DSP packing (CREG).\n", log_id(pm.module), log_id(st.dsp));
 	log_debug("ffC:        %s\n", log_id(st.ffC, "--"));
 
 	Cell *cell = st.dsp;
@@ -124,7 +124,7 @@ struct ZeroAsicDspPass : public Pass {
 	}
 	void execute(std::vector<std::string> args, RTLIL::Design *design) override
 	{
-		log_header(design, "Executing ZERO ASIC pass (pack resources into DSPs).\n");
+		log_header(design, "Executing DSP Inference pass (pack resources into DSPs).\n");
 
 		size_t argidx;
 		for (argidx = 1; argidx < args.size(); argidx++)
