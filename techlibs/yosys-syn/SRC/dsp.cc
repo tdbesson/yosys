@@ -25,14 +25,14 @@
 USING_YOSYS_NAMESPACE
 PRIVATE_NAMESPACE_BEGIN
 
-#include "techlibs/zeroasic/Z1010/DSP/zeroasic_dsp_CREG_pm.h"
-#include "techlibs/zeroasic/Z1010/DSP/zeroasic_dsp_cascade_pm.h"
+#include "techlibs/yosys-syn/SRC/Z1010/DSP/dsp_CREG_pm.h"
+#include "techlibs/yosys-syn/SRC/Z1010/DSP/dsp_cascade_pm.h"
 
-void zeroasic_dsp_packC(zeroasic_dsp_CREG_pm &pm)
+void dsp_packC(dsp_CREG_pm &pm)
 {
-	auto &st = pm.st_zeroasic_dsp_packC;
+	auto &st = pm.st_dsp_packC;
 
-	log_debug("Analyzing %s.%s for ZeroAsic Z1010 DSP packing (CREG).\n", log_id(pm.module), log_id(st.dsp));
+	log_debug("Analyzing %s.%s for Yosys_syn_ Z1010 DSP packing (CREG).\n", log_id(pm.module), log_id(st.dsp));
 	log_debug("ffC:        %s\n", log_id(st.ffC, "--"));
 
 	Cell *cell = st.dsp;
@@ -92,17 +92,17 @@ void zeroasic_dsp_packC(zeroasic_dsp_CREG_pm &pm)
 	pm.blacklist(cell);
 }
 
-struct ZeroAsicDspPass : public Pass {
-	ZeroAsicDspPass() : Pass("zeroasic_dsp", "ZeroAsic: pack resources into DSPs") { }
+struct Yosys_syn_DspPass : public Pass {
+	Yosys_syn_DspPass() : Pass("dsp", "Yosys_syn_: pack resources into DSPs") { }
 	void help() override
 	{
 		//   |---v---|---v---|---v---|---v---|---v---|---v---|---v---|---v---|---v---|---v---|
 		log("\n");
-		log("    zeroasic_dsp [options] [selection]\n");
+		log("    dsp [options] [selection]\n");
 		log("\n");
 		log("Pack input registers (A2, A1, B2, B1, C, D, AD; with optional enable/reset),\n");
 		log("pipeline registers (M; with optional enable/reset), output registers (P; with\n");
-		log("optional enable/reset), pre-adder and/or post-adder into ZeroAsic DSP resources.\n");
+		log("optional enable/reset), pre-adder and/or post-adder into Yosys_syn_ DSP resources.\n");
 		log("\n");
 		log("Multiply-accumulate operations using the post-adder with feedback on the 'C'\n");
 		log("input will be folded into the DSP. In this scenario only, the 'C' input can be\n");
@@ -117,7 +117,7 @@ struct ZeroAsicDspPass : public Pass {
 		log("to a maximum length of 20 cells, corresponding to the smallest 7 Series\n");
 		log("device.\n");
 		log("\n");
-		log("This pass is a no-op if the scratchpad variable 'zeroasic_dsp.multonly' is set\n");
+		log("This pass is a no-op if the scratchpad variable 'dsp.multonly' is set\n");
 		log("to 1.\n");
 		log("\n");
 		log("\n");
@@ -134,7 +134,7 @@ struct ZeroAsicDspPass : public Pass {
 
 		for (auto module : design->selected_modules()) {
 
-			if (design->scratchpad_get_bool("zeroasic_dsp.multonly"))
+			if (design->scratchpad_get_bool("dsp.multonly"))
 				continue;
 
 			// Separating out CREG packing is necessary since there
@@ -146,18 +146,18 @@ struct ZeroAsicDspPass : public Pass {
 			//   PREG of an upstream DSP that had not been visited
 			//   yet
 			{
-				zeroasic_dsp_CREG_pm pm(module, module->selected_cells());
-				pm.run_zeroasic_dsp_packC(zeroasic_dsp_packC);
+				dsp_CREG_pm pm(module, module->selected_cells());
+				pm.run_dsp_packC(dsp_packC);
 			}
 			// Lastly, identify and utilise PCOUT -> PCIN,
 			//   ACOUT -> ACIN, and BCOUT-> BCIN dedicated cascade
 			//   chains
 			{
-				zeroasic_dsp_cascade_pm pm(module, module->selected_cells());
-				pm.run_zeroasic_dsp_cascade();
+				dsp_cascade_pm pm(module, module->selected_cells());
+				pm.run_dsp_cascade();
 			}
 		}
 	}
-} ZeroAsicDspPass;
+} Yosys_syn_DspPass;
 
 PRIVATE_NAMESPACE_END
