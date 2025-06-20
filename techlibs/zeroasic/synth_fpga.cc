@@ -39,7 +39,7 @@ struct SynthFpgaPass : public ScriptPass
   string top_opt, verilog_file, part_name, opt;
   string abc_script_version;
   bool no_flatten, dff_enable, dff_async_set, dff_async_reset;
-  bool obs_clean, wait, show_max_level, csv, insbuf, resynthesis;
+  bool obs_clean, wait, show_max_level, csv, insbuf, resynthesis, autoname;
   string sc_syn_lut_size;
 
   pool<string> opt_options  = {"default", "fast", "area", "delay"};
@@ -444,6 +444,11 @@ struct SynthFpgaPass : public ScriptPass
         log("        performs buffers insertion (off by default).\n");
         log("\n");
 
+        log("    -autoname\n");
+        log("        Generate, if possible, better wire and cells names close to RTL names rather than\n");
+        log("        $abc generic names.\n");
+        log("\n");
+
 	// DFF related options
 	//
         log("    -no_dff_enable\n");
@@ -505,6 +510,7 @@ struct SynthFpgaPass : public ScriptPass
 	part_name = "Z1000";
 
 	no_flatten = false;
+	autoname = false;
 	resynthesis = false;
 	show_max_level = false;
 	csv = false;
@@ -566,6 +572,11 @@ struct SynthFpgaPass : public ScriptPass
 
           if (args[argidx] == "-insbuf") {
              insbuf = true;
+             continue;
+          }
+
+          if (args[argidx] == "-autoname") {
+             autoname = true;
              continue;
           }
 
@@ -980,6 +991,13 @@ struct SynthFpgaPass : public ScriptPass
     run("setundef -zero");
     run("clean -purge");
 
+    // tries to give public names instead of using $abc generic names.
+    // Right now this procedure blows up runtime for medium/big designs
+    //
+    if (autoname) {
+      run("autoname");
+    }
+
     if (!verilog_file.empty()) {
        log("Dump Verilog file '%s'\n", verilog_file.c_str()); 
        run(stringf("write_verilog -noexpr -nohex -nodec %s", verilog_file.c_str()));
@@ -1007,6 +1025,8 @@ struct SynthFpgaPass : public ScriptPass
     if (csv) {
        dump_csv_file("stat.csv", (int)totalTime);
     }
+
+    run(stringf("write_verilog -noexpr -nohex -nodec %s", "netlist_synth_fpga.v"));
 
   } // end script()
 
