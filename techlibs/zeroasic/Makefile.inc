@@ -58,29 +58,39 @@ $(eval $(call add_share_file,share/zeroasic/ABC_SCRIPTS/LUT6/V1,techlibs/zeroasi
 # MODELS
 #
 $(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dff.v))
-#$(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dff_bb.v))
 
 $(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dffe.v))
-#$(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dffe_bb.v))
 
 $(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dffr.v))
-#$(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dffr_bb.v))
 
 $(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dffs.v))
-#$(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dffs_bb.v))
 
 $(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dffrs.v))
-#$(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dffrs_bb.v))
 
 $(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dffer.v))
-#$(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dffer_bb.v))
 
 $(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dffes.v))
-#$(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dffes_bb.v))
 
 $(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dffers.v))
-#$(eval $(call add_share_file,share/zeroasic/FF_MODELS,techlibs/zeroasic/FF_MODELS/dffers_bb.v))
 
 
+# DSP related
+#
+$(eval $(call add_share_file,share/zeroasic/DSP,techlibs/zeroasic/DSP/DSP48_sim.v))
 
+$(eval $(call add_share_file,share/zeroasic/DSP,techlibs/zeroasic/DSP/mult18x18_DSP48.v))
+
+
+OBJS += techlibs/zeroasic/zeroasic_dsp.o
+
+GENFILES += techlibs/zeroasic/DSP/zeroasic_dsp_pm.h
+GENFILES += techlibs/zeroasic/DSP/zeroasic_dsp48a_pm.h
+GENFILES += techlibs/zeroasic/DSP/zeroasic_dsp_CREG_pm.h
+GENFILES += techlibs/zeroasic/DSP/zeroasic_dsp_cascade_pm.h
+
+techlibs/zeroasic/zeroasic_dsp.o: techlibs/zeroasic/DSP/zeroasic_dsp_pm.h techlibs/zeroasic/DSP/zeroasic_dsp48a_pm.h techlibs/zeroasic/DSP/zeroasic_dsp_CREG_pm.h techlibs/zeroasic/DSP/zeroasic_dsp_cascade_pm.h
+$(eval $(call add_extra_objs,techlibs/zeroasic/DSP/zeroasic_dsp_pm.h))
+$(eval $(call add_extra_objs,techlibs/zeroasic/DSP/zeroasic_dsp48a_pm.h))
+$(eval $(call add_extra_objs,techlibs/zeroasic/DSP/zeroasic_dsp_CREG_pm.h))
+$(eval $(call add_extra_objs,techlibs/zeroasic/DSP/zeroasic_dsp_cascade_pm.h))
 

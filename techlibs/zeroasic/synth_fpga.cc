@@ -40,6 +40,7 @@ struct SynthFpgaPass : public ScriptPass
   string abc_script_version;
   bool no_flatten, dff_enable, dff_async_set, dff_async_reset;
   bool obs_clean, wait, show_max_level, csv, insbuf, resynthesis, autoname;
+  bool dsp48;
   string sc_syn_lut_size;
 
   pool<string> opt_options  = {"default", "fast", "area", "delay"};
@@ -335,6 +336,36 @@ struct SynthFpgaPass : public ScriptPass
   }
 
   // -------------------------
+  // infer_DSPs
+  // -------------------------
+  void infer_DSPs()
+  {
+
+     if (!dsp48) {
+       return;
+     }
+
+     run("memory_dff"); // 'zeroasic_dsp' will merge registers, reserve memory port registers first
+
+     // NB: Zero Asic multipliers are signed only
+     //
+
+     run("techmap -map +/mul2dsp.v -map +/zeroasic/DSP/mult18x18_DSP48.v -D DSP_A_MAXWIDTH=18 -D DSP_B_MAXWIDTH=18 "
+         "-D DSP_A_MINWIDTH=2 -D DSP_B_MINWIDTH=2 " // Blocks Nx1 multipliers
+         "-D DSP_Y_MINWIDTH=9 " // UG901 suggests small multiplies are those 4x4 and smaller
+         "-D DSP_SIGNEDONLY=1 -D DSP_NAME=$__MUL18X18");
+
+     run("select a:mul2dsp");
+     run("setattr -unset mul2dsp");
+     run("opt_expr -fine");
+     run("wreduce");
+     run("select -clear");
+     run("zeroasic_dsp -family DSP48");
+     run("chtype -set $mul t:$__soft_mul");
+
+  }
+
+  // -------------------------
   // resynthesize
   // -------------------------
   // Avoid the heavy synthesis flow and performs a light structural synthesis
@@ -436,8 +467,13 @@ struct SynthFpgaPass : public ScriptPass
         log("        specifies the optimization target : area, delay, default, fast.\n");
         log("\n");
 
+        log("    -use_DSP48\n");
+        log("        Invoke DSP48 inference. It is off by default.\n");
+        log("\n");
+
         log("    -resynthesis\n");
-        log("        switch synthesis flow to resynthesis mode which means a lighter flow. It can be used only after performing a first 'synth_fpga' synthesis pass \n");
+        log("        switch synthesis flow to resynthesis mode which means a lighter flow.\n");
+        log("        It can be used only after performing a first 'synth_fpga' synthesis pass \n");
         log("\n");
 
         log("    -insbuf\n");
@@ -511,6 +547,7 @@ struct SynthFpgaPass : public ScriptPass
 
 	no_flatten = false;
 	autoname = false;
+	dsp48 = false;
 	resynthesis = false;
 	show_max_level = false;
 	csv = false;
@@ -567,6 +604,11 @@ struct SynthFpgaPass : public ScriptPass
 
           if (args[argidx] == "-no_flatten") {
              no_flatten = true;
+             continue;
+          }
+
+          if (args[argidx] == "-use_DSP48") {
+             dsp48 = true;
              continue;
           }
 
@@ -822,6 +864,11 @@ struct SynthFpgaPass : public ScriptPass
     }
 #endif
 
+    // Map DSP components
+    //
+    infer_DSPs();
+
+
     // Mimic ICE40 flow by running an alumacc and memory -nomap passes
     // after DSP mapping
     //  
@@ -1026,7 +1073,7 @@ struct SynthFpgaPass : public ScriptPass
        dump_csv_file("stat.csv", (int)totalTime);
     }
 
-    run(stringf("write_verilog -noexpr -nohex -nodec %s", "netlist_synth_fpga.v"));
+    run(stringf("write_verilog -noexpr -nohex -nodec %s", "netlist_synth_fpga.verilog"));
 
   } // end script()
 
