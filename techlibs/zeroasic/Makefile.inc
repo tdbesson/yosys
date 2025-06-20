@@ -83,14 +83,11 @@ $(eval $(call add_share_file,share/zeroasic/DSP,techlibs/zeroasic/DSP/mult18x18_
 
 OBJS += techlibs/zeroasic/zeroasic_dsp.o
 
-GENFILES += techlibs/zeroasic/DSP/zeroasic_dsp_pm.h
-GENFILES += techlibs/zeroasic/DSP/zeroasic_dsp48a_pm.h
 GENFILES += techlibs/zeroasic/DSP/zeroasic_dsp_CREG_pm.h
 GENFILES += techlibs/zeroasic/DSP/zeroasic_dsp_cascade_pm.h
 
-techlibs/zeroasic/zeroasic_dsp.o: techlibs/zeroasic/DSP/zeroasic_dsp_pm.h techlibs/zeroasic/DSP/zeroasic_dsp48a_pm.h techlibs/zeroasic/DSP/zeroasic_dsp_CREG_pm.h techlibs/zeroasic/DSP/zeroasic_dsp_cascade_pm.h
-$(eval $(call add_extra_objs,techlibs/zeroasic/DSP/zeroasic_dsp_pm.h))
-$(eval $(call add_extra_objs,techlibs/zeroasic/DSP/zeroasic_dsp48a_pm.h))
+techlibs/zeroasic/zeroasic_dsp.o: techlibs/zeroasic/DSP/zeroasic_dsp_CREG_pm.h techlibs/zeroasic/DSP/zeroasic_dsp_cascade_pm.h
+
 $(eval $(call add_extra_objs,techlibs/zeroasic/DSP/zeroasic_dsp_CREG_pm.h))
 $(eval $(call add_extra_objs,techlibs/zeroasic/DSP/zeroasic_dsp_cascade_pm.h))
 
