@@ -8,6 +8,11 @@ $(eval $(call add_share_file,share/yosys-syn/ARCHITECTURE/Z1000/techlib,techlibs
 $(eval $(call add_share_file,share/yosys-syn/ARCHITECTURE/Z1000/techlib,techlibs/yosys-syn/ARCHITECTURE/Z1000/techlib/tech_dsp_empty.v))
 $(eval $(call add_share_file,share/yosys-syn/ARCHITECTURE/Z1000/techlib,techlibs/yosys-syn/ARCHITECTURE/Z1000/techlib/tech_flops.v))
 
+$(eval $(call add_share_file,share/yosys-syn/ARCHITECTURE/Z1010/techlib,techlibs/yosys-syn/ARCHITECTURE/Z1010/techlib/bram_memory_map_empty.txt))
+$(eval $(call add_share_file,share/yosys-syn/ARCHITECTURE/Z1010/techlib,techlibs/yosys-syn/ARCHITECTURE/Z1010/techlib/tech_bram_empty.v))
+$(eval $(call add_share_file,share/yosys-syn/ARCHITECTURE/Z1010/techlib,techlibs/yosys-syn/ARCHITECTURE/Z1010/techlib/tech_dsp_empty.v))
+$(eval $(call add_share_file,share/yosys-syn/ARCHITECTURE/Z1010/techlib,techlibs/yosys-syn/ARCHITECTURE/Z1010/techlib/tech_flops.v))
+
 
 #########################
 # LUT4
