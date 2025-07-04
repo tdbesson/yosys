@@ -1,0 +1,1539 @@
+python3 heartbeat.py
+/usr/lib/python3/dist-packages/paramiko/pkey.py:59: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "cipher": algorithms.TripleDES,
+/usr/lib/python3/dist-packages/paramiko/transport.py:220: CryptographyDeprecationWarning: Blowfish has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.Blowfish and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 45.0.0.
+  "class": algorithms.Blowfish,
+/usr/lib/python3/dist-packages/paramiko/transport.py:244: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "class": algorithms.TripleDES,
+| INFO     | heartbeat.v inferred as rtl/verilog
+| INFO     | heartbeat.sdc inferred as constraint/sdc
+| INFO     | Setting up node import.bluespec0 with bluespec/convert
+| WARNING  | Removing import.bluespec0 due to no files in [input,hll,bsv]
+| INFO     | Setting up node import.c0 with bambu/convert
+| WARNING  | Removing import.c0 due to no files in [input,hll,c] or [input,hll,llvm]
+| INFO     | Setting up node import.chisel0 with chisel/convert
+| WARNING  | Removing import.chisel0 due to no files in [input,hll,scala] or [input,config,chisel]
+| INFO     | Setting up node import.verilog0 with slang/elaborate
+| INFO     | Setting up node import.vhdl0 with ghdl/convert
+| WARNING  | Removing import.vhdl0 due to no files in [input,rtl,vhdl]
+| INFO     | Setting up node import.convert0 with sv2v/convert
+| WARNING  | Removing import.convert0 due to will not receive systemverilog to convert
+| INFO     | Setting up node import.combine0 with builtin/concatenate
+| WARNING  | Removing import.combine0 due to no need to concatenate file
+| INFO     | Setting up node syn0 with yosys/syn_asic
+| INFO     | Setting up node floorplan.init0 with openroad/init_floorplan
+| INFO     | Setting up node floorplan.macro_placement0 with openroad/macro_placement
+| INFO     | Setting up node floorplan.tapcell0 with openroad/endcap_tapcell_insertion
+| INFO     | Setting up node floorplan.power_grid0 with openroad/power_grid
+| INFO     | Setting up node floorplan.pin_placement0 with openroad/pin_placement
+| INFO     | Setting up node place.global0 with openroad/global_placement
+| INFO     | Setting up node place.repair_design0 with openroad/repair_design
+| INFO     | Setting up node place.detailed0 with openroad/detailed_placement
+| INFO     | Setting up node cts.clock_tree_synthesis0 with openroad/clock_tree_synthesis
+| INFO     | Setting up node cts.repair_timing0 with openroad/repair_timing
+| INFO     | Setting up node cts.fillcell0 with openroad/fillercell_insertion
+| INFO     | Setting up node route.global0 with openroad/global_route
+| INFO     | Setting up node route.antenna_repair0 with openroad/antenna_repair
+| INFO     | Setting up node route.detailed0 with openroad/detailed_route
+| INFO     | Setting up node dfm.metal_fill0 with openroad/fillmetal_insertion
+| WARNING  | Removing dfm.metal_fill0 due to no fill script is available
+| INFO     | Setting up node write.gds0 with klayout/export
+| INFO     | Setting up node write.views0 with openroad/write_data
+| INFO     | Checking manifest before running.
+| INFO     | job0 | import.verilog       | 0 | Running in /home/thierry/SILICON_COMPILER/siliconcompiler/examples/heartbeat/build/heartbeat/job0/import.verilog/0
+| INFO     | job0 | import.verilog       | 0 | runtime arguments: --single-unit --threads 8 /home/thierry/SILICON_COMPILER/siliconcompiler/examples/heartbeat/heartbeat.v --top heartbeat --allow-use-before-declare --ignore-unknown-modules -Weverything
+| INFO     | job0 | import.verilog       | 0 | Number of errors: 0
+| INFO     | job0 | import.verilog       | 0 | Number of warnings: 0
+| INFO     | job0 | import.verilog       | 0 | Finished task in 0.34s
+| INFO     | job0 | syn                  | 0 | Running in /home/thierry/SILICON_COMPILER/siliconcompiler/examples/heartbeat/build/heartbeat/job0/syn/0
+| INFO     | job0 | syn                  | 0 | Opening file for replace: /home/thierry/.sc/cache/lambdapdk-v0.1.50/lambdapdk/freepdk45/libs/nangate45/nldm/NangateOpenCellLibrary_typical.lib
+| INFO     | job0 | syn                  | 0 | Commented 0 lines containing "original_pin"
+| INFO     | job0 | syn                  | 0 | Replaced malformed functions 0
+| INFO     | job0 | syn                  | 0 | Replaced capacitive load 0
+| INFO     | job0 | syn                  | 0 | Tool 'yosys' found with version '0.54+17' in directory '/home/thierry/.local/bin'
+| INFO     | job0 | syn                  | 0 | yosys -c /home/thierry/.local/lib/python3.8/site-packages/siliconcompiler/tools/yosys/sc_synth_asic.tcl
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 |  /----------------------------------------------------------------------------\
+| INFO     | job0 | syn                  | 0 |  |  yosys -- Yosys Open SYnthesis Suite                                       |
+| INFO     | job0 | syn                  | 0 |  |  Copyright (C) 2012 - 2025  Claire Xenia Wolf <claire@yosyshq.com>         |
+| INFO     | job0 | syn                  | 0 |  |  Distributed under an ISC-like license, type "license" to see terms        |
+| INFO     | job0 | syn                  | 0 |  \----------------------------------------------------------------------------/
+| INFO     | job0 | syn                  | 0 |  Yosys 0.54+17 (git sha1 d5a168439, g++ 13.1.0-8ubuntu1~20.04.2 -fPIC -O3)
+| INFO     | job0 | syn                  | 0 | echo on
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> read_liberty -overwrite -setattr liberty_cell -lib /home/thierry/SILICON_COMPILER/siliconcompiler/examples/heartbeat/build/heartbeat/job0/syn/0/inputs/sc_logic_nangate45_NangateOpenCellLibrary_typical.lib
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 1. Executing Liberty frontend: /home/thierry/SILICON_COMPILER/siliconcompiler/examples/heartbeat/build/heartbeat/job0/syn/0/inputs/sc_logic_nangate45_NangateOpenCellLibrary_typical.lib
+| INFO     | job0 | syn                  | 0 | Imported 134 cell types from liberty file.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> read_liberty -overwrite -setattr liberty_cell -unit_delay -wb -ignore_miss_func -ignore_buses /home/thierry/SILICON_COMPILER/siliconcompiler/examples/heartbeat/build/heartbeat/job0/syn/0/inputs/sc_logic_nangate45_NangateOpenCellLibrary_typical.lib
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 2. Executing Liberty frontend: /home/thierry/SILICON_COMPILER/siliconcompiler/examples/heartbeat/build/heartbeat/job0/syn/0/inputs/sc_logic_nangate45_NangateOpenCellLibrary_typical.lib
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module AND2_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module AND2_X2.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module AND2_X4.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module AND3_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module AND3_X2.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module AND3_X4.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module AND4_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module AND4_X2.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module AND4_X4.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module ANTENNA_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module AOI21_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module AOI21_X2.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module AOI21_X4.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module AOI22_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module AOI22_X2.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module AOI22_X4.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module AOI211_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module AOI211_X2.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module AOI211_X4.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module AOI221_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module AOI221_X2.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module AOI221_X4.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module AOI222_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module AOI222_X2.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module AOI222_X4.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module BUF_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module BUF_X2.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module BUF_X4.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module BUF_X8.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module BUF_X16.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module BUF_X32.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module CLKBUF_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module CLKBUF_X2.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module CLKBUF_X3.
+| INFO     | job0 | syn                  | 0 | Ignoring cell CLKGATETST_X1 with missing function on output IQ.
+| INFO     | job0 | syn                  | 0 | Ignoring cell CLKGATETST_X2 with missing function on output IQ.
+| INFO     | job0 | syn                  | 0 | Ignoring cell CLKGATETST_X4 with missing function on output IQ.
+| INFO     | job0 | syn                  | 0 | Ignoring cell CLKGATETST_X8 with missing function on output IQ.
+| INFO     | job0 | syn                  | 0 | Ignoring cell CLKGATE_X1 with missing function on output IQ.
+| INFO     | job0 | syn                  | 0 | Ignoring cell CLKGATE_X2 with missing function on output IQ.
+| INFO     | job0 | syn                  | 0 | Ignoring cell CLKGATE_X4 with missing function on output IQ.
+| INFO     | job0 | syn                  | 0 | Ignoring cell CLKGATE_X8 with missing function on output IQ.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module DFFRS_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module DFFRS_X2.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module DFFR_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module DFFR_X2.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module DFFS_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module DFFS_X2.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module DFF_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module DFF_X2.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module DLH_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module DLH_X2.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module DLL_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module DLL_X2.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module FA_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module FILLCELL_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module FILLCELL_X2.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module FILLCELL_X4.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module FILLCELL_X8.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module FILLCELL_X16.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module FILLCELL_X32.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module HA_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module INV_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module INV_X2.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module INV_X4.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module INV_X8.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module INV_X16.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module INV_X32.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module LOGIC0_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module LOGIC1_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module MUX2_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module MUX2_X2.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module NAND2_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module NAND2_X2.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module NAND2_X4.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module NAND3_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module NAND3_X2.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module NAND3_X4.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module NAND4_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module NAND4_X2.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module NAND4_X4.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module NOR2_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module NOR2_X2.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module NOR2_X4.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module NOR3_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module NOR3_X2.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module NOR3_X4.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module NOR4_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing b
+| INFO     | job0 | syn                  | 0 | lackbox module NOR4_X2.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module NOR4_X4.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module OAI21_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module OAI21_X2.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module OAI21_X4.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module OAI22_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module OAI22_X2.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module OAI22_X4.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module OAI33_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module OAI211_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module OAI211_X2.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module OAI211_X4.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module OAI221_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module OAI221_X2.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module OAI221_X4.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module OAI222_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module OAI222_X2.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module OAI222_X4.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module OR2_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module OR2_X2.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module OR2_X4.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module OR3_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module OR3_X2.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module OR3_X4.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module OR4_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module OR4_X2.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module OR4_X4.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module SDFFRS_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module SDFFRS_X2.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module SDFFR_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module SDFFR_X2.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module SDFFS_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module SDFFS_X2.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module SDFF_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module SDFF_X2.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module TBUF_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module TBUF_X2.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module TBUF_X4.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module TBUF_X8.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module TBUF_X16.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module TINV_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module TLAT_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module XNOR2_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module XNOR2_X2.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module XOR2_X1.
+| INFO     | job0 | syn                  | 0 | Replacing existing blackbox module XOR2_X2.
+| INFO     | job0 | syn                  | 0 | Imported 126 cell types from liberty file.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> read_verilog -noblackbox -sv inputs/heartbeat.v
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 3. Executing Verilog-2005 frontend: inputs/heartbeat.v
+| INFO     | job0 | syn                  | 0 | Parsing SystemVerilog input from `inputs/heartbeat.v' to AST representation.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\heartbeat'.
+| INFO     | job0 | syn                  | 0 | Successfully finished Verilog frontend.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> chparam -list heartbeat
+| INFO     | job0 | syn                  | 0 | heartbeat:
+| INFO     | job0 | syn                  | 0 |   N
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> hierarchy -top heartbeat
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 4. Executing HIERARCHY pass (managing design hierarchy).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 4.1. Analyzing design hierarchy..
+| INFO     | job0 | syn                  | 0 | Top module:  \heartbeat
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 4.2. Analyzing design hierarchy..
+| INFO     | job0 | syn                  | 0 | Top module:  \heartbeat
+| INFO     | job0 | syn                  | 0 | Removed 0 unused modules.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> tribuf
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 5. Executing TRIBUF pass.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> scratchpad -set flatten.separator /
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> synth -flatten -extra-map /home/thierry/.local/lib/python3.8/site-packages/siliconcompiler/tools/yosys/techmaps/lcu_kogge_stone.v -top heartbeat -run begin:fine
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6. Executing SYNTH pass.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> hierarchy -check -top heartbeat
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.1. Executing HIERARCHY pass (managing design hierarchy).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.1.1. Analyzing design hierarchy..
+| INFO     | job0 | syn                  | 0 | Top module:  \heartbeat
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.1.2. Analyzing design hierarchy..
+| INFO     | job0 | syn                  | 0 | Top module:  \heartbeat
+| INFO     | job0 | syn                  | 0 | Removed 0 unused modules.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> proc
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.2. Executing PROC pass (convert processes to netlists).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> proc_clean
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.2.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+| INFO     | job0 | syn                  | 0 | Cleaned up 0 empty switches.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> proc_rmdead
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.2.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+| INFO     | job0 | syn                  | 0 | Marked 1 switch rules as full_case in process $proc$inputs/heartbeat.v:14$992 in module heartbeat.
+| INFO     | job0 | syn                  | 0 | Removed a total of 0 dead cases.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> proc_prune
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.2.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+| INFO     | job0 | syn                  | 0 | Removed 2 redundant assignments.
+| INFO     | job0 | syn                  | 0 | Promoted 0 assignments to connections.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> proc_init
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.2.4. Executing PROC_INIT pass (extract init attributes).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> proc_arst
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.2.5. Executing PROC_ARST pass (detect async resets in processes).
+| INFO     | job0 | syn                  | 0 | Found async reset \nreset in `\heartbeat.$proc$inputs/heartbeat.v:14$992'.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> proc_rom
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.2.6. Executing PROC_ROM pass (convert switches to ROMs).
+| INFO     | job0 | syn                  | 0 | Converted 0 switches.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> proc_mux
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.2.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+| INFO     | job0 | syn                  | 0 | Creating decoders for process `\heartbeat.$proc$inputs/heartbeat.v:14$992'.
+| INFO     | job0 | syn                  | 0 |      1/2: $0\out[0:0]
+| INFO     | job0 | syn                  | 0 |      2/2: $0\counter_reg[7:0]
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> proc_dlatch
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.2.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> proc_dff
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.2.9. Executing PROC_DFF pass (convert process syncs to FFs).
+| INFO     | job0 | syn                  | 0 | Creating register for signal `\heartbeat.\out' using process `\heartbeat.$proc$inputs/heartbeat.v:14$992'.
+| INFO     | job0 | syn                  | 0 |   created $adff cell `$procdff$1000' with positive edge clock and positive level reset.
+| INFO     | job0 | syn                  | 0 | Creating register for signal `\heartbeat.\counter_reg' using process `\heartbeat.$proc$inputs/heartbeat.v:14$992'.
+| INFO     | job0 | syn                  | 0 |   created $adff cell `$procdff$1005' with positive edge clock and positive level reset.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> proc_memwr
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.2.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> proc_clean
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.2.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+| INFO     | job0 | syn                  | 0 | Removing empty process `heartbeat.$proc$inputs/heartbeat.v:14$992'.
+| INFO     | job0 | syn                  | 0 | Cleaned up 0 empty switches.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_expr -keepdc
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.2.12. Executing OPT_EXPR pass (perform const folding).
+| INFO     | job0 | syn                  | 0 | Optimizing module heartbeat.
+| INFO     | job0 | syn                  | 0 | <suppressed ~4 debug messages>
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> flatten
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.3. Executing FLATTEN pass (flatten design).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_expr
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.4. Executing OPT_EXPR pass (perform const folding).
+| INFO     | job0 | syn                  | 0 | Optimizing module heartbeat.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_clean
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.5. Executing OPT_CLEAN pass (remove unused cells and wires).
+| INFO     | job0 | syn                  | 0 | Finding unused cells or wires in module \heartbeat..
+| INFO     | job0 | syn                  | 0 | Removed 3 unused cells and 7 unused wires.
+| INFO     | job0 | syn                  | 0 | <suppressed ~4 debug messages>
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> check
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.6. Executing CHECK pass (checking for obvious problems).
+| INFO     | job0 | syn                  | 0 | Checking module heartbeat...
+| INFO     | job0 | syn                  | 0 | Found and reported 0 problems.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt -nodffe -nosdff
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.7. Executing OPT pass (performing simple optimizations).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_expr
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.7.1. Executing OPT_EXPR pass (perform const folding).
+| INFO     | job0 | syn                  | 0 | Optimizing module heartbeat.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_merge -nomux
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.7.2. Executing OPT_MERGE pass (detect identical cells).
+| INFO     | job0 | syn                  | 0 | Finding identical cells in module `\heartbeat'.
+| INFO     | job0 | syn                  | 0 | Removed a total of 0 cells.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_muxtree
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.7.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+| INFO     | job0 | syn                  | 0 | Running muxtree optimizer on module \heartbeat..
+| INFO     | job0 | syn                  | 0 |   Creating internal representation of mux trees.
+| INFO     | job0 | syn                  | 0 |   No muxes found in this module.
+| INFO     | job0 | syn                  | 0 | Removed 0 multiplexer ports.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_reduce
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.7.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+| INFO     | job0 | syn                  | 0 |   Optimizing cells in module \heartbeat.
+| INFO     | job0 | syn                  | 0 | Performed a total of 0 changes.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_merge
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.7.5. Executing OPT_MERGE pass (detect identical cells).
+| INFO     | job0 | syn                  | 0 | Finding identical cells in module `\heartbeat'.
+| INFO     | job0 | syn                  | 0 | Removed a total of 0 cells.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_dff -nodffe -nosdff
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.7.6. Executing OPT_DFF pass (perform DFF optimizations).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_clean
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.7.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+| INFO     | job0 | syn                  | 0 | Finding unused cells or wires in module \heartbeat..
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_expr
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.7.8. Executing OPT_EXPR pass (perform const folding).
+| INFO     | job0 | syn                  | 0 | Optimizing module heartbeat.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.7.9. Finished OPT passes. (There is nothing left to do.)
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> fsm
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.8. Executing FSM pass (extract and optimize FSM).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> fsm_detect
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.8.1. Executing FSM_DETECT pass (finding FSMs in design).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> fsm_extract
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.8.2. Executing FSM_EXTRACT pass (extracting FSM from design).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> fsm_opt
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.8.3. Executing FSM_OPT pass (simple optimizations of FSMs).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_clean
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.8.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+| INFO     | job0 | syn                  | 0 | Finding unused cells or wires in module \heartbeat..
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> fsm_opt
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.8.5. Executing FSM_OPT pass (simple optimizations of FSMs).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> fsm_recode
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.8.6. Executing FSM_RECODE pass (re-assigning FSM state encoding).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> fsm_info
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.8.7. Executing FSM_INFO pass (dumping all available information on FSM cells).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> fsm_map
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.8.8. Executing FSM_MAP pass (mapping FSMs to basic logic).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.9. Executing OPT pass (performing simple optimizations).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_expr
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.9.1. Executing OPT_EXPR pass (perform const folding).
+| INFO     | job0 | syn                  | 0 | Optimizing module heartbeat.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_merge -nomux
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.9.2. Executing OPT_MERGE pass (detect identical cells).
+| INFO     | job0 | syn                  | 0 | Finding identical cells in module `\heartbeat'.
+| INFO     | job0 | syn                  | 0 | Removed a total of 0 cells.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_muxtree
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.9.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+| INFO     | job0 | syn                  | 0 | Running muxtree optimizer on module \heartbeat..
+| INFO     | job0 | syn                  | 0 |   Creating internal representation of mux trees.
+| INFO     | job0 | syn                  | 0 |   No muxes found in this module.
+| INFO     | job0 | syn                  | 0 | Removed 0 multiplexer ports.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_reduce
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.9.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+| INFO     | job0 | syn                  | 0 |   Optimizing cells in module \heartbeat.
+| INFO     | job0 | syn                  | 0 | Performed a total of 0 changes.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_merge
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.9.5. Executing OPT_MERGE pass (detect identical cells).
+| INFO     | job0 | syn                  | 0 | Finding identical cells in module `\heartbeat'.
+| INFO     | job0 | syn                  | 0 | Removed a total of 0 cells.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_dff
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.9.6. Executing OPT_DFF pass (perform DFF optimizations).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_clean
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.9.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+| INFO     | job0 | syn                  | 0 | Finding unused cells or wires in module \heartbeat..
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_expr
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.9.8. Executing OPT_EXPR pass (perform const folding).
+| INFO     | job0 | syn                  | 0 | Optimizing module heartbeat.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.9.9. Finished OPT passes. (There is nothing left to do.)
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> wreduce
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.10. Executing WREDUCE pass (reducing word size of cells).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> peepopt
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.11. Executing PEEPOPT pass (run peephole optimizers).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_clean
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.12. Executing OPT_CLEAN pass (remove unused cells and wires).
+| INFO     | job0 | syn                  | 0 | Finding unused cells or wires in module \heartbeat..
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> alumacc
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.13. Executing ALUMACC pass (create $alu and $macc cells).
+| INFO     | job0 | syn                  | 0 | Extracting $alu and $macc cells in module heartbeat:
+| INFO     | job0 | syn                  | 0 |   creating $macc model for $add$inputs/heartbeat.v:19$994 ($add).
+| INFO     | job0 | syn                  | 0 |   creating $alu model for $macc $add$inputs/heartbeat.v:19$994.
+| INFO     | job0 | syn                  | 0 |   creating $alu cell for $add$inputs/heartbeat.v:19$994: $auto$alumacc.cc:495:replace_alu$1006
+| INFO     | job0 | syn                  | 0 |   created 1 $alu and 0 $macc cells.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> share
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.14. Executing SHARE pass (SAT-based resource sharing).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.15. Executing OPT pass (performing simple optimizations).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_expr
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.15.1. Executing OPT_EXPR pass (perform const folding).
+| INFO     | job0 | syn                  | 0 | Optimizing module heartbeat.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_merge -nomux
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.15.2. Executing OPT_MERGE pass (detect identical cells).
+| INFO     | job0 | syn                  | 0 | Finding identical cells in module `\heartbeat'.
+| INFO     | job0 | syn                  | 0 | Removed a total of 0 cells.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_muxtree
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.15.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+| INFO     | job0 | syn                  | 0 | Running muxtree optimizer on module \heartbeat..
+| INFO     | job0 | syn                  | 0 |   Creating internal representation of mux trees.
+| INFO     | job0 | syn                  | 0 |   No muxes found in this module.
+| INFO     | job0 | syn                  | 0 | Removed 0 multiplexer ports.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_reduce
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.15.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+| INFO     | job0 | syn                  | 0 |   Optimizing cells in module \heartbeat.
+| INFO     | job0 | syn                  | 0 | Performed a total of 0 changes.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_merge
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.15.5. Executing OPT_MERGE pass (detect identical cells).
+| INFO     | job0 | syn                  | 0 | Finding identical cells in module `\heartbeat'.
+| INFO     | job0 | syn                  | 0 | Removed a total of 0 cells.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_dff
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.15.6. Executing OPT_DFF pass (perform DFF optimizations).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_clean
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.15.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+| INFO     | job0 | syn                  | 0 | Finding unused cells or wires in module \heartbeat..
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_expr
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.15.8. Executing OPT_EXPR pass (perform const folding).
+| INFO     | job0 | syn                  | 0 | Optimizing module heartbeat.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.15.9. Finished OPT passes. (There is nothing left to do.)
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> memory -nomap
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.16. Executing MEMORY pass.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_mem
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.16.1. Executing OPT_MEM pass (optimize memories).
+| INFO     | job0 | syn                  | 0 | Performed a total of 0 transformations.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_mem_priority
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.16.2. Executing OPT_MEM_PRIORITY pass (removing unnecessary memory write priority relations).
+| INFO     | job0 | syn                  | 0 | Performed a total of 0 transformations.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_mem_feedback
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.16.3. Executing OPT_MEM_FEEDBACK pass (finding memory read-to-write feedback paths).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> memory_bmux2rom
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.16.4. Executing MEMORY_BMUX2ROM pass (converting muxes to ROMs).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> memory_dff
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.16.5. Executing MEMORY_DFF pass (merging $dff cells to $memrd).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_clean
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.16.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+| INFO     | job0 | syn                  | 0 | Finding unused cells or wires in module \heartbeat..
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> memory_share
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.16.7. Executing MEMORY_SHARE pass (consolidating $memrd/$memwr cells).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_mem_widen
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.16.8. Executing OPT_MEM_WIDEN pass (optimize memories where all ports are wide).
+| INFO     | job0 | syn                  | 0 | Performed a total of 0 transformations.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_clean
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.16.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+| INFO     | job0 | syn                  | 0 | Finding unused cells or wires in module \heartbeat..
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> memory_collect
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.16.10. Executing MEMORY_COLLECT pass (generating $mem cells).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_clean
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 6.17. Executing OPT_CLEAN pass (remove unused cells and wires).
+| INFO     | job0 | syn                  | 0 | Finding unused cells or wires in module \heartbeat..
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> synth -flatten -extra-map /home/thierry/.local/lib/python3.8/site-packages/siliconcompiler/tools/yosys/techmaps/lcu_kogge_stone.v -top heartbeat -run fine:check
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 7. Executing SYNTH pass.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt -fast -full
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 7.1. Executing OPT pass (performing simple optimizations).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_expr -full
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 7.1.1. Executing OPT_EXPR pass (perform const folding).
+| INFO     | job0 | syn                  | 0 | Optimizing module heartbeat.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_merge
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 7.1.2. Executing OPT_MERGE pass (detect identical cells).
+| INFO     | job0 | syn                  | 0 | Finding identical cells in module `\heartbeat'.
+| INFO     | job0 | syn                  | 0 | Removed a total of 0 cells.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_dff
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 7.1.3. Executing OPT_DFF pass (perform DFF optimizations).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_clean
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 7.1.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+| INFO     | job0 | syn                  | 0 | Finding unused cells or wires in module \heartbeat..
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 7.1.5. Finished fast OPT passes.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> memory_map
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 7.2. Executing MEMORY_MAP pass (converting memories to logic and flip-flops).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt -full
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 7.3. Executing OPT pass (performing simple optimizations).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_expr -full
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 7.3.1. Executing OPT_EXPR pass (perform const folding).
+| INFO     | job0 | syn                  | 0 | Optimizing module heartbeat.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_merge -nomux
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 7.3.2. Executing OPT_MERGE pass (detect identical cells).
+| INFO     | job0 | syn                  | 0 | Finding identical cells in module `\heartbeat'.
+| INFO     | job0 | syn                  | 0 | Removed a total of 0 cells.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_muxtree
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 7.3.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+| INFO     | job0 | syn                  | 0 | Running muxtree optimizer on module \heartbeat..
+| INFO     | job0 | syn                  | 0 |   Creating internal representation of mux trees.
+| INFO     | job0 | syn                  | 0 |   No muxes found in this module.
+| INFO     | job0 | syn                  | 0 | Removed 0 multiplexer ports.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_reduce -full
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 7.3.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+| INFO     | job0 | syn                  | 0 |   Optimizing cells in module \heartbeat.
+| INFO     | job0 | syn                  | 0 | Performed a total of 0 changes.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_merge
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 7.3.5. Executing OPT_MERGE pass (detect identical cells).
+| INFO     | job0 | syn                  | 0 | Finding identical cells in module `\heartbeat'.
+| INFO     | job0 | syn                  | 0 | Removed a total of 0 cells.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_share
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 7.3.6. Executing OPT_SHARE pass.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_dff
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 7.3.7. Executing OPT_DFF pass (perform DFF optimizations).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_clean
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 7.3.8. Executing OPT_CLEAN pass (remove unused cells and wires).
+| INFO     | job0 | syn                  | 0 | Finding unused cells or wires in module \heartbeat..
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_expr -full
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 7.3.9. Executing OPT_EXPR pass (perform const folding).
+| INFO     | job0 | syn                  | 0 | Optimizing module heartbeat.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 7.3.10. Finished OPT passes. (There is nothing left to do.)
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> techmap -map +/techmap.v -map /home/thierry/.local/lib/python3.8/site-packages/siliconcompiler/tools/yosys/techmaps/lcu_kogge_stone.v
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 7.4. Executing TECHMAP pass (map to technology primitives).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 7.4.1. Executing Verilog-2005 frontend: /home/thierry/.local/bin/../share/yosys/techmap.v
+| INFO     | job0 | syn                  | 0 | Parsing Verilog input from `/home/thierry/.local/bin/../share/yosys/techmap.v' to AST representation.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_simplemap_bool_ops'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_simplemap_reduce_ops'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_simplemap_logic_ops'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_simplemap_compare_ops'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_simplemap_various'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_simplemap_registers'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_shift_ops_shr_shl_sshl_sshr'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_shift_shiftx'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_fa'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_lcu_brent_kung'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_alu'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_macc'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_alumacc'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\$__div_mod_u'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\$__div_mod_trunc'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_div'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_mod'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\$__div_mod_floor'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_divfloor'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_modfloor'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_pow'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_pmux'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_demux'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_lut'.
+| INFO     | job0 | syn                  | 0 | Successfully finished Verilog frontend.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 7.4.2. Executing Verilog-2005 frontend: /home/thierry/.local/lib/python3.8/site-packages/siliconcompiler/tools/yosys/techmaps/lcu_kogge_stone.v
+| INFO     | job0 | syn                  | 0 | Parsing Verilog input from `/home/thierry/.local/lib/python3.8/site-packages/siliconcompiler/tools/yosys/techmaps/lcu_kogge_stone.v' to AST representation.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_80_lcu_kogge_stone'.
+| INFO     | job0 | syn                  | 0 | Successfully finished Verilog frontend.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 7.4.3. Continuing TECHMAP pass.
+| INFO     | job0 | syn                  | 0 | Using extmapper simplemap for cells of type $eq.
+| INFO     | job0 | syn                  | 0 | Using extmapper simplemap for cells of type $adff.
+| INFO     | job0 | syn                  | 0 | Using template $paramod$c3cd1564c35d873179656addd6052d7ea8b6d991\_90_alu for cells of type $alu.
+| INFO     | job0 | syn                  | 0 | Using extmapper simplemap for cells of type $xor.
+| INFO     | job0 | syn                  | 0 | Using extmapper simplemap for cells of type $and.
+| INFO     | job0 | syn                  | 0 | Using template $paramod\_80_lcu_kogge_stone\WIDTH=32'00000000000000000000000000001000 for cells of type $lcu.
+| INFO     | job0 | syn                  | 0 | Using extmapper simplemap for cells of type $pos.
+| INFO     | job0 | syn                  | 0 | Using extmapper simplemap for cells of type $mux.
+| INFO     | job0 | syn                  | 0 | Using extmapper simplemap for cells of type $not.
+| INFO     | job0 | syn                  | 0 | Using extmapper simplemap for cells of type $or.
+| INFO     | job0 | syn                  | 0 | No more expansions possible.
+| INFO     | job0 | syn                  | 0 | <suppressed ~320 debug messages>
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt -fast
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 7.5. Executing OPT pass (performing simple optimizations).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_expr
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 7.5.1. Executing OPT_EXPR pass (perform const folding).
+| INFO     | job0 | syn                  | 0 | Optimizing module heartbeat.
+| INFO     | job0 | syn                  | 0 | <suppressed ~63 debug messages>
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_merge
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 7.5.2. Executing OPT_MERGE pass (detect identical cells).
+| INFO     | job0 | syn                  | 0 | Finding identical cells in module `\heartbeat'.
+| INFO     | job0 | syn                  | 0 | <suppressed ~27 debug messages>
+| INFO     | job0 | syn                  | 0 | Removed a total of 9 cells.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_dff
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 7.5.3. Executing OPT_DFF pass (perform DFF optimizations).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_clean
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 7.5.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+| INFO     | job0 | syn                  | 0 | Finding unused cells or wires in module \heartbeat..
+| INFO     | job0 | syn                  | 0 | Removed 3 unused cells and 59 unused wires.
+| INFO     | job0 | syn                  | 0 | <suppressed ~4 debug messages>
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 7.5.5. Finished fast OPT passes.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> abc -fast
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 7.6. Executing ABC pass (technology mapping using ABC).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 7.6.1. Extracting gate netlist of module `\heartbeat' to `<abc-temp-dir>/input.blif'..
+| INFO     | job0 | syn                  | 0 | Extracted 37 gates and 45 wires to a netlist network with 8 inputs and 9 outputs.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 7.6.1.1. Executing ABC.
+| INFO     | job0 | syn                  | 0 | Running ABC command: "<yosys-exe-dir>/yosys-abc" -s -f <abc-temp-dir>/abc.script 2>&1
+| INFO     | job0 | syn                  | 0 | ABC: ABC command line: "source <abc-temp-dir>/abc.script".
+| INFO     | job0 | syn                  | 0 | ABC:
+| INFO     | job0 | syn                  | 0 | ABC: + read_blif <abc-temp-dir>/input.blif
+| INFO     | job0 | syn                  | 0 | ABC: + read_library <abc-temp-dir>/stdcells.genlib
+| INFO     | job0 | syn                  | 0 | ABC: + strash
+| INFO     | job0 | syn                  | 0 | ABC: + dretime
+| INFO     | job0 | syn                  | 0 | ABC: + map
+| INFO     | job0 | syn                  | 0 | ABC: + write_blif <abc-temp-dir>/output.blif
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 7.6.1.2. Re-integrating ABC results.
+| INFO     | job0 | syn                  | 0 | ABC RESULTS:               AND cells:        1
+| INFO     | job0 | syn                  | 0 | ABC RESULTS:            ANDNOT cells:        6
+| INFO     | job0 | syn                  | 0 | ABC RESULTS:              NAND cells:        6
+| INFO     | job0 | syn                  | 0 | ABC RESULTS:               NOT cells:        1
+| INFO     | job0 | syn                  | 0 | ABC RESULTS:                OR cells:        4
+| INFO     | job0 | syn                  | 0 | ABC RESULTS:               XOR cells:        7
+| INFO     | job0 | syn                  | 0 | ABC RESULTS:        internal signals:       28
+| INFO     | job0 | syn                  | 0 | ABC RESULTS:           input signals:        8
+| INFO     | job0 | syn                  | 0 | ABC RESULTS:          output signals:        9
+| INFO     | job0 | syn                  | 0 | Removing temp directory.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt -fast
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 7.7. Executing OPT pass (performing simple optimizations).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_expr
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 7.7.1. Executing OPT_EXPR pass (perform const folding).
+| INFO     | job0 | syn                  | 0 | Optimizing module heartbeat.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_merge
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 7.7.2. Executing OPT_MERGE pass (detect identical cells).
+| INFO     | job0 | syn                  | 0 | Finding identical cells in module `\heartbeat'.
+| INFO     | job0 | syn                  | 0 | Removed a total of 0 cells.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_dff
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 7.7.3. Executing OPT_DFF pass (perform DFF optimizations).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_clean
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 7.7.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+| INFO     | job0 | syn                  | 0 | Finding unused cells or wires in module \heartbeat..
+| INFO     | job0 | syn                  | 0 | Removed 0 unused cells and 36 unused wires.
+| INFO     | job0 | syn                  | 0 | <suppressed ~1 debug messages>
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 7.7.5. Finished fast OPT passes.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> delete */t:$print
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> chformal -remove
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> hierarchy -top heartbeat
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 8. Executing HIERARCHY pass (managing design hierarchy).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 8.1. Analyzing design hierarchy..
+| INFO     | job0 | syn                  | 0 | Top module:  \heartbeat
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 8.2. Analyzing design hierarchy..
+| INFO     | job0 | syn                  | 0 | Top module:  \heartbeat
+| INFO     | job0 | syn                  | 0 | Removed 0 unused modules.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt -purge
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 9. Executing OPT pass (performing simple optimizations).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_expr
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 9.1. Executing OPT_EXPR pass (perform const folding).
+| INFO     | job0 | syn                  | 0 | Optimizing module heartbeat.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_merge -nomux
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 9.2. Executing OPT_MERGE pass (detect identical cells).
+| INFO     | job0 | syn                  | 0 | Finding identical cells in module `\heartbeat'.
+| INFO     | job0 | syn                  | 0 | Removed a total of 0 cells.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_muxtree
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 9.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+| INFO     | job0 | syn                  | 0 | Running muxtree optimizer on module \heartbeat..
+| INFO     | job0 | syn                  | 0 |   Creating internal representation of mux trees.
+| INFO     | job0 | syn                  | 0 |   No muxes found in this module.
+| INFO     | job0 | syn                  | 0 | Removed 0 multiplexer ports.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_reduce
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 9.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+| INFO     | job0 | syn                  | 0 |   Optimizing cells in module \heartbeat.
+| INFO     | job0 | syn                  | 0 | Performed a total of 0 changes.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_merge
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 9.5. Executing OPT_MERGE pass (detect identical cells).
+| INFO     | job0 | syn                  | 0 | Finding identical cells in module `\heartbeat'.
+| INFO     | job0 | syn                  | 0 | Removed a total of 0 cells.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_dff
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 9.6. Executing OPT_DFF pass (perform DFF optimizations).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_clean -purge
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 9.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+| INFO     | job0 | syn                  | 0 | Finding unused cells or wires in module \heartbeat..
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_expr
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 9.8. Executing OPT_EXPR pass (perform const folding).
+| INFO     | job0 | syn                  | 0 | Optimizing module heartbeat.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 9.9. Finished OPT passes. (There is nothing left to do.)
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> techmap -map /home/thierry/.sc/cache/lambdapdk-v0.1.50/lambdapdk/freepdk45/libs/nangate45/techmap/yosys/cells_tristatebuf.v
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 10. Executing TECHMAP pass (map to technology primitives).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 10.1. Executing Verilog-2005 frontend: /home/thierry/.sc/cache/lambdapdk-v0.1.50/lambdapdk/freepdk45/libs/nangate45/techmap/yosys/cells_tristatebuf.v
+| INFO     | job0 | syn                  | 0 | Parsing Verilog input from `/home/thierry/.sc/cache/lambdapdk-v0.1.50/lambdapdk/freepdk45/libs/nangate45/techmap/yosys/cells_tristatebuf.v' to AST representation.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\$_TBUF_'.
+| INFO     | job0 | syn                  | 0 | Successfully finished Verilog frontend.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 10.2. Continuing TECHMAP pass.
+| INFO     | job0 | syn                  | 0 | No more expansions possible.
+| INFO     | job0 | syn                  | 0 | <suppressed ~3 debug messages>
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> techmap
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 11. Executing TECHMAP pass (map to technology primitives).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 11.1. Executing Verilog-2005 frontend: /home/thierry/.local/bin/../share/yosys/techmap.v
+| INFO     | job0 | syn                  | 0 | Parsing Verilog input from `/home/thierry/.local/bin/../share/yosys/techmap.v' to AST representation.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_simplemap_bool_ops'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_simplemap_reduce_ops'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_simplemap_logic_ops'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_simplemap_compare_ops'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_simplemap_various'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_simplemap_registers'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_shift_ops_shr_shl_sshl_sshr'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_shift_shiftx'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_fa'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_lcu_brent_kung'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_alu'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_macc'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_alumacc'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\$__div_mod_u'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\$__div_mod_trunc'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_div'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_mod'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\$__div_mod_floor'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_divfloor'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_modfloor'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_pow'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_pmux'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_demux'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_lut'.
+| INFO     | job0 | syn                  | 0 | Successfully finished Verilog frontend.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 11.2. Continuing TECHMAP pass.
+| INFO     | job0 | syn                  | 0 | No more expansions possible.
+| INFO     | job0 | syn                  | 0 | <suppressed ~74 debug messages>
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt -fast -purge
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 12. Executing OPT pass (performing simple optimizations).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_expr
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 12.1. Executing OPT_EXPR pass (perform const folding).
+| INFO     | job0 | syn                  | 0 | Optimizing module heartbeat.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_merge
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 12.2. Executing OPT_MERGE pass (detect identical cells).
+| INFO     | job0 | syn                  | 0 | Finding identical cells in module `\heartbeat'.
+| INFO     | job0 | syn                  | 0 | Removed a total of 0 cells.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_dff
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 12.3. Executing OPT_DFF pass (perform DFF optimizations).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_clean -purge
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 12.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+| INFO     | job0 | syn                  | 0 | Finding unused cells or wires in module \heartbeat..
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 12.5. Finished fast OPT passes.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> extract_fa
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 13. Executing EXTRACT_FA pass (find and extract full/half adders).
+| INFO     | job0 | syn                  | 0 | Extracting full/half adders from heartbeat:
+| INFO     | job0 | syn                  | 0 |   2-Input XOR/XNOR \counter_reg [0] \counter_reg [1]:
+| INFO     | job0 | syn                  | 0 |     0110 -> $auto$alumacc.cc:495:replace_alu$1006.Y [1]
+| INFO     | job0 | syn                  | 0 |     AND without inversions:
+| INFO     | job0 | syn                  | 0 |       1000 -> $abc$1291$new_n19
+| INFO     | job0 | syn                  | 0 |       Created $fa cell $auto$extract_fa.cc:504:run$1394.
+| INFO     | job0 | syn                  | 0 |   2-Input XOR/XNOR \counter_reg [2] $abc$1291$new_n19:
+| INFO     | job0 | syn                  | 0 |     0110 -> $auto$alumacc.cc:495:replace_alu$1006.Y [2]
+| INFO     | job0 | syn                  | 0 |   2-Input XOR/XNOR \counter_reg [3] $abc$1291$new_n29:
+| INFO     | job0 | syn                  | 0 |     0110 -> $auto$alumacc.cc:495:replace_alu$1006.Y [3]
+| INFO     | job0 | syn                  | 0 |   2-Input XOR/XNOR \counter_reg [4] $abc$1291$new_n21:
+| INFO     | job0 | syn                  | 0 |     0110 -> $auto$alumacc.cc:495:replace_alu$1006.Y [4]
+| INFO     | job0 | syn                  | 0 |   2-Input XOR/XNOR \counter_reg [5] $abc$1291$new_n34:
+| INFO     | job0 | syn                  | 0 |     0110 -> $auto$alumacc.cc:495:replace_alu$1006.Y [5]
+| INFO     | job0 | syn                  | 0 |   2-Input XOR/XNOR \counter_reg [6] $abc$1291$new_n37:
+| INFO     | job0 | syn                  | 0 |     0110 -> $auto$alumacc.cc:495:replace_alu$1006.Y [6]
+| INFO     | job0 | syn                  | 0 |   2-Input XOR/XNOR \counter_reg [7] $abc$1291$new_n41:
+| INFO     | job0 | syn                  | 0 |     0110 -> $auto$alumacc.cc:495:replace_alu$1006.Y [7]
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> techmap -map /home/thierry/.sc/cache/lambdapdk-v0.1.50/lambdapdk/freepdk45/libs/nangate45/techmap/yosys/cells_adders.v
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 14. Executing TECHMAP pass (map to technology primitives).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 14.1. Executing Verilog-2005 frontend: /home/thierry/.sc/cache/lambdapdk-v0.1.50/lambdapdk/freepdk45/libs/nangate45/techmap/yosys/cells_adders.v
+| INFO     | job0 | syn                  | 0 | Parsing Verilog input from `/home/thierry/.sc/cache/lambdapdk-v0.1.50/lambdapdk/freepdk45/libs/nangate45/techmap/yosys/cells_adders.v' to AST representation.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_tech_fa'.
+| INFO     | job0 | syn                  | 0 | Successfully finished Verilog frontend.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 14.2. Continuing TECHMAP pass.
+| INFO     | job0 | syn                  | 0 | Using template $paramod$366b53aa83fc1f56a6a9bf0b408f4c58a4c2aa2e\_tech_fa for cells of type $fa.
+| INFO     | job0 | syn                  | 0 | No more expansions possible.
+| INFO     | job0 | syn                  | 0 | <suppressed ~21 debug messages>
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> techmap
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 15. Executing TECHMAP pass (map to technology primitives).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 15.1. Executing Verilog-2005 frontend: /home/thierry/.local/bin/../share/yosys/techmap.v
+| INFO     | job0 | syn                  | 0 | Parsing Verilog input from `/home/thierry/.local/bin/../share/yosys/techmap.v' to AST representation.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_simplemap_bool_ops'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_simplemap_reduce_ops'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_simplemap_logic_ops'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_simplemap_compare_ops'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_simplemap_various'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_simplemap_registers'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_shift_ops_shr_shl_sshl_sshr'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_shift_shiftx'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_fa'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_lcu_brent_kung'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_alu'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_macc'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_alumacc'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\$__div_mod_u'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\$__div_mod_trunc'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_div'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_mod'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\$__div_mod_floor'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_divfloor'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_modfloor'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_pow'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_pmux'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_demux'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_lut'.
+| INFO     | job0 | syn                  | 0 | Successfully finished Verilog frontend.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 15.2. Continuing TECHMAP pass.
+| INFO     | job0 | syn                  | 0 | No more expansions possible.
+| INFO     | job0 | syn                  | 0 | <suppressed ~74 debug messages>
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt -fast -purge
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 16. Executing OPT pass (performing simple optimizations).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_expr
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 16.1. Executing OPT_EXPR pass (perform const folding).
+| INFO     | job0 | syn                  | 0 | Optimizing module heartbeat.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_merge
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 16.2. Executing OPT_MERGE pass (detect identical cells).
+| INFO     | job0 | syn                  | 0 | Finding identical cells in module `\heartbeat'.
+| INFO     | job0 | syn                  | 0 | Removed a total of 0 cells.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_dff
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 16.3. Executing OPT_DFF pass (perform DFF optimizations).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_clean -purge
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 16.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+| INFO     | job0 | syn                  | 0 | Finding unused cells or wires in module \heartbeat..
+| INFO     | job0 | syn                  | 0 | Removed 2 unused cells and 8 unused wires.
+| INFO     | job0 | syn                  | 0 | <suppressed ~3 debug messages>
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 16.5. Finished fast OPT passes.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> techmap -map /home/thierry/.sc/cache/lambdapdk-v0.1.50/lambdapdk/freepdk45/libs/nangate45/techmap/yosys/cells_latch.v
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 17. Executing TECHMAP pass (map to technology primitives).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 17.1. Executing Verilog-2005 frontend: /home/thierry/.sc/cache/lambdapdk-v0.1.50/lambdapdk/freepdk45/libs/nangate45/techmap/yosys/cells_latch.v
+| INFO     | job0 | syn                  | 0 | Parsing Verilog input from `/home/thierry/.sc/cache/lambdapdk-v0.1.50/lambdapdk/freepdk45/libs/nangate45/techmap/yosys/cells_latch.v' to AST representation.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\$_DLATCH_P_'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\$_DLATCH_N_'.
+| INFO     | job0 | syn                  | 0 | Successfully finished Verilog frontend.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 17.2. Continuing TECHMAP pass.
+| INFO     | job0 | syn                  | 0 | No more expansions possible.
+| INFO     | job0 | syn                  | 0 | <suppressed ~4 debug messages>
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> techmap
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 18. Executing TECHMAP pass (map to technology primitives).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 18.1. Executing Verilog-2005 frontend: /home/thierry/.local/bin/../share/yosys/techmap.v
+| INFO     | job0 | syn                  | 0 | Parsing Verilog input from `/home/thierry/.local/bin/../share/yosys/techmap.v' to AST representation.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_simplemap_bool_ops'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_simplemap_reduce_ops'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_simplemap_logic_ops'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_simplemap_compare_ops'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_simplemap_various'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_simplemap_registers'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_shift_ops_shr_shl_sshl_sshr'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_shift_shiftx'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_fa'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_lcu_brent_kung'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_alu'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_macc'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_alumacc'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\$__div_mod_u'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\$__div_mod_trunc'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_div'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_mod'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\$__div_mod_floor'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_divfloor'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_modfloor'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_pow'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_pmux'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_demux'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_lut'.
+| INFO     | job0 | syn                  | 0 | Successfully finished Verilog frontend.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 18.2. Continuing TECHMAP pass.
+| INFO     | job0 | syn                  | 0 | No more expansions possible.
+| INFO     | job0 | syn                  | 0 | <suppressed ~74 debug messages>
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt -fast -purge
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 19. Executing OPT pass (performing simple optimizations).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_expr
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 19.1. Executing OPT_EXPR pass (perform const folding).
+| INFO     | job0 | syn                  | 0 | Optimizing module heartbeat.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_merge
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 19.2. Executing OPT_MERGE pass (detect identical cells).
+| INFO     | job0 | syn                  | 0 | Finding identical cells in module `\heartbeat'.
+| INFO     | job0 | syn                  | 0 | Removed a total of 0 cells.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_dff
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 19.3. Executing OPT_DFF pass (perform DFF optimizations).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_clean -purge
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 19.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+| INFO     | job0 | syn                  | 0 | Finding unused cells or wires in module \heartbeat..
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 19.5. Finished fast OPT passes.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> rename -wire
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> dfflibmap -dont_use OAI211_X1 -liberty /home/thierry/SILICON_COMPILER/siliconcompiler/examples/heartbeat/build/heartbeat/job0/syn/0/inputs/sc_logic_nangate45_NangateOpenCellLibrary_typical.lib
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 20. Executing DFFLIBMAP pass (mapping DFF cells to sequential cells from liberty file).
+| INFO     | job0 | syn                  | 0 |   cell DFF_X1 (noninv, pins=4, area=4.52) is a direct match for cell type $_DFF_P_.
+| INFO     | job0 | syn                  | 0 |   cell DFFR_X1 (noninv, pins=5, area=5.32) is a direct match for cell type $_DFF_PN0_.
+| INFO     | job0 | syn                  | 0 |   cell DFFS_X1 (noninv, pins=5, area=5.32) is a direct match for cell type $_DFF_PN1_.
+| INFO     | job0 | syn                  | 0 |   cell DFFRS_X1 (noninv, pins=6, area=6.38) is a direct match for cell type $_DFFSR_PNN_.
+| INFO     | job0 | syn                  | 0 |   final dff cell mappings:
+| INFO     | job0 | syn                  | 0 |     unmapped dff cell: $_DFF_N_
+| INFO     | job0 | syn                  | 0 |     \DFF_X1 _DFF_P_ (.CK( C), .D( D), .Q( Q), .QN(~Q));
+| INFO     | job0 | syn                  | 0 |     unmapped dff cell: $_DFF_NN0_
+| INFO     | job0 | syn                  | 0 |     unmapped dff cell: $_DFF_NN1_
+| INFO     | job0 | syn                  | 0 |     unmapped dff cell: $_DFF_NP0_
+| INFO     | job0 | syn                  | 0 |     unmapped dff cell: $_DFF_NP1_
+| INFO     | job0 | syn                  | 0 |     \DFFR_X1 _DFF_PN0_ (.CK( C), .D( D), .Q( Q), .QN(~Q), .RN( R));
+| INFO     | job0 | syn                  | 0 |     \DFFS_X1 _DFF_PN1_ (.CK( C), .D( D), .Q( Q), .QN(~Q), .SN( R));
+| INFO     | job0 | syn                  | 0 |     unmapped dff cell: $_DFF_PP0_
+| INFO     | job0 | syn                  | 0 |     unmapped dff cell: $_DFF_PP1_
+| INFO     | job0 | syn                  | 0 |     unmapped dff cell: $_DFFE_NN_
+| INFO     | job0 | syn                  | 0 |     unmapped dff cell: $_DFFE_NP_
+| INFO     | job0 | syn                  | 0 |     unmapped dff cell: $_DFFE_PN_
+| INFO     | job0 | syn                  | 0 |     unmapped dff cell: $_DFFE_PP_
+| INFO     | job0 | syn                  | 0 |     unmapped dff cell: $_DFFSR_NNN_
+| INFO     | job0 | syn                  | 0 |     unmapped dff cell: $_DFFSR_NNP_
+| INFO     | job0 | syn                  | 0 |     unmapped dff cell: $_DFFSR_NPN_
+| INFO     | job0 | syn                  | 0 |     unmapped dff cell: $_DFFSR_NPP_
+| INFO     | job0 | syn                  | 0 |     \DFFRS_X1 _DFFSR_PNN_ (.CK( C), .D( D), .Q( Q), .QN(~Q), .RN( R), .SN( S));
+| INFO     | job0 | syn                  | 0 |     unmapped dff cell: $_DFFSR_PNP_
+| INFO     | job0 | syn                  | 0 |     unmapped dff cell: $_DFFSR_PPN_
+| INFO     | job0 | syn                  | 0 |     unmapped dff cell: $_DFFSR_PPP_
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> dfflegalize -cell $_DFF_P_ 01 -cell $_DFF_PN0_ 01 -cell $_DFF_PN1_ 01 -cell $_DFFSR_PNN_ 01 t:$_DFF* t:$_SDFF*
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 20.1. Executing DFFLEGALIZE pass (convert FFs to types supported by the target).
+| INFO     | job0 | syn                  | 0 | <suppressed ~8 debug messages>
+| INFO     | job0 | syn                  | 0 | Mapping DFF cells in module `\heartbeat':
+| INFO     | job0 | syn                  | 0 |   mapped 9 $_DFF_PN0_ cells to \DFFR_X1 cells.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> techmap
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 21. Executing TECHMAP pass (map to technology primitives).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 21.1. Executing Verilog-2005 frontend: /home/thierry/.local/bin/../share/yosys/techmap.v
+| INFO     | job0 | syn                  | 0 | Parsing Verilog input from `/home/thierry/.local/bin/../share/yosys/techmap.v' to AST representation.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_simplemap_bool_ops'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_simplemap_reduce_ops'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_simplemap_logic_ops'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_simplemap_compare_ops'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_simplemap_various'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_simplemap_registers'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_shift_ops_shr_shl_sshl_sshr'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_shift_shiftx'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_fa'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_lcu_brent_kung'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_alu'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_macc'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_alumacc'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\$__div_mod_u'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\$__div_mod_trunc'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_div'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_mod'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\$__div_mod_floor'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_divfloor'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_modfloor'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_pow'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_pmux'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_demux'.
+| INFO     | job0 | syn                  | 0 | Generating RTLIL representation for module `\_90_lut'.
+| INFO     | job0 | syn                  | 0 | Successfully finished Verilog frontend.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 21.2. Continuing TECHMAP pass.
+| INFO     | job0 | syn                  | 0 | No more expansions possible.
+| INFO     | job0 | syn                  | 0 | <suppressed ~74 debug messages>
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt -purge
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 22. Executing OPT pass (performing simple optimizations).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_expr
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 22.1. Executing OPT_EXPR pass (perform const folding).
+| INFO     | job0 | syn                  | 0 | Optimizing module heartbeat.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_merge -nomux
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 22.2. Executing OPT_MERGE pass (detect identical cells).
+| INFO     | job0 | syn                  | 0 | Finding identical cells in module `\heartbeat'.
+| INFO     | job0 | syn                  | 0 | Removed a total of 0 cells.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_muxtree
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 22.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+| INFO     | job0 | syn                  | 0 | Running muxtree optimizer on module \heartbeat..
+| INFO     | job0 | syn                  | 0 |   Creating internal representation of mux trees.
+| INFO     | job0 | syn                  | 0 |   No muxes found in this module.
+| INFO     | job0 | syn                  | 0 | Removed 0 multiplexer ports.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_reduce
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 22.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+| INFO     | job0 | syn                  | 0 |   Optimizing cells in module \heartbeat.
+| INFO     | job0 | syn                  | 0 | Performed a total of 0 changes.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_merge
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 22.5. Executing OPT_MERGE pass (detect identical cells).
+| INFO     | job0 | syn                  | 0 | Finding identical cells in module `\heartbeat'.
+| INFO     | job0 | syn                  | 0 | Removed a total of 0 cells.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_dff
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 22.6. Executing OPT_DFF pass (perform DFF optimizations).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_clean -purge
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 22.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+| INFO     | job0 | syn                  | 0 | Finding unused cells or wires in module \heartbeat..
+| INFO     | job0 | syn                  | 0 | Removed 1 unused cells and 2 unused wires.
+| INFO     | job0 | syn                  | 0 | <suppressed ~2 debug messages>
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_expr
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 22.8. Executing OPT_EXPR pass (perform const folding).
+| INFO     | job0 | syn                  | 0 | Optimizing module heartbeat.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 22.9. Rerunning OPT passes. (Maybe there is more to do..)
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_muxtree
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 22.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+| INFO     | job0 | syn                  | 0 | Running muxtree optimizer on module \heartbeat..
+| INFO     | job0 | syn                  | 0 |   Creating internal representation of mux trees.
+| INFO     | job0 | syn                  | 0 |   No muxes found in this module.
+| INFO     | job0 | syn                  | 0 | Removed 0 multiplexer ports.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_reduce
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 22.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+| INFO     | job0 | syn                  | 0 |   Optimizing cells in module \heartbeat.
+| INFO     | job0 | syn                  | 0 | Performed a total of 0 changes.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_merge
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 22.12. Executing OPT_MERGE pass (detect identical cells).
+| INFO     | job0 | syn                  | 0 | Finding identical cells in module `\heartbeat'.
+| INFO     | job0 | syn                  | 0 | Removed a total of 0 cells.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_dff
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 22.13. Executing OPT_DFF pass (perform DFF optimizations).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_clean -purge
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 22.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+| INFO     | job0 | syn                  | 0 | Finding unused cells or wires in module \heartbeat..
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> opt_expr
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 22.15. Executing OPT_EXPR pass (perform const folding).
+| INFO     | job0 | syn                  | 0 | Optimizing module heartbeat.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 22.16. Finished OPT passes. (There is nothing left to do.)
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> abc -D 10000 -constr /home/thierry/SILICON_COMPILER/siliconcompiler/examples/heartbeat/build/heartbeat/job0/syn/0/inputs/sc_abc.constraints -liberty /home/thierry/SILICON_COMPILER/siliconcompiler/examples/heartbeat/build/heartbeat/job0/syn/0/inputs/sc_logic_nangate45_NangateOpenCellLibrary_typical.lib -dont_use OAI211_X1 -dont_use CLKBUF_X1 -dont_use CLKBUF_X2 -dont_use CLKBUF_X3
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 23. Executing ABC pass (technology mapping using ABC).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 23.1. Extracting gate netlist of module `\heartbeat' to `<abc-temp-dir>/input.blif'..
+| INFO     | job0 | syn                  | 0 | Extracted 22 gates and 31 wires to a netlist network with 9 inputs and 7 outputs.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 23.1.1. Executing ABC.
+| INFO     | job0 | syn                  | 0 | Running ABC command: "<yosys-exe-dir>/yosys-abc" -s -f <abc-temp-dir>/abc.script 2>&1
+| INFO     | job0 | syn                  | 0 | ABC: ABC command line: "source <abc-temp-dir>/abc.script".
+| INFO     | job0 | syn                  | 0 | ABC:
+| INFO     | job0 | syn                  | 0 | ABC: + read_blif <abc-temp-dir>/input.blif
+| INFO     | job0 | syn                  | 0 | ABC: + read_lib -X OAI211_X1 -X CLKBUF_X1 -X CLKBUF_X2 -X CLKBUF_X3 -w /home/thierry/SILICON_COMPILER/siliconcompiler/examples/heartbeat/build/heartbeat/job0/syn/0/inputs/sc_logic_nangate45_NangateOpenCellLibrary_typical.lib
+| INFO     | job0 | syn                  | 0 | ABC: Parsing finished successfully.  Parsing time =     0.06 sec
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNA_X1" due to dont_use attribute.
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped cell "CLKBUF_X1" due to dont_use attribute.
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped cell "CLKBUF_X2" due to dont_use attribute.
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped cell "CLKBUF_X3" due to dont_use attribute.
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped cell "CLKGATETST_X1" without logic function.
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped cell "CLKGATETST_X2" without logic function.
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped cell "CLKGATETST_X4" without logic function.
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped cell "CLKGATETST_X8" without logic function.
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped cell "CLKGATE_X1" without logic function.
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped cell "CLKGATE_X2" without logic function.
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped cell "CLKGATE_X4" without logic function.
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped cell "CLKGATE_X8" without logic function.
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRS_X1".
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRS_X2".
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFR_X1".
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFR_X2".
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFS_X1".
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFS_X2".
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFF_X1".
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFF_X2".
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLH_X1".
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLH_X2".
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLL_X1".
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLL_X2".
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped cell "FILLCELL_X1" due to dont_use attribute.
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped cell "FILLCELL_X2" due to dont_use attribute.
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped cell "FILLCELL_X4" due to dont_use attribute.
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped cell "FILLCELL_X8" due to dont_use attribute.
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped cell "FILLCELL_X16" due to dont_use attribute.
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped cell "FILLCELL_X32" due to dont_use attribute.
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped cell "LOGIC0_X1" due to dont_use attribute.
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped cell "LOGIC1_X1" due to dont_use attribute.
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped cell "OAI211_X1" due to dont_use attribute.
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRS_X1".
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRS_X2".
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFR_X1".
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFR_X2".
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFS_X1".
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFS_X2".
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFF_X1".
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFF_X2".
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped three-state cell "TBUF_X1".
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped three-state cell "TBUF_X2".
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped three-state cell "TBUF_X4".
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped three-state cell "TBUF_X8".
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped three-state cell "TBUF_X16".
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped three-state cell "TINV_X1".
+| INFO     | job0 | syn                  | 0 | ABC: Scl_LibertyReadGenlib() skipped sequential cell "TLAT_X1".
+| INFO     | job0 | syn                  | 0 | ABC: Library "NangateOpenCellLibrary" from "/home/thierry/SILICON_COMPILER/siliconcompiler/examples/heartbeat/build/heartbeat/job0/syn/0/inputs/sc_logic_nangat
+| INFO     | job0 | syn                  | 0 | e45_NangateOpenCellLibrary_typical.lib" has 86 cells (35 skipped: 21 seq; 6 tri-state; 8 no func; 13 dont_use).  Time =     0.09 sec
+| INFO     | job0 | syn                  | 0 | ABC: Memory =   11.38 MB. Time =     0.09 sec
+| INFO     | job0 | syn                  | 0 | ABC: Warning: Detected 2 multi-output gates (for example, "FA_X1").
+| INFO     | job0 | syn                  | 0 | ABC: + read_constr -v /home/thierry/SILICON_COMPILER/siliconcompiler/examples/heartbeat/build/heartbeat/job0/syn/0/inputs/sc_abc.constraints
+| INFO     | job0 | syn                  | 0 | ABC: Setting driving cell to be "BUF_X4".
+| INFO     | job0 | syn                  | 0 | ABC: Setting output load to be 3.899000.
+| INFO     | job0 | syn                  | 0 | ABC: + strash
+| INFO     | job0 | syn                  | 0 | ABC: + &get -n
+| INFO     | job0 | syn                  | 0 | ABC: + &fraig -x
+| INFO     | job0 | syn                  | 0 | ABC: + &put
+| INFO     | job0 | syn                  | 0 | ABC: + scorr
+| INFO     | job0 | syn                  | 0 | ABC: Warning: The network is combinational (run "fraig" or "fraig_sweep").
+| INFO     | job0 | syn                  | 0 | ABC: + dc2
+| INFO     | job0 | syn                  | 0 | ABC: + dretime
+| INFO     | job0 | syn                  | 0 | ABC: + retime -o -D 10000
+| INFO     | job0 | syn                  | 0 | ABC: + strash
+| INFO     | job0 | syn                  | 0 | ABC: + &get -n
+| INFO     | job0 | syn                  | 0 | ABC: + &dch -f
+| INFO     | job0 | syn                  | 0 | ABC: + &nf -D 10000
+| INFO     | job0 | syn                  | 0 | ABC: + &put
+| INFO     | job0 | syn                  | 0 | ABC: + buffer
+| INFO     | job0 | syn                  | 0 | ABC: + upsize -D 10000
+| INFO     | job0 | syn                  | 0 | ABC: Current delay (146.36 ps) does not exceed the target delay (10000.00 ps). Upsizing is not performed.
+| INFO     | job0 | syn                  | 0 | ABC: + dnsize -D 10000
+| INFO     | job0 | syn                  | 0 | ABC: + stime -p
+| INFO     | job0 | syn                  | 0 | ABC: WireLoad = "none"  Gates =     14 (  0.0 %)   Cap =  3.8 ff (  0.0 %)   Area =       19.42 (100.0 %)   Delay =   146.36 ps  ( 21.4 %)
+| INFO     | job0 | syn                  | 0 | ABC: Path  0 --       2 : 0    5 pi       A =   0.00  Df =   5.0   -1.3 ps  S =   7.3 ps  Cin =  0.0 ff  Cout =   7.2 ff  Cmax =   0.0 ff  G =    0
+| INFO     | job0 | syn                  | 0 | ABC: Path  1 --      24 : 4    2 AND4_X1  A =   1.60  Df =  64.3  -23.7 ps  S =  15.8 ps  Cin =  0.9 ff  Cout =   3.3 ff  Cmax =  60.3 ff  G =  355
+| INFO     | job0 | syn                  | 0 | ABC: Path  2 --      29 : 4    1 NAND4_X1 A =   1.33  Df =  98.4  -32.8 ps  S =  18.0 ps  Cin =  1.6 ff  Cout =   2.6 ff  Cmax =  56.0 ff  G =  158
+| INFO     | job0 | syn                  | 0 | ABC: Path  3 --      30 : 2    1 XNOR2_X1 A =   1.60  Df = 146.4  -33.7 ps  S =  28.9 ps  Cin =  2.3 ff  Cout =   3.9 ff  Cmax =  26.0 ff  G =  167
+| INFO     | job0 | syn                  | 0 | ABC: Start-point = pi1 (\counter_reg [2]).  End-point = po6 ($auto$alumacc.cc:495:replace_alu$1006.Y [7]).
+| INFO     | job0 | syn                  | 0 | ABC: + write_blif <abc-temp-dir>/output.blif
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 23.1.2. Re-integrating ABC results.
+| INFO     | job0 | syn                  | 0 | ABC RESULTS:           AND4_X1 cells:        3
+| INFO     | job0 | syn                  | 0 | ABC RESULTS:          NAND2_X1 cells:        2
+| INFO     | job0 | syn                  | 0 | ABC RESULTS:          NAND3_X1 cells:        2
+| INFO     | job0 | syn                  | 0 | ABC RESULTS:          NAND4_X1 cells:        1
+| INFO     | job0 | syn                  | 0 | ABC RESULTS:          XNOR2_X1 cells:        5
+| INFO     | job0 | syn                  | 0 | ABC RESULTS:           XOR2_X1 cells:        1
+| INFO     | job0 | syn                  | 0 | ABC RESULTS:        internal signals:       15
+| INFO     | job0 | syn                  | 0 | ABC RESULTS:           input signals:        9
+| INFO     | job0 | syn                  | 0 | ABC RESULTS:          output signals:        7
+| INFO     | job0 | syn                  | 0 | Removing temp directory.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> clean -purge
+| INFO     | job0 | syn                  | 0 | Removed 0 unused cells and 31 unused wires.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> setundef -zero
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 24. Executing SETUNDEF pass (replace undef values with defined constants).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> splitnets
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 25. Executing SPLITNETS pass (splitting up multi-bit signals).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> clean -purge
+| INFO     | job0 | syn                  | 0 | Removed 0 unused cells and 9 unused wires.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> hilomap -singleton -locell LOGIC0_X1 Z -hicell LOGIC1_X1 Z
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 26. Executing HILOMAP pass (mapping to constant drivers).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> insbuf -buf BUF_X1 A Z
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 27. Executing INSBUF pass (insert buffer cells for connected wires).
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> clean -purge
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> echo off
+| INFO     | job0 | syn                  | 0 | echo off
+| INFO     | job0 | syn                  | 0 | {
+| INFO     | job0 | syn                  | 0 |    "creator": "Yosys 0.54+17 (git sha1 d5a168439, g++ 13.1.0-8ubuntu1~20.04.2 -fPIC -O3)",
+| INFO     | job0 | syn                  | 0 |    "invocation": "stat -json -top heartbeat -liberty /home/thierry/SILICON_COMPILER/siliconcompiler/examples/heartbeat/build/heartbeat/job0/syn/0/inputs/sc_logic_nangate45_NangateOpenCellLibrary_typical.lib ",
+| INFO     | job0 | syn                  | 0 |    "modules": {
+| INFO     | job0 | syn                  | 0 |       "\\heartbeat": {
+| INFO     | job0 | syn                  | 0 |          "num_wires":         36,
+| INFO     | job0 | syn                  | 0 |          "num_wire_bits":     36,
+| INFO     | job0 | syn                  | 0 |          "num_pub_wires":     11,
+| INFO     | job0 | syn                  | 0 |          "num_pub_wire_bits": 11,
+| INFO     | job0 | syn                  | 0 |          "num_ports":         3,
+| INFO     | job0 | syn                  | 0 |          "num_port_bits":     3,
+| INFO     | job0 | syn                  | 0 |          "num_memories":      0,
+| INFO     | job0 | syn                  | 0 |          "num_memory_bits":   0,
+| INFO     | job0 | syn                  | 0 |          "num_processes":     0,
+| INFO     | job0 | syn                  | 0 |          "num_cells":         24,
+| INFO     | job0 | syn                  | 0 |          "area":              69.958000,
+| INFO     | job0 | syn                  | 0 |          "num_cells_by_type": {
+| INFO     | job0 | syn                  | 0 |             "AND4_X1": 3,
+| INFO     | job0 | syn                  | 0 |             "DFFR_X1": 9,
+| INFO     | job0 | syn                  | 0 |             "HA_X1": 1,
+| INFO     | job0 | syn                  | 0 |             "NAND2_X1": 2,
+| INFO     | job0 | syn                  | 0 |             "NAND3_X1": 2,
+| INFO     | job0 | syn                  | 0 |             "NAND4_X1": 1,
+| INFO     | job0 | syn                  | 0 |             "XNOR2_X1": 5,
+| INFO     | job0 | syn                  | 0 |             "XOR2_X1": 1
+| INFO     | job0 | syn                  | 0 |          }
+| INFO     | job0 | syn                  | 0 |       }
+| INFO     | job0 | syn                  | 0 |    },
+| INFO     | job0 | syn                  | 0 |       "design": {
+| INFO     | job0 | syn                  | 0 |          "num_wires":         36,
+| INFO     | job0 | syn                  | 0 |          "num_wire_bits":     36,
+| INFO     | job0 | syn                  | 0 |          "num_pub_wires":     11,
+| INFO     | job0 | syn                  | 0 |          "num_pub_wire_bits": 11,
+| INFO     | job0 | syn                  | 0 |          "num_ports":         3,
+| INFO     | job0 | syn                  | 0 |          "num_port_bits":     3,
+| INFO     | job0 | syn                  | 0 |          "num_memories":      0,
+| INFO     | job0 | syn                  | 0 |          "num_memory_bits":   0,
+| INFO     | job0 | syn                  | 0 |          "num_processes":     0,
+| INFO     | job0 | syn                  | 0 |          "num_cells":         24,
+| INFO     | job0 | syn                  | 0 |          "area":              69.958000,
+| INFO     | job0 | syn                  | 0 |          "num_cells_by_type": {
+| INFO     | job0 | syn                  | 0 |             "AND4_X1": 3,
+| INFO     | job0 | syn                  | 0 |             "DFFR_X1": 9,
+| INFO     | job0 | syn                  | 0 |             "HA_X1": 1,
+| INFO     | job0 | syn                  | 0 |             "NAND2_X1": 2,
+| INFO     | job0 | syn                  | 0 |             "NAND3_X1": 2,
+| INFO     | job0 | syn                  | 0 |             "NAND4_X1": 1,
+| INFO     | job0 | syn                  | 0 |             "XNOR2_X1": 5,
+| INFO     | job0 | syn                  | 0 |             "XOR2_X1": 1
+| INFO     | job0 | syn                  | 0 |          }
+| INFO     | job0 | syn                  | 0 |       }
+| INFO     | job0 | syn                  | 0 | }
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | echo on
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> write_verilog -noexpr -nohex -nodec outputs/heartbeat.vg
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 28. Executing Verilog backend.
+yosys> clean_zerowidth
+| INFO     | job0 | syn                  | 0 | Dumping module `\heartbeat'.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | yosys> write_json outputs/heartbeat.netlist.json
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | 29. Executing JSON backend.
+| INFO     | job0 | syn                  | 0 | 
+| INFO     | job0 | syn                  | 0 | End of script. Logfile hash: 274f37b71c, CPU: user 0.46s system 0.04s, MEM: 102.76 MB peak
+| INFO     | job0 | syn                  | 0 | Yosys 0.54+17 (git sha1 d5a168439, g++ 13.1.0-8ubuntu1~20.04.2 -fPIC -O3)
+| INFO     | job0 | syn                  | 0 | Time spent: 32% 2x abc (0 sec), 13% 4x read_liberty (0 sec), ...
+| WARNING  | job0 | syn                  | 0 | 1333: ABC: Warning: Detected 2 multi-output gates (for example, "FA_X1").
+| WARNING  | job0 | syn                  | 0 | 1342: ABC: Warning: The network is combinational (run "fraig" or "fraig_sweep").
+| INFO     | job0 | syn                  | 0 | Number of errors: 0
+| INFO     | job0 | syn                  | 0 | Number of warnings: 2
+| INFO     | job0 | syn                  | 0 | Finished task in 1.85s
+| INFO     | job0 | floorplan.init       | 0 | Running in /home/thierry/SILICON_COMPILER/siliconcompiler/examples/heartbeat/build/heartbeat/job0/floorplan.init/0
+| ERROR    | job0 | floorplan.init       | 0 | openroad could not be found
+| ERROR    | job0 | floorplan.init       | 0 | Backtrace:
+| ERROR    | job0 | floorplan.init       | 0 |   File "/home/thierry/.local/lib/python3.8/site-packages/siliconcompiler/scheduler/schedulernode.py", line 588, in run
+| ERROR    | job0 | floorplan.init       | 0 |     self.execute()
+| ERROR    | job0 | floorplan.init       | 0 |   File "/home/thierry/.local/lib/python3.8/site-packages/siliconcompiler/scheduler/schedulernode.py", line 637, in execute
+| ERROR    | job0 | floorplan.init       | 0 |     toolpath = self.__task.get_exe()
+| ERROR    | job0 | floorplan.init       | 0 |   File "/home/thierry/.local/lib/python3.8/site-packages/siliconcompiler/tool.py", line 237, in get_exe
+
