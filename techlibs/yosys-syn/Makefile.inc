@@ -1,7 +1,7 @@
 #
 # Makefile.inc is used to compile 'yosys-syn' with the global Makefile used to create the main Yosys executable.
 #
-OBJS += techlibs/yosys-syn/SRC/synth_fpga.o techlibs/yosys-syn/SRC/clk_domains.o techlibs/yosys-syn/SRC/load_models.o techlibs/yosys-syn/SRC/report_stat.o techlibs/yosys-syn/SRC/time_chrono.o techlibs/yosys-syn/SRC/obs_clean.o techlibs/yosys-syn/SRC/zopt_dff.o techlibs/yosys-syn/SRC/zqcsat.o techlibs/yosys-syn/SRC/synth_asic.o
+OBJS += techlibs/yosys-syn/SRC/synth_fpga.o techlibs/yosys-syn/SRC/clk_domains.o techlibs/yosys-syn/SRC/load_models.o techlibs/yosys-syn/SRC/report_stat.o techlibs/yosys-syn/SRC/time_chrono.o techlibs/yosys-syn/SRC/obs_clean.o techlibs/yosys-syn/SRC/zopt_dff.o techlibs/yosys-syn/SRC/zqcsat.o techlibs/yosys-syn/SRC/synth_asic.o techlibs/yosys-syn/SRC/cp.o
 
 $(eval $(call add_share_file,share/yosys-syn/ARCHITECTURE/Z1000/techlib,techlibs/yosys-syn/ARCHITECTURE/Z1000/techlib/bram_memory_map_empty.txt))
 $(eval $(call add_share_file,share/yosys-syn/ARCHITECTURE/Z1000/techlib,techlibs/yosys-syn/ARCHITECTURE/Z1000/techlib/tech_bram_empty.v))
@@ -31,23 +31,32 @@ $(eval $(call add_share_file,share/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V1,techlibs/yo
 $(eval $(call add_share_file,share/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V1,techlibs/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V1/delay_lut4.scr))
 $(eval $(call add_share_file,share/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V1,techlibs/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V1/default_lut4.scr))
 $(eval $(call add_share_file,share/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V1,techlibs/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V1/fast_lut4.scr))
+$(eval $(call add_share_file,share/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V1,techlibs/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V1/huge_lut4.scr))
 
 #V2
 $(eval $(call add_share_file,share/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V2,techlibs/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V2/default_lut4.scr))
 $(eval $(call add_share_file,share/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V2,techlibs/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V2/delay_lut4.scr))
 $(eval $(call add_share_file,share/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V2,techlibs/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V2/area_lut4.scr))
 $(eval $(call add_share_file,share/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V2,techlibs/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V2/fast_lut4.scr))
+$(eval $(call add_share_file,share/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V2,techlibs/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V2/huge_lut4.scr))
 
 #V3
 $(eval $(call add_share_file,share/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V3,techlibs/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V3/area_lut4.scr))
 $(eval $(call add_share_file,share/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V3,techlibs/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V3/delay_lut4.scr))
 $(eval $(call add_share_file,share/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V3,techlibs/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V3/fast_lut4.scr))
+$(eval $(call add_share_file,share/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V3,techlibs/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V3/huge_lut4.scr))
 
 #V4
 $(eval $(call add_share_file,share/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V4,techlibs/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V4/area_lut4.scr))
 $(eval $(call add_share_file,share/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V4,techlibs/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V4/delay_lut4.scr))
 $(eval $(call add_share_file,share/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V4,techlibs/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V4/fast_lut4.scr))
+$(eval $(call add_share_file,share/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V4,techlibs/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V4/huge_lut4.scr))
 
+#V5
+$(eval $(call add_share_file,share/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V5,techlibs/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V5/area_lut4.scr))
+$(eval $(call add_share_file,share/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V5,techlibs/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V5/delay_lut4.scr))
+$(eval $(call add_share_file,share/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V5,techlibs/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V5/fast_lut4.scr))
+$(eval $(call add_share_file,share/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V5,techlibs/yosys-syn/SRC/ABC_SCRIPTS/LUT4/V5/huge_lut4.scr))
 
 #########################
 # LUT6
