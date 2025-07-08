@@ -1791,6 +1791,9 @@ struct SynthFpgaPass : public ScriptPass
 
     dbg_wait();
 
+    run("opt_lut_ins");
+    run("opt_lut");
+
     run("setundef -zero");
     run("clean -purge");
 
